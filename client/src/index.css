@@ -8,3 +8,11 @@ body {
   font-family: Arial, sans-serif;
 }
 
+.nav-link-a {
+  text-decoration: none;
+}
+
+.nav-link-a.active {
+  font-weight: bold;
+  border-bottom: 2px solid;
+}
