@@ -82,12 +82,92 @@ body {
 /*--- HomePage ---*/
 
 .home-page {
+  width: 100%;
+  max-width: 1200px;
   margin: 20px auto;
 
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
+.home-hero {
+  width: 100%;
+  margin: 5px auto 35px;
+  padding: 36px 24px 28px;
+  text-align: center;
+
+    background:
+    linear-gradient(
+      135deg,
+      var(--color-text-muted),
+      var(--color-primary),
+      var(--color-primary-hover)
+    );
+  border: 1px solid var(--color-text);
+  border-radius: 20px;
+  box-shadow: 4px 8px 4px var(--color-text-muted);
+}
+
+.home-features {
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+  margin-top: 16px;
+}
+
+.feature-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-text);
+  border-radius: 10px;
+  padding: 15px;
+  background-color: var(--color-surface);
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+}
+
+.feature-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 3px 2px var(--color-text-muted);
+}
+
+.feature-card h2 {
+  margin: 0 0 20px;
+}
+.feature-card p {
+  margin: 10px 0 20px;
+}
+
+.button-container {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+}
+
+/*--- Buttons --*/
+
+.primary-button {
+  width: 180px;
+  background-color: var(--color-primary);
+  margin: 10px auto;
+  color: var(--color-surface);
+  border: none;
+  text-decoration: none;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.primary-button:hover {
+  background-color: var(--color-primary-hover);
+}
+
 
 /*---Footer---*/
 
@@ -96,7 +176,7 @@ body {
   text-align: center;
 
   background-color: var(--color-primary);
-  color: #fff;
+  color: var(--color-surface);
   
   font-size: 0.9rem;
 }
@@ -106,4 +186,9 @@ body {
   justify-content: center;
   gap: 8px;
   margin: 10px auto;
+}
+
+.footer a {
+  text-decoration: none;
+  color: var(--color-background);
 }
