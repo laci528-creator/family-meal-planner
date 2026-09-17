@@ -1,7 +1,9 @@
-import "dotenv/config";  //must first place! configure env variables
+import "dotenv/config";  //Load environment variables first
 import express from "express";
 import cors from "cors";
 import pool from "./db.js";
+
+import authRoutes from "./routes/authRoutes.js";
 
 
 const app = express();
@@ -10,6 +12,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
+app.use("/api/auth", authRoutes);
 
 app.get("/api/test", (req, res) => {
   res.json({
