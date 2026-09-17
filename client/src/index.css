@@ -11,6 +11,11 @@
   --color-text-muted: #6e7771;
 
   --color-border: #dde2de;
+
+  --danger: #dc2626;
+  --danger-hover: #b91c1c;
+  --danger-bg: #fee2e2;
+  --danger-border: #fecaca;
 }  
 
 /*---CSS Global ---*/
@@ -41,6 +46,15 @@ body {
   width: min(1200px, 90%);
   margin: 0 auto;
   flex: 1;
+}
+
+.error-message {
+  text-align: center;
+  color: var(--danger);
+  padding: 10px;
+  background-color: var(--danger-bg);
+  border: 2px solid var(--danger);
+  border-radius: 4px;
 }
 
 

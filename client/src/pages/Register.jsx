@@ -8,26 +8,29 @@ function Register() {
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(null);
 
   function handleSubmit(e) {
   e.preventDefault();
 
   if (password !== password2) {
-    console.log("Passwords do not match");
+    setError("Passwords do not match");
     return;
   }
+  setError(null);
 
   console.log({
     firstName,
     lastName,
-    email,
-    password,
+    email
   });
 }
 
   return (
     <div className="register-container">
       <h2>Sign Up</h2>
+
+      {error && <div className="error-message" role="alert"><p>{error}</p></div>}
 
       <form className="register-form" onSubmit={handleSubmit}>
         <div className="form-group">
