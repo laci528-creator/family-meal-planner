@@ -1,5 +1,6 @@
 import { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
+import api from '../services/api';
 
 function Register() {
   const [firstName, setFirstName] = useState('');
@@ -10,21 +11,41 @@ function Register() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
 
-  function handleSubmit(e) {
+  const navigate = useNavigate();
+
+  async function handleSubmit(e) {
   e.preventDefault();
+  setError(null);
+  
 
   if (password !== password2) {
     setError("Passwords do not match");
     return;
   }
-  setError(null);
+  setIsSubmitting(true);
 
-  console.log({
-    firstName,
-    lastName,
-    email
-  });
-}
+  try {
+      await api.post('/auth/register', { 
+      firstName,
+      lastName,
+      email,
+      password,
+      });
+
+      navigate("/login", {
+        state: { message: "Account created successfully. Please log in." }
+      });
+    } catch (err) {
+      console.error('Register error:', err);
+      setError(
+        err.response?.data?.message || 
+        'Registration failed. Please try again.'
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
 
   return (
     <div className="register-container">
