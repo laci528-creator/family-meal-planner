@@ -1,8 +1,8 @@
+import "dotenv/config";  //must first place! configure env variables
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
+import pool from "./db.js";
 
-dotenv.config();
 
 const app = express();
 
@@ -15,6 +15,23 @@ app.get("/api/test", (req, res) => {
   res.json({
     message: "Family Meal Planner API is running"
   });
+});
+
+app.get("/api/db-test", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT NOW()");
+
+    res.json({
+      message: "Database connection successful",
+      time: result.rows[0].now,
+    });
+  } catch (error) {
+    console.error("Database connection error:", error);
+
+    res.status(500).json({
+      message: "Database connection failed",
+    });
+  }
 });
 
 app.listen(PORT, () => {
