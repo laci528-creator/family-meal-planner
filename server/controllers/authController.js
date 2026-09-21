@@ -151,16 +151,31 @@ export async function loginUser(req, res) {
       });
     }
 
-    return res.status(200).json({
-      error: false,
-      message: "Login successful.",
-      user: {
+    
+
+    req.session.regenerate((error) => {
+      if (error) {
+        console.error("Session regeneration error:", error);
+
+        return res.status(500).json({
+          error: true,
+          message: "Login failed.",
+        });
+      }
+
+      req.session.user = {
         id: user.id,
         firstName: user.first_name,
         lastName: user.last_name,
         email: user.email,
         role: user.role,
-      },
+      };
+
+      return res.status(200).json({
+        error: false,
+        message: "Login successful.",
+        user: req.session.user,
+      });
     });
   } catch (error) {
     console.error("Login error:", error);
@@ -170,4 +185,36 @@ export async function loginUser(req, res) {
       message: "Server error.",
     });
   }
+}
+
+export function getCurrentUser(req, res) {
+  if (!req.session.user) {
+    return res.status(401).json({
+      error: true,
+      message: "Not authenticated.",
+    });
+  }
+
+  return res.status(200).json({
+    error: false,
+    user: req.session.user,
+  });
+}
+
+export function logoutUser(req, res) {
+  req.session.destroy((error) => {
+    if (error) {
+      return res.status(500).json({
+        error: true,
+        message: "Logout failed.",
+      });
+    }
+
+    res.clearCookie("connect.sid");
+
+    return res.status(200).json({
+      error: false,
+      message: "Logout successful.",
+    });
+  });
 }
