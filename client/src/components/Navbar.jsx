@@ -16,13 +16,13 @@ function Navbar() {
             <NavLink to="/shopping" className={({ isActive }) => `nav-link-a${isActive ? " active" : ""}`}>Shopping</NavLink>
             {user ? (
                 <>
-                  <span>Hello, {user.firstName}</span>
-                  <button onClick={logout}>Logout</button>
+                  <span className="nav-user">Hello, {user.firstName}</span>
+                  <button className="nav-link-a logout-button" onClick={logout}>Logout</button>
                 </>
               ) : (
                 <>
-                  <NavLink to="/login">Login</NavLink>
-                  <NavLink to="/register">Register</NavLink>
+                  <NavLink to="/login" className={({ isActive }) => `nav-link-a${isActive ? " active" : ""}`}>Login</NavLink>
+                  <NavLink to="/register" className={({ isActive }) => `nav-link-a${isActive ? " active" : ""}`}>Register</NavLink>
                 </>
               )}
         </div>

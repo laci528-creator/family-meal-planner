@@ -93,6 +93,21 @@ body {
   border-bottom: 3px solid;
 }
 
+.logout-button {
+  background: none;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+.nav-user {
+  color: var(--color-surface);
+  padding: 10px 5px;
+  margin: 10px 0;
+}
+
 /*--- HomePage ---*/
 
 .home-page {
