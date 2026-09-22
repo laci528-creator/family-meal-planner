@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import session from "express-session";
 import pool from "./config/db.js";
+import recipeRoutes from "./routes/recipeRoutes.js";
 
 import authRoutes from "./routes/authRoutes.js";
 
@@ -32,6 +33,8 @@ app.use(session({
 
 
 app.use("/api/auth", authRoutes);
+
+app.use("/api/recipes", recipeRoutes);
 
 app.get("/api/test", (req, res) => {
   res.json({
