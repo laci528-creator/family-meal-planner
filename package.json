@@ -1,0 +1,26 @@
+{
+  "name": "family-meal-planner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "client": "npm run dev --prefix client",
+    "server": "npm run dev --prefix server",
+    "dev": "concurrently \"npm run client\" \"npm run server\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laci528-creator/family-meal-planner.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/laci528-creator/family-meal-planner/issues"
+  },
+  "homepage": "https://github.com/laci528-creator/family-meal-planner#readme",
+  "devDependencies": {
+    "concurrently": "^10.0.5"
+  }
+}
