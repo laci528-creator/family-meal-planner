@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Footer from './components/Footer';
+import ProtectedRoute from "./components/ProtectedRoute";
 
 import Home from "./pages/Home";
 import Login from './pages/Login';
@@ -24,9 +25,32 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/recipes" element={<MyRecipes />} />
-                <Route path="/planner" element={<WeeklyPlanner />} />
-                <Route path="/shopping" element={<ShoppingList />} />
+                <Route
+                  path="/recipes"
+                  element={
+                    <ProtectedRoute>
+                      <MyRecipes />
+                    </ProtectedRoute>
+                  }
+                />
+
+                <Route
+                  path="/planner"
+                  element={
+                    <ProtectedRoute>
+                      <WeeklyPlanner />
+                    </ProtectedRoute>
+                  }
+                />
+
+                <Route
+                  path="/shopping"
+                  element={
+                    <ProtectedRoute>
+                      <ShoppingList />
+                    </ProtectedRoute>
+                  }
+                />
                 <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
