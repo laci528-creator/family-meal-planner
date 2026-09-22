@@ -1,6 +1,28 @@
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import api from "../services/api";
 
 function Home() {
+  const [recipe, setRecipe] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function loadRandomRecipe() {
+      try {
+        const response = await api.get("/recipes/random");
+        setRecipe(response.data.recipe);
+      } catch (err) {
+        console.error("Recipe loading error:", err);
+        setError("Could not load recipe.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadRandomRecipe();
+  }, []);
+
   return (
     <section className="home-page">
       <div className="home-hero">
@@ -45,7 +67,41 @@ function Home() {
           </div>
         </article>
       </div>
+
+      <section className="recipe-inspiration">
+        <h2>Recipe Inspiration</h2>
+
+        {loading && <p>Loading recipe...</p>}
+
+        {error && (
+          <p className="error-message">
+            {error}
+          </p>
+        )}
+
+        {recipe && (
+          <article className="recipe-inspiration-card">
+            <img
+              src={recipe.image}
+              alt={recipe.title}
+              className="recipe-inspiration-image"
+            />
+
+            <div>
+              <h3>{recipe.title}</h3>
+
+              <p>{recipe.category}</p>
+
+              {recipe.cuisine && (
+                <p>{recipe.cuisine}</p>
+              )}
+            </div>
+          </article>
+        )}
+      </section>
     </section>
+
+    
   );
 }
 
