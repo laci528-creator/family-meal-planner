@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from "../context/AuthContext";
 import api from '../services/api';
 
 
@@ -9,6 +10,8 @@ function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { setUser } = useAuth();
 
   const navigate = useNavigate();
 
@@ -20,14 +23,18 @@ const handleSubmit = async (e) => {
     const trimmedEmail = email.trim();
 
     try {
+      const response=
         await api.post('/auth/login', { 
           email: trimmedEmail, 
           password 
         });
 
+      setUser(response.data.user);
+
       navigate('/');
     } catch (err) {
       console.error('Login error:', err);
+      
       setError(
         err.response?.data?.message || 
           'Invalid email or password.'
