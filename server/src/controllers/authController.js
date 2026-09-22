@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import pool from "../db.js";
+import pool from "../config/db.js";
 
 
 export async function registerUser(req, res) {

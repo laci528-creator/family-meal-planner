@@ -2,7 +2,7 @@ import "dotenv/config";  //Load environment variables first
 import express from "express";
 import cors from "cors";
 import session from "express-session";
-import pool from "./db.js";
+import pool from "./config/db.js";
 
 import authRoutes from "./routes/authRoutes.js";
 
