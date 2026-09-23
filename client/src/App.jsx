@@ -12,6 +12,7 @@ import MyRecipes from './pages/Recipes';
 import WeeklyPlanner from './pages/Planner';
 import ShoppingList from './pages/Shopping';
 import NotFound from "./pages/NotFound";
+import RecipeDetails from "./pages/RecipeDetails";
 
 import './App.css'
 
@@ -25,6 +26,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/recipes/:id" element={<RecipeDetails />} />
                 <Route
                   path="/recipes"
                   element={

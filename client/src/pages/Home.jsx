@@ -95,7 +95,15 @@ function Home() {
               {recipe.cuisine && (
                 <p>{recipe.cuisine}</p>
               )}
+              <br></br>
+               <Link
+              to={`/recipes/${recipe.externalId}`}
+              className="primary-button"
+            >
+              View recipe
+            </Link>
             </div>
+           
           </article>
         )}
       </section>
