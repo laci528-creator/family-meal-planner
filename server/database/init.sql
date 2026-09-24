@@ -65,5 +65,8 @@ CREATE TABLE IF NOT EXISTS recipe_ingredients (
     ingredient_id INTEGER NOT NULL
         REFERENCES ingredients(id),
 
-    measure VARCHAR(100)
+    measure VARCHAR(100),
+
+    CONSTRAINT recipe_ingredients_unique
+    UNIQUE (recipe_id, ingredient_id)
 );
