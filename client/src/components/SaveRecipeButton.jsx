@@ -3,12 +3,14 @@ import api from "../services/api";
 
 function SaveRecipeButton({ externalId }) {
   const [isSaving, setIsSaving] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
   const [message, setMessage] = useState("");
   const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
   async function checkSaved() {
     try {
+      setIsChecking(true);
       const response = await api.get(
         `/recipes/saved/${externalId}`
       );
@@ -16,6 +18,8 @@ function SaveRecipeButton({ externalId }) {
       setIsSaved(response.data.saved);
     } catch (error) {
       console.error("Could not check recipe status:", error);
+    } finally {
+      setIsChecking(false);
     }
   }
 
@@ -49,9 +53,11 @@ function SaveRecipeButton({ externalId }) {
         type="button"
         className="primary-button"
         onClick={handleSave}
-        disabled={isSaving || isSaved}
+        disabled={isChecking || isSaving || isSaved}
       >
-        {isSaved ? "Saved" : 
+        {isChecking
+          ? "Checking..." :
+          isSaved ? "Saved" : 
           isSaving ? "Saving..." : "Save recipe"}
       </button>
 
