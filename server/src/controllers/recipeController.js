@@ -214,3 +214,34 @@ export async function saveRecipe(req, res) {
     }
 }
 
+
+export async function checkRecipeSaved(req, res) {
+  const { externalId } = req.params;
+  const userId = req.session.user.id;
+
+  try {
+    const result = await pool.query(
+      `
+        SELECT id
+        FROM recipes
+        WHERE user_id = $1
+          AND external_id = $2
+          AND source = 'api'
+        LIMIT 1
+      `,
+      [userId, externalId]
+    );
+
+    return res.status(200).json({
+      error: false,
+      saved: result.rows.length > 0, //true
+    });
+  } catch (error) {
+    console.error("Check saved recipe error:", error);
+
+    return res.status(500).json({
+      error: true,
+      message: "Could not check recipe status.",
+    });
+  }
+}

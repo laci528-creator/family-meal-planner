@@ -1,9 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import api from "../services/api";
 
 function SaveRecipeButton({ externalId }) {
   const [isSaving, setIsSaving] = useState(false);
   const [message, setMessage] = useState("");
+  const [isSaved, setIsSaved] = useState(false);
+
+  useEffect(() => {
+  async function checkSaved() {
+    try {
+      const response = await api.get(
+        `/recipes/saved/${externalId}`
+      );
+
+      setIsSaved(response.data.saved);
+    } catch (error) {
+      console.error("Could not check recipe status:", error);
+    }
+  }
+
+  checkSaved();
+}, [externalId]);
 
   async function handleSave() {
     try {
@@ -14,6 +31,7 @@ function SaveRecipeButton({ externalId }) {
         externalId,
       });
 
+      setIsSaved(true);
       setMessage("Recipe saved.");
     } catch (err) {
       setMessage(
@@ -31,9 +49,10 @@ function SaveRecipeButton({ externalId }) {
         type="button"
         className="primary-button"
         onClick={handleSave}
-        disabled={isSaving}
+        disabled={isSaving || isSaved}
       >
-        {isSaving ? "Saving..." : "Save recipe"}
+        {isSaved ? "Saved" : 
+          isSaving ? "Saving..." : "Save recipe"}
       </button>
 
       {message && <p>{message}</p>}
