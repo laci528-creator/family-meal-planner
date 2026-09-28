@@ -13,8 +13,10 @@ import WeeklyPlanner from './pages/Planner';
 import ShoppingList from './pages/Shopping';
 import NotFound from "./pages/NotFound";
 import RecipeDetails from "./pages/RecipeDetails";
+import SavedRecipeDetails from "./pages/SavedRecipeDetails";
 
 import './App.css'
+import RecipeCard from "./components/RecipeCard";
 
 function App() {
 
@@ -32,6 +34,14 @@ function App() {
                   element={
                     <ProtectedRoute>
                       <MyRecipes />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/recipes/saved/:id"
+                  element={
+                    <ProtectedRoute>
+                      <SavedRecipeDetails />
                     </ProtectedRoute>
                   }
                 />
@@ -53,6 +63,7 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
+
                 <Route path="*" element={<NotFound />} />
             </Routes>
           </main>

@@ -21,7 +21,7 @@ function RecipeCard({ recipe }) {
         )}
 
         <Link
-          to={`/recipes/${recipe.external_id}`}
+          to={`/recipes/saved/${recipe.id}`}
           className="primary-button"
         >
           View recipe
