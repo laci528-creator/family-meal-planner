@@ -276,6 +276,35 @@ body {
   align-self: flex-start;
 }
 
+.recipe-card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+.recipe-card-actions .primary-button,
+.delete-button {
+  flex: 1;
+  text-align: center;
+}
+
+.delete-button {
+  background: transparent;
+  border: 1px solid #b84a4a;
+  color: #b84a4a;
+  border-radius: 5px;
+  padding: 8px 12px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background: #b84a4a;
+  color: white;
+}
+
 @media (max-width: 900px) {
   .recipes-grid {
     grid-template-columns: repeat(2, 1fr);

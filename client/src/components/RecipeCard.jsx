@@ -20,17 +20,18 @@ function RecipeCard({ recipe, onDeleted }) {
         {recipe.cuisine && (
           <p>{recipe.cuisine}</p>
         )}
-
-        <Link
-          to={`/recipes/saved/${recipe.id}`}
-          className="primary-button"
-        >
-          View recipe
-        </Link>
-        <DeleteRecipeButton
-            recipeId={recipe.id}
-            onDeleted={onDeleted}
-            />
+        <div className="recipe-card-actions">
+            <Link
+            to={`/recipes/saved/${recipe.id}`}
+            className="primary-button"
+            >
+            View recipe
+            </Link>
+            <DeleteRecipeButton
+                recipeId={recipe.id}
+                onDeleted={onDeleted}
+                />
+        </div>
       </div>
     </article>
   );
