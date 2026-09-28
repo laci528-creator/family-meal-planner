@@ -305,6 +305,21 @@ body {
   color: white;
 }
 
+.success-message {
+  position: fixed;
+  top: 80px;
+  right: 24px;
+  z-index: 1000;
+
+  background: #e7f4ec;
+  color: #245c3a;
+  border: 1px solid #8fc5a3;
+  padding: 12px 16px;
+  border-radius: 8px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
 @media (max-width: 900px) {
   .recipes-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -314,6 +329,15 @@ body {
 @media (max-width: 600px) {
   .recipes-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .success-message {
+    left: 16px;
+    right: 16px;
+    top: 25px;
+    text-align: center;
   }
 }
 
