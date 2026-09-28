@@ -7,6 +7,14 @@ function Recipes() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  function handleRecipeDeleted(recipeId) {
+  setRecipes((currentRecipes) =>
+    currentRecipes.filter(
+      (recipe) => recipe.id !== recipeId
+    )
+  );
+}
+
   useEffect(() => {
     async function fetchRecipes() {
       try {
@@ -46,6 +54,7 @@ function Recipes() {
               <RecipeCard
                 key={recipe.id}
                 recipe={recipe}
+                onDeleted={handleRecipeDeleted}
               />
             ))}
           </div>

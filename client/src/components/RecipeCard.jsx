@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
+import DeleteRecipeButton from "./DeleteRecipeButton";
 
-function RecipeCard({ recipe }) {
+function RecipeCard({ recipe, onDeleted }) {
   return (
     <article className="recipe-card">
       <img
@@ -26,6 +27,10 @@ function RecipeCard({ recipe }) {
         >
           View recipe
         </Link>
+        <DeleteRecipeButton
+            recipeId={recipe.id}
+            onDeleted={onDeleted}
+            />
       </div>
     </article>
   );
