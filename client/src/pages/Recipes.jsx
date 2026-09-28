@@ -23,27 +23,35 @@ function Recipes() {
     fetchRecipes();
   }, []);
 
-  if (loading) {
-    return <p>Loading recipes...</p>;
-  }
-
-  if (error) {
-    return <p className="error-message">{error}</p>;
-  }
-
   return (
-    <div className="recipes-page">
+    <main className="recipes-page">
       <h1>My Recipes</h1>
 
-      <div className="recipes-grid">
-        {recipes.map((recipe) => (
-          <RecipeCard
-            key={recipe.id}
-            recipe={recipe}
-          />
-        ))}
-      </div>
-    </div>
+      {loading && <p>Loading recipes...</p>}
+
+      {error && (
+        <p className="error-message">
+          {error}
+        </p>
+      )}
+
+      {!loading && !error && (
+        recipes.length === 0 ? (
+          <p>
+            No saved recipes yet. Start exploring and save your favorite recipes.
+          </p>
+        ) : (
+          <div className="recipes-grid">
+            {recipes.map((recipe) => (
+              <RecipeCard
+                key={recipe.id}
+                recipe={recipe}
+              />
+            ))}
+          </div>
+        )
+      )}
+    </main>
   );
 }
 
