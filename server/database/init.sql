@@ -67,6 +67,4 @@ CREATE TABLE IF NOT EXISTS recipe_ingredients (
 
     measure VARCHAR(100),
 
-    CONSTRAINT recipe_ingredients_unique
-    UNIQUE (recipe_id, ingredient_id)
 );
