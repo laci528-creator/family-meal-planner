@@ -283,3 +283,74 @@ export async function getSavedRecipes(req,res) {
     });
   }
 }
+
+export async function getSavedRecipeById(req, res) {
+  const { id } = req.params;
+  const userId = req.session.user.id;
+
+  if (!/^\d+$/.test(id)) {
+    return res.status(400).json({
+      error: true,
+      message: "Invalid recipe ID.",
+    });
+  }
+
+  try {
+    const recipeResult = await pool.query(
+      `
+        SELECT
+          id,
+          external_id,
+          title,
+          category,
+          cuisine,
+          instructions,
+          image_url,
+          source,
+          created_at
+        FROM recipes
+        WHERE id = $1
+          AND user_id = $2
+      `,
+      [id, userId]
+    );
+
+    if (recipeResult.rows.length === 0) {
+      return res.status(404).json({
+        error: true,
+        message: "Recipe not found.",
+      });
+    }
+
+    const ingredientsResult = await pool.query(
+      `
+        SELECT
+          i.id,
+          i.name,
+          ri.measure
+        FROM recipe_ingredients ri
+        JOIN ingredients i
+          ON i.id = ri.ingredient_id
+        WHERE ri.recipe_id = $1
+        ORDER BY ri.id
+      `,
+      [id]
+    );
+
+    return res.status(200).json({
+      error: false,
+      recipe: {
+        ...recipeResult.rows[0],
+        ingredients: ingredientsResult.rows,
+      },
+    });
+
+  } catch (error) {
+    console.error("Error loading saved recipe:", error);
+
+    return res.status(500).json({
+      error: true,
+      message: "Could not load recipe.",
+    });
+  }
+}
