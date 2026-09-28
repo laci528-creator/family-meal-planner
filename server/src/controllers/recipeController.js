@@ -1,5 +1,5 @@
 import pool from '../config/db.js';
-import { fetchRecipeById } from "../services/recipeApiService.js";
+import { fetchRecipeById, searchRecipesByName } from "../services/recipeApiService.js";
 
 export async function getRandomRecipe(req, res) {
   try {
@@ -395,6 +395,33 @@ export async function deleteRecipe(req, res) {
     return res.status(500).json({
       error: true,
       message: "Could not delete recipe.",
+    });
+  }
+}
+
+export async function searchRecipes(req, res) {
+  const query = req.query.q?.trim();
+
+  if (!query) {
+    return res.status(400).json({
+      error: true,
+      message: "Search query is required.",
+    });
+  }
+
+  try {
+    const recipes = await searchRecipesByName(query);
+
+    return res.status(200).json({
+      error: false,
+      recipes,
+    });
+  } catch (error) {
+    console.error("Recipe search error:", error);
+
+    return res.status(500).json({
+      error: true,
+      message: "Could not search recipes.",
     });
   }
 }

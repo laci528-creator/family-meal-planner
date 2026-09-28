@@ -38,3 +38,27 @@ export async function fetchRecipeById(externalId) {
     ingredients,
   };
 }
+
+export async function searchRecipesByName(query) {
+  const response = await fetch(
+    `https://www.themealdb.com/api/json/v1/1/search.php?s=${encodeURIComponent(query)}`
+  );
+
+  if (!response.ok) {
+    throw new Error("Recipe API request failed.");
+  }
+
+  const data = await response.json();
+
+  if (!data.meals) {
+    return [];
+  }
+
+  return data.meals.map((meal) => ({
+    externalId: meal.idMeal,
+    title: meal.strMeal,
+    category: meal.strCategory,
+    cuisine: meal.strArea,
+    image: meal.strMealThumb,
+  }));
+}

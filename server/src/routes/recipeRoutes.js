@@ -1,11 +1,12 @@
 import express from "express";
-import { getRandomRecipe, getRecipeById, saveRecipe, checkRecipeSaved, getSavedRecipes, getSavedRecipeById, deleteRecipe } from "../controllers/recipeController.js";
+import { getRandomRecipe, getRecipeById, saveRecipe, checkRecipeSaved, getSavedRecipes, getSavedRecipeById, deleteRecipe, searchRecipes } from "../controllers/recipeController.js";
 import { requireAuth } from "../middleware/authMiddleware.js";
 
 
 const router = express.Router();
 
 router.get("/random", getRandomRecipe);
+router.get("/search", searchRecipes);
 router.get("/:id", getRecipeById);
 router.get("/saved/:externalId", requireAuth, checkRecipeSaved);
 
