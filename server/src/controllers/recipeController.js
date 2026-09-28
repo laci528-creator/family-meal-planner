@@ -354,3 +354,47 @@ export async function getSavedRecipeById(req, res) {
     });
   }
 }
+
+export async function deleteRecipe(req, res) {
+  const { id } = req.params;
+  const userId = req.session.user.id;
+
+  if (!/^\d+$/.test(id)) {
+    return res.status(400).json({
+      error: true,
+      message: "Invalid recipe ID.",
+    });
+  }
+
+  try {
+    const result = await pool.query(
+      `
+        DELETE FROM recipes
+        WHERE id = $1
+          AND user_id = $2
+        RETURNING id
+      `,
+      [id, userId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        error: true,
+        message: "Recipe not found.",
+      });
+    }
+
+    return res.status(200).json({
+      error: false,
+      message: "Recipe deleted.",
+    });
+
+  } catch (error) {
+    console.error("Delete recipe error:", error);
+
+    return res.status(500).json({
+      error: true,
+      message: "Could not delete recipe.",
+    });
+  }
+}

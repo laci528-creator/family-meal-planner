@@ -1,5 +1,5 @@
 import express from "express";
-import { getRandomRecipe, getRecipeById, saveRecipe, checkRecipeSaved, getSavedRecipes, getSavedRecipeById } from "../controllers/recipeController.js";
+import { getRandomRecipe, getRecipeById, saveRecipe, checkRecipeSaved, getSavedRecipes, getSavedRecipeById, deleteRecipe } from "../controllers/recipeController.js";
 import { requireAuth } from "../middleware/authMiddleware.js";
 
 
@@ -11,8 +11,8 @@ router.get("/saved/:externalId", requireAuth, checkRecipeSaved);
 router.post("/api", requireAuth, saveRecipe);
 router.get("/", requireAuth, getSavedRecipes);
 router.get("/saved-recipe/:id", requireAuth, getSavedRecipeById);
+router.delete("/:id", requireAuth, deleteRecipe);
 
-router.get("/:id", getRecipeById);
 
 
 export default router;
