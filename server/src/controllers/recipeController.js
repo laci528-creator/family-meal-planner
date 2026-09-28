@@ -245,3 +245,41 @@ export async function checkRecipeSaved(req, res) {
     });
   }
 }
+
+
+
+export async function getSavedRecipes(req,res) {
+  const userId = req.session.user.id;
+
+  try {
+        const result = await pool.query(
+      `
+        SELECT
+          id,
+          external_id,
+          title,
+          category,
+          cuisine,
+          image_url,
+          source,
+          created_at
+        FROM recipes
+        WHERE user_id = $1
+        ORDER BY created_at DESC
+      `,
+      [userId]
+    );
+
+    return res.status(200).json({
+      error:false,
+      recipes: result.rows,
+    });
+
+  } catch (error) {
+    console.error("Error loading saved recipes:", error);
+     return res.status(500).json({
+      error: true,
+      message: "Could not load recipes.",
+    });
+  }
+}
