@@ -6,6 +6,7 @@ function Recipes() {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
 
   function handleRecipeDeleted(recipeId) {
   setRecipes((currentRecipes) =>
@@ -13,6 +14,12 @@ function Recipes() {
       (recipe) => recipe.id !== recipeId
     )
   );
+
+  setMessage("Recipe deleted successfully.");
+
+  setTimeout(() => {
+    setMessage("");
+  }, 3000);
 }
 
   useEffect(() => {
@@ -34,6 +41,11 @@ function Recipes() {
   return (
     <main className="recipes-page">
       <h1>My Recipes</h1>
+      {message && (
+        <p className="success-message">
+          {message}
+        </p>
+      )}
 
       {loading && <p>Loading recipes...</p>}
 
