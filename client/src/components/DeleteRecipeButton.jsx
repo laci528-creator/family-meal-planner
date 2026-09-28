@@ -6,6 +6,13 @@ function DeleteRecipeButton({ recipeId, onDeleted }) {
   const [error, setError] = useState("");
 
   async function handleDelete() {
+    const confirmed = window.confirm(
+        "Are you sure you want to delete this recipe?"
+    );
+
+    if (!confirmed) {
+        return;
+    }
     try {
       setIsDeleting(true);
       setError("");
