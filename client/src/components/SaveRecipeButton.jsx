@@ -1,13 +1,25 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import api from "../services/api";
+import { useAuth } from "../context/AuthContext";
 
 function SaveRecipeButton({ externalId }) {
   const [isSaving, setIsSaving] = useState(false);
   const [isChecking, setIsChecking] = useState(true);
   const [message, setMessage] = useState("");
   const [isSaved, setIsSaved] = useState(false);
+  const { user, loading } = useAuth();
 
   useEffect(() => {
+    if (loading) {
+      return;
+    }
+
+    if (!user) {
+      setIsChecking(false);
+      return;
+    }
+
   async function checkSaved() {
     try {
       setIsChecking(true);
@@ -24,7 +36,7 @@ function SaveRecipeButton({ externalId }) {
   }
 
   checkSaved();
-}, [externalId]);
+}, [externalId, user, loading]);
 
   async function handleSave() {
     try {
@@ -45,6 +57,21 @@ function SaveRecipeButton({ externalId }) {
     } finally {
       setIsSaving(false);
     }
+  }
+    
+  if (loading) {
+    return null;
+  }
+
+  if (!user) {
+    return (
+      <Link
+        to="/login"
+        className="primary-button"
+      >
+        Login to save
+      </Link>
+    );
   }
 
   return (
@@ -67,3 +94,4 @@ function SaveRecipeButton({ externalId }) {
 }
 
 export default SaveRecipeButton;
+
