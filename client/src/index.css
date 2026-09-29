@@ -258,6 +258,16 @@ body {
   object-fit: cover;
 }
 
+.recipe-card-image-placeholder {
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--color-border);
+  color: var(--color-text-muted);
+}
+
 .recipe-card h2 {
   font-size: 1.2rem;
   line-height: 1.2;

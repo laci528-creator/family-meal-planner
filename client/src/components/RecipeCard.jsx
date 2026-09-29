@@ -4,11 +4,17 @@ import DeleteRecipeButton from "./DeleteRecipeButton";
 function RecipeCard({ recipe, onDeleted }) {
   return (
     <article className="recipe-card">
-      <img
-        src={recipe.image_url}
-        alt={recipe.title}
-        className="recipe-card-image"
-      />
+    {recipe.image_url ? (
+          <img
+            src={recipe.image_url}
+            alt={recipe.title}
+            className="recipe-card-image"
+          />
+        ) : (
+          <div className="recipe-card-image-placeholder">
+            No image available
+          </div>
+        )}
 
       <div className="recipe-card-content">
         <h2>{recipe.title}</h2>
