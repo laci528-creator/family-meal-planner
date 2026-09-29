@@ -39,7 +39,7 @@ function Home() {
           <h2>Discover Recipes</h2>
           <p>Find new recipes and save your favourites.</p>
           <div className="button-container">
-          <Link to="/recipes" className="primary-button">Discover recipes</Link>
+          <Link to="/discover" className="primary-button">Discover recipes</Link>
           </div>
         </article>
 

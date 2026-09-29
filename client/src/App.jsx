@@ -14,6 +14,7 @@ import ShoppingList from './pages/Shopping';
 import NotFound from "./pages/NotFound";
 import RecipeDetails from "./pages/RecipeDetails";
 import SavedRecipeDetails from "./pages/SavedRecipeDetails";
+import DiscoverRecipes from "./pages/DiscoverRecipes";
 
 import './App.css'
 import RecipeCard from "./components/RecipeCard";
@@ -29,6 +30,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/recipes/:id" element={<RecipeDetails />} />
+                <Route path="/discover" element={<DiscoverRecipes />} />
                 <Route
                   path="/recipes"
                   element={
