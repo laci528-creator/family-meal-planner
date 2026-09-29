@@ -15,6 +15,7 @@ import NotFound from "./pages/NotFound";
 import RecipeDetails from "./pages/RecipeDetails";
 import SavedRecipeDetails from "./pages/SavedRecipeDetails";
 import DiscoverRecipes from "./pages/DiscoverRecipes";
+import AddFamilyRecipes from "./pages/AddFamilyRecipe";
 
 import './App.css'
 import RecipeCard from "./components/RecipeCard";
@@ -36,6 +37,14 @@ function App() {
                   element={
                     <ProtectedRoute>
                       <MyRecipes />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/recipes/family/new"
+                  element={
+                    <ProtectedRoute>
+                      <AddFamilyRecipes />
                     </ProtectedRoute>
                   }
                 />

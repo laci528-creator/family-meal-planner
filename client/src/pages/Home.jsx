@@ -47,7 +47,7 @@ function Home() {
           <h2>Family Recipes</h2>
           <p>Keep your own and traditional family recipes in one place.</p>
           <div className="button-container">
-          <Link to="/recipes" className="primary-button">View recipes</Link>
+          <Link to="/recipes/family/new" className="primary-button"> Add family recipe </Link>
           </div>
         </article>
 
