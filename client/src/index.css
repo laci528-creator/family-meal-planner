@@ -341,6 +341,17 @@ body {
   }
 }
 
+/*---save recipe button---*/
+
+.save-recipe-container {
+  margin-top: 16px;
+  margin-bottom: 20px;
+}
+
+.save-recipe-container .primary-button {
+  display: inline-block;
+}
+
 /*---Discover-Recipe---*/
 
 .recipe-search-form {

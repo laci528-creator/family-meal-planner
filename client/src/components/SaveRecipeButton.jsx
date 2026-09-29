@@ -65,17 +65,19 @@ function SaveRecipeButton({ externalId }) {
 
   if (!user) {
     return (
-      <Link
-        to="/login"
-        className="primary-button"
-      >
-        Login to save
-      </Link>
+      <div className="save-recipe-container">
+        <Link
+          to="/login"
+          className="primary-button"
+        >
+          Login to save
+        </Link>
+      </div>
     );
   }
 
   return (
-    <div>
+    <div className="save-recipe-container">
       <button
         type="button"
         className="primary-button"
