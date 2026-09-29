@@ -346,7 +346,8 @@ body {
 .recipe-search-form {
   display: flex;
   gap: 10px;
-  margin-bottom: 20px;
+  margin: 20px 0px 30px;
+  align-items: stretch;
 }
 
 .recipe-search-input {
@@ -355,6 +356,13 @@ body {
   border: 1px solid var(--color-border);
   border-radius: 6px;
   font: inherit;
+}
+
+.recipe-search-input,
+.recipe-search-form .primary-button {
+  margin: 10px auto;
+  height: 55px;
+  font-size: 1.2rem;
 }
 
 /*---Footer---*/
