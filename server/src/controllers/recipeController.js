@@ -425,3 +425,314 @@ export async function searchRecipes(req, res) {
     });
   }
 }
+
+
+export async function saveFamilyRecipe(req, res) {
+
+    const {
+    title,
+    category,
+    cuisine,
+    instructions,
+    imageUrl,
+    ingredients,
+  } = req.body;
+
+  const userId = req.session.user.id;
+
+    if (
+      typeof title !== "string" ||
+      !title.trim() ||
+      typeof instructions !== "string" ||
+      !instructions.trim()
+    ) {
+      return res.status(400).json({
+        error: true,
+        message: "Title and instructions are required.",
+      });
+    }
+
+      if (!Array.isArray(ingredients)) {
+        return res.status(400).json({
+          error: true,
+          message: "Ingredients must be a list.",
+        });
+      }
+
+      const validIngredients = ingredients.filter(
+        (ingredient) =>
+          typeof ingredient.name === "string" &&
+          ingredient.name.trim() !== ""
+      );
+
+      if (validIngredients.length === 0) {
+        return res.status(400).json({
+          error: true,
+          message: "At least one ingredient is required.",
+        });
+      }
+
+    let client;
+
+      try {
+
+          client = await pool.connect();
+
+          await client.query("BEGIN");
+
+          const recipeSaveResult = await client.query(
+                ` INSERT INTO recipes (
+                  user_id,
+                  title,
+                  category, 
+                  cuisine,
+                  instructions,
+                  image_url,
+                  source
+                ) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id `,
+                  [
+                  userId,
+                  title.trim(),
+                  category?.trim() || null,
+                  cuisine?.trim() || null,
+                  instructions.trim(),
+                  imageUrl?.trim() || null,
+                    "custom"
+                  ]
+              );
+
+              const recipeId = recipeSaveResult.rows[0].id;
+
+              for (const ingredient of ingredients) {
+                    const ingredientName =
+                      typeof ingredient.name === "string"
+                        ? ingredient.name.trim()
+                        : "";
+
+                    if (!ingredientName) {
+                      continue;
+                    }
+
+                    let ingredientResult = await client.query (
+                      `SELECT id FROM ingredients WHERE LOWER(name) = LOWER($1) `, [ingredientName]
+                    );
+
+                    if (ingredientResult.rows.length === 0) {
+                      ingredientResult = await client.query (
+                      `INSERT INTO ingredients (name) VALUES ($1) RETURNING id `, [ingredientName]
+                      );
+                    }
+
+                    const ingredientId = ingredientResult.rows[0].id;
+
+                    await client.query(
+                      `INSERT INTO recipe_ingredients (recipe_id, ingredient_id, measure) VALUES ($1, $2, $3) ` ,
+                      [recipeId, ingredientId, ingredient.measure?.trim() || null,]
+                    );
+              }
+
+
+                await client.query('COMMIT');
+
+                return res.status(201).json({
+                  error: false,
+                  message: "Recipe successfully saved in database!",
+                  recipeId,
+                });
+
+      } catch (error) {
+
+          if (client) {
+              await client.query("ROLLBACK");
+            }
+
+          console.error("Save recipe error:", error);
+
+            return res.status(500).json({
+              error: true,
+              message: "Could not save recipe.",
+            });
+
+        } finally {
+          client?.release();
+      }
+}
+
+
+export async function updateRecipe(req, res) {
+  const { id } = req.params;
+
+  const {
+    title,
+    category,
+    cuisine,
+    instructions,
+    imageUrl,
+    ingredients,
+  } = req.body;
+
+  const userId = req.session.user.id;
+
+  if (!/^\d+$/.test(id)) {
+    return res.status(400).json({
+      error: true,
+      message: "Invalid recipe ID.",
+    });
+  }
+
+  if (
+    typeof title !== "string" ||
+    !title.trim() ||
+    typeof instructions !== "string" ||
+    !instructions.trim()
+  ) {
+    return res.status(400).json({
+      error: true,
+      message: "Title and instructions are required.",
+    });
+  }
+
+  if (!Array.isArray(ingredients)) {
+    return res.status(400).json({
+      error: true,
+      message: "Ingredients must be a list.",
+    });
+  }
+
+  const validIngredients = ingredients.filter(
+    (ingredient) =>
+      typeof ingredient.name === "string" &&
+      ingredient.name.trim() !== ""
+  );
+
+  if (validIngredients.length === 0) {
+    return res.status(400).json({
+      error: true,
+      message: "At least one ingredient is required.",
+    });
+  }
+
+  if (validIngredients.length > 20) {
+    return res.status(400).json({
+      error: true,
+      message: "A maximum of 20 ingredients is allowed.",
+    });
+  }
+
+  let client;
+
+  try {
+    client = await pool.connect();
+
+    await client.query("BEGIN");
+
+    const recipeUpdateResult = await client.query(
+      `
+        UPDATE recipes
+        SET
+          title = $1,
+          category = $2,
+          cuisine = $3,
+          instructions = $4,
+          image_url = $5
+        WHERE id = $6
+          AND user_id = $7
+          AND source = 'custom'
+        RETURNING id
+      `,
+      [
+        title.trim(),
+        category?.trim() || null,
+        cuisine?.trim() || null,
+        instructions.trim(),
+        imageUrl?.trim() || null,
+        id,
+        userId,
+      ]
+    );
+
+    if (recipeUpdateResult.rows.length === 0) {
+      await client.query("ROLLBACK");
+
+      return res.status(404).json({
+        error: true,
+        message: "Recipe not found or cannot be edited.",
+      });
+    }
+
+    const recipeId = recipeUpdateResult.rows[0].id;
+
+    await client.query(
+      `
+        DELETE FROM recipe_ingredients
+        WHERE recipe_id = $1
+      `,
+      [recipeId]
+    );
+
+    for (const ingredient of validIngredients) {
+      const ingredientName = ingredient.name.trim();
+
+      let ingredientResult = await client.query(
+        `
+          SELECT id
+          FROM ingredients
+          WHERE LOWER(name) = LOWER($1)
+        `,
+        [ingredientName]
+      );
+
+      if (ingredientResult.rows.length === 0) {
+        ingredientResult = await client.query(
+          `
+            INSERT INTO ingredients (name)
+            VALUES ($1)
+            RETURNING id
+          `,
+          [ingredientName]
+        );
+      }
+
+      const ingredientId = ingredientResult.rows[0].id;
+
+      await client.query(
+        `
+          INSERT INTO recipe_ingredients (
+            recipe_id,
+            ingredient_id,
+            measure
+          )
+          VALUES ($1, $2, $3)
+        `,
+        [
+          recipeId,
+          ingredientId,
+          ingredient.measure?.trim() || null,
+        ]
+      );
+    }
+
+    await client.query("COMMIT");
+
+    return res.status(200).json({
+      error: false,
+      message: "Recipe successfully updated.",
+      recipeId,
+    });
+
+  } catch (error) {
+    if (client) {
+      await client.query("ROLLBACK");
+    }
+
+    console.error("Update recipe error:", error);
+
+    return res.status(500).json({
+      error: true,
+      message: "Could not update recipe.",
+    });
+
+  } finally {
+    client?.release();
+  }
+}
