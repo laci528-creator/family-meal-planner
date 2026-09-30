@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import api from '../services/api';
 
 function SavedRecipeDetails() {
@@ -50,6 +50,16 @@ function SavedRecipeDetails() {
   return (
     <div className="recipe-details-page">
       <h1>{recipe.title}</h1>
+        <div className="recipe-details-actions">
+          {recipe.source === "custom" && (
+            <Link
+              to={`/recipes/saved/${recipe.id}/edit`}
+              className="primary-button"
+            >
+              Edit recipe
+            </Link>
+          )}
+        </div>
 
       <p>Recipe ID: {recipe.id}</p>
 

@@ -16,6 +16,7 @@ import RecipeDetails from "./pages/RecipeDetails";
 import SavedRecipeDetails from "./pages/SavedRecipeDetails";
 import DiscoverRecipes from "./pages/DiscoverRecipes";
 import AddFamilyRecipes from "./pages/AddFamilyRecipe";
+import EditFamilyRecipes from "./pages/EditFamilyRecipe";
 
 import './App.css'
 import RecipeCard from "./components/RecipeCard";
@@ -53,6 +54,15 @@ function App() {
                   element={
                     <ProtectedRoute>
                       <SavedRecipeDetails />
+                    </ProtectedRoute>
+                  }
+                />
+
+                <Route
+                  path="/recipes/saved/:id/edit"
+                  element={
+                    <ProtectedRoute>
+                      <EditFamilyRecipes />
                     </ProtectedRoute>
                   }
                 />
