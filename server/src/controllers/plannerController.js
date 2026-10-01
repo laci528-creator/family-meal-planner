@@ -1,0 +1,136 @@
+import pool from '../config/db.js';
+
+
+export async function checkUserRecipe(recipeId, userId) {
+
+    try {
+        const result = await pool.query(
+            `SELECT id FROM recipes 
+            WHERE id = $1
+                AND user_id = $2`,
+            [recipeId, userId]
+        );
+
+        return result.rows.length > 0;
+
+    } catch (error) {
+        console.error("Error checking recipe ID:", error);
+        throw error;
+    } 
+}
+
+function isValidISODate(dateString) {
+    if (!dateString || typeof dateString !== 'string') return false;
+    
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
+        return false;
+    }
+
+    const [year, month, day] = dateString.split('-').map(Number);
+    const date = new Date(year, month - 1, day);
+
+    return (
+        date.getFullYear() === year &&
+        date.getMonth() === month - 1 &&
+        date.getDate() === day
+    );
+}
+
+export async function savePlannerData(req, res) {
+
+        const { 
+            recipeId,
+            planDate,
+            mealType,
+         } = req.body;
+
+        const userId = req.session.user.id;
+
+            if (
+                !Number.isInteger(recipeId) ||
+                recipeId <= 0
+                ) {
+                return res.status(400).json({
+                    error: true,
+                    message: "Invalid recipe ID.",
+                });
+            }
+
+        if (!isValidISODate(planDate)) {
+            return res.status(400).json({
+                error: true,
+                message: "Invalid plan date. Please provide a valid date in YYYY-MM-DD format.",
+            });
+        }
+
+        const allowedMealTypes = ["breakfast", "lunch", "dinner"];
+
+        if (!allowedMealTypes.includes(mealType)) {
+            return res.status(400).json({
+                error: true,
+                message: "Invalid meal type.",
+            });
+        }   
+
+        let client;
+
+        try {
+
+            const recipeExists = await checkUserRecipe(
+                    recipeId,
+                    userId
+                    );
+
+                    if (!recipeExists) {
+                    return res.status(404).json({
+                        error: true,
+                        message: "Recipe not found.",
+                    });
+                }
+
+            client = await pool.connect();
+
+            await client.query("BEGIN");
+
+            const planSaveResult = await client.query(
+              ` INSERT INTO meal_plan_entries (
+                user_id,
+                recipe_id,
+                plan_date,
+                meal_type
+              ) VALUES ($1, $2, $3, $4) RETURNING id `,
+                [
+                  userId,
+                  recipeId,
+                  planDate,
+                  mealType
+                ]
+            );
+
+            const plannerEntryId = planSaveResult.rows[0].id;
+
+
+            await client.query('COMMIT');
+
+            return res.status(201).json({
+              error: false,
+              message: "Recipe Plan successfully saved in database!",
+              plannerEntryId,
+            });
+
+        } catch (error) {
+          if (client) {
+            await client.query("ROLLBACK");
+          }
+
+          console.error("Save recipe error:", error);
+
+          return res.status(500).json({
+            error: true,
+            message: "Could not save recipe.",
+          });
+        } finally {
+          client?.release();
+    }
+}
+                 
