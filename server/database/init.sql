@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS users (
     id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
+    email VARCHAR(255) NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     role VARCHAR(20) NOT NULL DEFAULT 'user',
     created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -65,6 +65,30 @@ CREATE TABLE IF NOT EXISTS recipe_ingredients (
     ingredient_id INTEGER NOT NULL
         REFERENCES ingredients(id),
 
-    measure VARCHAR(100),
+    measure VARCHAR(100)
 
+);
+
+CREATE TABLE IF NOT EXISTS meal_plan_entries (
+    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+
+    user_id INTEGER NOT NULL
+        REFERENCES users(id)
+        ON DELETE CASCADE,
+
+    recipe_id INTEGER NOT NULL
+        REFERENCES recipes(id)
+        ON DELETE CASCADE,
+
+    plan_date DATE NOT NULL,
+
+    meal_type VARCHAR(20) NOT NULL,
+
+    created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT meal_type_check
+        CHECK (meal_type IN ('breakfast', 'lunch', 'dinner')),
+
+    CONSTRAINT meal_plan_unique
+        UNIQUE (user_id, plan_date, meal_type)
 );
