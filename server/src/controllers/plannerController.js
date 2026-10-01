@@ -174,13 +174,18 @@ export async function getWeeklyPlannerData(req, res) {
     try { 
 
             const weeklyPlannerResult = await pool.query(
-              ` SELECT 
-                    recipe_id,
-                    plan_date::text AS plan_date,
-                    meal_type
-                FROM meal_plan_entries
-                WHERE user_id = $1 AND plan_date BETWEEN $2 AND $3 
-                order by plan_date ASC`,
+              ` SELECT
+                    mpe.id AS planner_entry_id,
+                    mpe.recipe_id,
+                    mpe.plan_date::text AS plan_date,
+                    mpe.meal_type,
+                    r.title,
+                    r.image_url 
+                FROM meal_plan_entries mpe
+                JOIN recipes r
+                    ON r.id = mpe.recipe_id
+                WHERE mpe.user_id = $1 AND mpe.plan_date BETWEEN $2 AND $3 
+                order by mpe.plan_date ASC`,
                 [
                   userId,
                   startDate,
