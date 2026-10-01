@@ -98,7 +98,13 @@ export async function savePlannerData(req, res) {
                 recipe_id,
                 plan_date,
                 meal_type
-              ) VALUES ($1, $2, $3, $4) RETURNING id `,
+              ) VALUES ($1, $2, $3, $4) 
+               
+              ON CONFLICT (user_id, plan_date, meal_type) 
+              DO UPDATE SET
+                recipe_id = EXCLUDED.recipe_id
+              
+              RETURNING id `,
                 [
                   userId,
                   recipeId,
@@ -112,9 +118,9 @@ export async function savePlannerData(req, res) {
 
             await client.query('COMMIT');
 
-            return res.status(201).json({
+            return res.status(200).json({
               error: false,
-              message: "Recipe Plan successfully saved in database!",
+              message: "Meal plan successfully saved!",
               plannerEntryId,
             });
 
@@ -123,11 +129,11 @@ export async function savePlannerData(req, res) {
             await client.query("ROLLBACK");
           }
 
-          console.error("Save recipe error:", error);
+          console.error("Save meal plan error:", error);
 
           return res.status(500).json({
             error: true,
-            message: "Could not save recipe.",
+            message: "Could not save meal plan.",
           });
         } finally {
           client?.release();
