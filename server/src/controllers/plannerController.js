@@ -46,15 +46,15 @@ export async function savePlannerData(req, res) {
 
         const userId = req.session.user.id;
 
-            if (
-                !Number.isInteger(recipeId) ||
-                recipeId <= 0
-                ) {
+        if (
+            !Number.isInteger(recipeId) ||
+            recipeId <= 0
+            ) {
                 return res.status(400).json({
                     error: true,
                     message: "Invalid recipe ID.",
                 });
-            }
+        }
 
         if (!isValidISODate(planDate)) {
             return res.status(400).json({
@@ -139,4 +139,66 @@ export async function savePlannerData(req, res) {
           client?.release();
     }
 }
-                 
+
+
+function getEndDate(startDate) {
+  const [year, month, day] = startDate
+    .split("-")
+    .map(Number);
+
+  const date = new Date(year, month - 1, day);
+
+  date.setDate(date.getDate() + 6);
+
+  const endYear = date.getFullYear();
+  const endMonth = String(date.getMonth() + 1).padStart(2, "0");
+  const endDay = String(date.getDate()).padStart(2, "0");
+
+  return `${endYear}-${endMonth}-${endDay}`;
+}
+
+
+export async function getWeeklyPlannerData(req, res) {
+    const { startDate } = req.query;
+    const userId = req.session.user.id; 
+
+    if (!isValidISODate(startDate)) {
+        return res.status(400).json({
+            error: true,
+            message: "Invalid start date. Please provide a valid date in YYYY-MM-DD format.",
+        });
+    }
+
+    const endDate = getEndDate(startDate);
+
+    try { 
+
+            const weeklyPlannerResult = await pool.query(
+              ` SELECT 
+                    recipe_id,
+                    plan_date::text AS plan_date,
+                    meal_type
+                FROM meal_plan_entries
+                WHERE user_id = $1 AND plan_date BETWEEN $2 AND $3 
+                order by plan_date ASC`,
+                [
+                  userId,
+                  startDate,
+                  endDate
+                ]
+            );
+            
+            return res.status(200).json({
+              error: false,
+              message: "Weekly planner data retrieved successfully!",
+              weeklyPlannerData: weeklyPlannerResult.rows,
+            });
+    } catch (error) {
+          console.error("Retrieve weekly planner data error:", error);
+
+          return res.status(500).json({
+            error: true,
+            message: "Could not retrieve weekly planner data.",
+          });
+    } 
+}
