@@ -6,6 +6,7 @@ import pool from "./config/db.js";
 import recipeRoutes from "./routes/recipeRoutes.js";
 
 import authRoutes from "./routes/authRoutes.js";
+import plannerRoutes from "./routes/plannerRoutes.js";
 
 
 const app = express();
@@ -35,6 +36,8 @@ app.use(session({
 app.use("/api/auth", authRoutes);
 
 app.use("/api/recipes", recipeRoutes);
+
+app.use("/api/planner", plannerRoutes);
 
 app.get("/api/test", (req, res) => {
   res.json({
