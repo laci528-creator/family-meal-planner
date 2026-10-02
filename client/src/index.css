@@ -386,6 +386,21 @@ body {
   font-size: 1.2rem;
 }
 
+
+/*---Planner---*/
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1rem;
+}
+
+.day-card {
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: var(--color-surface);
+}
+
 /*---Footer---*/
 
 .footer {
