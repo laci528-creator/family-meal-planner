@@ -22,8 +22,10 @@ function Planner() {
 
   const [plannerData, setPlannerData] = useState([]);
   const [selectedSlot, setSelectedSlot] = useState(null);
+  const [isSaving, setIsSaving] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [message, setMessage] = useState("");
   const [recipes, setRecipes] = useState([]);
   const [currentMonday, setCurrentMonday] = useState(() =>
     getWeekStart(new Date())
@@ -40,8 +42,7 @@ function Planner() {
 
   const weekDays = getWeekDays(currentMonday);
 
-  useEffect(() => {
-  const fetchPlannerData = async () => {
+  async function fetchPlannerData() {
     try {
       setLoading(true);
       setError(null);
@@ -49,22 +50,23 @@ function Planner() {
       const startDate = formatDateForApi(currentMonday);
 
       const response = await api.get("/planner", {
-        params: {
-          startDate,
-        },
+        params: { startDate },
       });
 
       setPlannerData(response.data.weeklyPlannerData);
+
     } catch (error) {
       console.error("Planner loading error:", error);
       setError("Could not load planner data.");
     } finally {
       setLoading(false);
     }
-  };
+  }
 
-  fetchPlannerData();
-}, [currentMonday]);
+  useEffect(() => {
+    fetchPlannerData();
+  }, [currentMonday]);
+
 
   useEffect(() => {
     async function fetchRecipes() {
@@ -93,10 +95,33 @@ function getPlannedMeal(date, mealType) {
 }
 
 
+  async function handleSelectRecipe(recipe) {
+    try {
+      setIsSaving(true);
+      setMessage("");
+
+      await api.post("/planner/save", {
+        planDate: selectedSlot.date,
+        mealType: selectedSlot.mealType,
+        recipeId: recipe.id,
+      });
+
+    await fetchPlannerData();
+
+    setMessage("Meal successfully added to planner.");
+    setSelectedSlot(null);
+    } catch (err) {
+      setMessage(
+        err.response?.data?.message ||
+        "Could not save recipe planner."
+      );
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
   return (
     <div className="planner-calendar">
-
-      {plannerData && console.log(plannerData)}
 
       <div className="calendar-header">
         <h3>
@@ -169,6 +194,11 @@ function getPlannedMeal(date, mealType) {
       </div>
       {loading && <p>Loading planner data...</p>}
       {error && <p className="error">{error}</p>}
+      {message && (
+        <p className="planner-message">
+          {message}
+        </p>
+      )}
 
       {selectedSlot && (
         <div className="recipe-selector">
@@ -181,10 +211,13 @@ function getPlannedMeal(date, mealType) {
             <PlannerRecipeCard
               key={recipe.id}
               recipe={recipe}
-              /*onSelect={handleSelectRecipe}*/
+              onSelect={handleSelectRecipe}
+              isSaving={isSaving}
             />
           ))}
-          <button onClick={() => setSelectedSlot(null)}>
+          <button onClick={() => setSelectedSlot(null)}
+            disabled={isSaving}
+            >
             Cancel
           </button>
         </div>

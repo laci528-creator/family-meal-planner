@@ -1,4 +1,4 @@
-function PlannerRecipeCard({ recipe, onSelect }) {
+function PlannerRecipeCard({ recipe, onSelect, isSaving }) {
   return (
     <div className="planner-recipe-card">
       {recipe.image_url && (
@@ -17,8 +17,9 @@ function PlannerRecipeCard({ recipe, onSelect }) {
 
         <button
           onClick={() => onSelect(recipe)}
+          disabled={isSaving}
         >
-          Select
+          {isSaving ? "Saving..." : "Select"}
         </button>
       </div>
     </div>
