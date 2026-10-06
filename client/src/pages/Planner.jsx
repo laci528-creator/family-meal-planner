@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import api from "../services/api";
 
 import {
   getWeekDays,
@@ -17,6 +18,10 @@ const dayNames = [
 ];
 
 function Planner() {
+
+  const [plannerData, setPlannerData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [currentMonday, setCurrentMonday] = useState(() =>
     getWeekStart(new Date())
   );
@@ -32,8 +37,36 @@ function Planner() {
 
   const weekDays = getWeekDays(currentMonday);
 
+  useEffect(() => {
+  const fetchPlannerData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const startDate = formatDateForApi(currentMonday);
+
+      const response = await api.get("/planner", {
+        params: {
+          startDate,
+        },
+      });
+
+      setPlannerData(response.data.weeklyPlannerData);
+    } catch (error) {
+      console.error("Planner loading error:", error);
+      setError("Could not load planner data.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchPlannerData();
+}, [currentMonday]);
+
   return (
     <div className="planner-calendar">
+
+      {plannerData && console.log(plannerData)}
 
       <div className="calendar-header">
         <h3>
