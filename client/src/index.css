@@ -473,7 +473,7 @@ body {
 }
 
 .meal-slot {
-  min-height: 118px;
+  min-height: 125px;
   padding: 0.75rem;
 
   display: flex;
@@ -519,8 +519,31 @@ body {
   cursor: pointer;
 }
 
+.meal-actions {
+  margin-top: auto;
+
+  display: flex;
+  gap: 0.4rem;
+}
+
+.meal-actions button {
+  flex: 1;
+  width: auto;
+}
+
 .meal-slot button:hover {
   background: var(--color-primary-hover);
+}
+
+.meal-actions .delete-meal-button {
+  background: transparent;
+  border: 1px solid var(--danger);
+  color: var(--danger);
+}
+
+.meal-actions .delete-meal-button:hover {
+  background: var(--danger);
+  color: white;
 }
 
 /* Calendar recipeCards */

@@ -192,12 +192,34 @@ function getPlannedMeal(date, mealType) {
                         {plannedMeal ? (
                           <>
                           <p>{plannedMeal.title}</p>
-                              <button 
-                              disabled={isSaving}
-                              onClick={() => deleteMeal(plannedMeal.planner_entry_id)}
-                              >
-                                Delete meal
-                              </button>
+                              <div className="meal-actions">
+                                <button
+                                  className="delete-meal-button"
+                                  disabled={isSaving}
+                                  onClick={() =>
+                                    deleteMeal(plannedMeal.planner_entry_id)
+                                  }
+                                >
+                                  Delete
+                                </button>
+
+                                <button
+                                  disabled={isSaving}
+                                  onClick={() =>
+                                    setSelectedSlot({
+                                      date: isoDate,
+                                      mealType,
+                                    })
+                                  }
+                                >
+                                  Change
+                                </button>
+                              </div>
+                            </>
+                        ) : (
+                          <>
+                          <p>No meal planned</p>
+                            <div className="meal-actions">
                               <button
                                 disabled={isSaving}
                                 onClick={() =>
@@ -207,23 +229,9 @@ function getPlannedMeal(date, mealType) {
                                   })
                                 }
                               >
-                                Change meal
-                            </button>
-                            </>
-                        ) : (
-                          <>
-                          <p>No meal planned</p>
-                            <button
-                              disabled={isSaving}
-                                onClick={() =>
-                                  setSelectedSlot({
-                                    date: isoDate,
-                                    mealType,
-                                  })
-                                }
-                              >
                                 Add meal
-                            </button>
+                              </button>
+                            </div>
                           </>
                         )}
                       </div>
