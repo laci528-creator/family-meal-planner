@@ -217,34 +217,39 @@ function getPlannedMeal(date, mealType) {
       )}
 
       {selectedSlot && (
-        <div className="recipe-selector">
-          <h2>Select a recipe</h2>
+        <div className="recipe-selector-header">
+          <div>
+            <h2>Select a recipe</h2>
 
-          <p>
-            {selectedSlot.date} - {selectedSlot.mealType}
-          </p>
+            <p>
+              {selectedSlot.date} - {selectedSlot.mealType}
+            </p>
+          </div>
+
+          <button
+            className="secondary-button"
+            onClick={() => setSelectedSlot(null)}
+            disabled={isSaving}
+          >
+            Cancel Selection
+          </button>
 
           {recipesLoading ? (
             <p>Loading saved recipes...</p>
           ) : recipes.length === 0 ? (
             <p>No saved recipes available.</p>
           ) : (
-            recipes.map((recipe) => (
+            <div className="recipe-selector-list">
+            {recipes.map((recipe) => (
               <PlannerRecipeCard
                 key={recipe.id}
                 recipe={recipe}
                 onSelect={handleSelectRecipe}
                 isSaving={isSaving}
               />
-            ))
+            ))}
+            </div>
           )}
-
-          <button
-            onClick={() => setSelectedSlot(null)}
-            disabled={isSaving}
-          >
-            Cancel
-          </button>
         </div>
       )}
     </div>
