@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import api from "../services/api";
+import PlannerRecipeCard from "../components/PlannerRecipeCard";
 
 import {
   getWeekDays,
@@ -22,6 +23,7 @@ function Planner() {
   const [plannerData, setPlannerData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [recipes, setRecipes] = useState([]);
   const [currentMonday, setCurrentMonday] = useState(() =>
     getWeekStart(new Date())
   );
@@ -62,6 +64,22 @@ function Planner() {
 
   fetchPlannerData();
 }, [currentMonday]);
+
+  useEffect(() => {
+    async function fetchRecipes() {
+      try {
+        const response = await api.get("/recipes");
+        setRecipes(response.data.recipes);
+      } catch (err) {
+        console.error("Could not load recipes:", err);
+        setError("Could not load saved recipes.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchRecipes();
+  }, []);
 
 function getPlannedMeal(date, mealType) {
   const isoDate = formatDateForApi(date);
@@ -136,6 +154,15 @@ function getPlannedMeal(date, mealType) {
           );
         })}
       </div>
+      {loading && <p>Loading planner data...</p>}
+      {error && <p className="error">{error}</p>}
+      {recipes.map((recipe) => (
+        <PlannerRecipeCard
+          key={recipe.id}
+          recipe={recipe}
+          /*onSelect={handleSelectRecipe}*/
+        />
+      ))}
     </div>
   );
 }
