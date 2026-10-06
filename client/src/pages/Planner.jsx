@@ -21,6 +21,7 @@ const dayNames = [
 function Planner() {
 
   const [plannerData, setPlannerData] = useState([]);
+  const [selectedSlot, setSelectedSlot] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [recipes, setRecipes] = useState([]);
@@ -143,7 +144,19 @@ function getPlannedMeal(date, mealType) {
                         {plannedMeal ? (
                           <p>{plannedMeal.title}</p>
                         ) : (
+                          <>
                           <p>No meal planned</p>
+                            <button
+                                onClick={() =>
+                                  setSelectedSlot({
+                                    date: isoDate,
+                                    mealType,
+                                  })
+                                }
+                              >
+                                Add meal
+                            </button>
+                          </>
                         )}
                       </div>
                     );
@@ -156,13 +169,26 @@ function getPlannedMeal(date, mealType) {
       </div>
       {loading && <p>Loading planner data...</p>}
       {error && <p className="error">{error}</p>}
-      {recipes.map((recipe) => (
-        <PlannerRecipeCard
-          key={recipe.id}
-          recipe={recipe}
-          /*onSelect={handleSelectRecipe}*/
-        />
-      ))}
+
+      {selectedSlot && (
+        <div className="recipe-selector">
+              <h2>Select a recipe</h2>
+
+              <p>
+                {selectedSlot.date} - {selectedSlot.mealType}
+              </p>
+          {recipes.map((recipe) => (
+            <PlannerRecipeCard
+              key={recipe.id}
+              recipe={recipe}
+              /*onSelect={handleSelectRecipe}*/
+            />
+          ))}
+          <button onClick={() => setSelectedSlot(null)}>
+            Cancel
+          </button>
+        </div>
+      )}
     </div>
   );
 }
