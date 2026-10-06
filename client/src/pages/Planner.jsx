@@ -227,7 +227,7 @@ function getPlannedMeal(date, mealType) {
           </div>
 
           <button
-            className="secondary-button"
+            className="cancel-selection-button"
             onClick={() => setSelectedSlot(null)}
             disabled={isSaving}
           >
