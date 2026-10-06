@@ -98,6 +98,25 @@ function getPlannedMeal(date, mealType) {
   );
 }
 
+  async function deleteMeal(plannerEntryId) {
+     try {
+      setIsSaving(true);
+      setMessage("");
+
+      await api.delete(`/planner/${plannerEntryId}`);
+
+      await fetchPlannerData();
+
+      setMessage("Meal successfully deleted from planner.");
+    } catch (err) {
+      setMessage(
+        err.response?.data?.message ||
+        "Could not delete meal from planner."
+      );
+    } finally {
+      setIsSaving(false);
+    }
+  }
 
   async function handleSelectRecipe(recipe) {
     try {
@@ -173,7 +192,14 @@ function getPlannedMeal(date, mealType) {
                         {plannedMeal ? (
                           <>
                           <p>{plannedMeal.title}</p>
+                              <button 
+                              disabled={isSaving}
+                              onClick={() => deleteMeal(plannedMeal.planner_entry_id)}
+                              >
+                                Delete meal
+                              </button>
                               <button
+                                disabled={isSaving}
                                 onClick={() =>
                                   setSelectedSlot({
                                     date: isoDate,
@@ -188,6 +214,7 @@ function getPlannedMeal(date, mealType) {
                           <>
                           <p>No meal planned</p>
                             <button
+                              disabled={isSaving}
                                 onClick={() =>
                                   setSelectedSlot({
                                     date: isoDate,
