@@ -63,6 +63,17 @@ function Planner() {
   fetchPlannerData();
 }, [currentMonday]);
 
+function getPlannedMeal(date, mealType) {
+  const isoDate = formatDateForApi(date);
+
+  return plannerData.find(
+    (entry) =>
+      entry.plan_date === isoDate &&
+      entry.meal_type === mealType
+  );
+}
+
+
   return (
     <div className="planner-calendar">
 
@@ -102,14 +113,23 @@ function Planner() {
 
               <div className="day-content">
                 {["breakfast", "lunch", "dinner"].map(
-                  (mealType) => (
-                    <div
-                      key={mealType}
-                      className="meal-slot"
-                    >
-                      <small>{mealType}</small>
-                    </div>
-                  )
+                  (mealType) => {
+                    const plannedMeal = getPlannedMeal(date, mealType);
+
+                    return (
+                      <div
+                        key={mealType}
+                        className="meal-slot"
+                      >
+                        <h4>{mealType}</h4>
+                        {plannedMeal ? (
+                          <p>{plannedMeal.title}</p>
+                        ) : (
+                          <p>No meal planned</p>
+                        )}
+                      </div>
+                    );
+                  }
                 )}
               </div>
             </div>
