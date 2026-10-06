@@ -23,7 +23,8 @@ function Planner() {
   const [plannerData, setPlannerData] = useState([]);
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [plannerLoading, setPlannerLoading] = useState(true);
+  const [recipesLoading, setRecipesLoading] = useState(true);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState("");
   const [recipes, setRecipes] = useState([]);
@@ -44,7 +45,7 @@ function Planner() {
 
   async function fetchPlannerData() {
     try {
-      setLoading(true);
+      setPlannerLoading(true);
       setError(null);
 
       const startDate = formatDateForApi(currentMonday);
@@ -59,7 +60,7 @@ function Planner() {
       console.error("Planner loading error:", error);
       setError("Could not load planner data.");
     } finally {
-      setLoading(false);
+      setPlannerLoading(false);
     }
   }
 
@@ -71,13 +72,16 @@ function Planner() {
   useEffect(() => {
     async function fetchRecipes() {
       try {
+        setRecipesLoading(true);
+        setError(null);
+
         const response = await api.get("/recipes");
         setRecipes(response.data.recipes);
       } catch (err) {
         console.error("Could not load recipes:", err);
         setError("Could not load saved recipes.");
       } finally {
-        setLoading(false);
+        setRecipesLoading(false);
       }
     }
 
@@ -192,7 +196,7 @@ function getPlannedMeal(date, mealType) {
           );
         })}
       </div>
-      {loading && <p>Loading planner data...</p>}
+      {plannerLoading && <p>Loading planner data...</p>}
       {error && <p className="error">{error}</p>}
       {message && (
         <p className="planner-message">
@@ -202,22 +206,31 @@ function getPlannedMeal(date, mealType) {
 
       {selectedSlot && (
         <div className="recipe-selector">
-              <h2>Select a recipe</h2>
+          <h2>Select a recipe</h2>
 
-              <p>
-                {selectedSlot.date} - {selectedSlot.mealType}
-              </p>
-          {recipes.map((recipe) => (
-            <PlannerRecipeCard
-              key={recipe.id}
-              recipe={recipe}
-              onSelect={handleSelectRecipe}
-              isSaving={isSaving}
-            />
-          ))}
-          <button onClick={() => setSelectedSlot(null)}
+          <p>
+            {selectedSlot.date} - {selectedSlot.mealType}
+          </p>
+
+          {recipesLoading ? (
+            <p>Loading saved recipes...</p>
+          ) : recipes.length === 0 ? (
+            <p>No saved recipes available.</p>
+          ) : (
+            recipes.map((recipe) => (
+              <PlannerRecipeCard
+                key={recipe.id}
+                recipe={recipe}
+                onSelect={handleSelectRecipe}
+                isSaving={isSaving}
+              />
+            ))
+          )}
+
+          <button
+            onClick={() => setSelectedSlot(null)}
             disabled={isSaving}
-            >
+          >
             Cancel
           </button>
         </div>
