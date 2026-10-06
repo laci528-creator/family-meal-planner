@@ -112,7 +112,7 @@ function getPlannedMeal(date, mealType) {
 
     await fetchPlannerData();
 
-    setMessage("Meal successfully added to planner.");
+    setMessage("Meal successfully saved to planner.");
     setSelectedSlot(null);
     } catch (err) {
       setMessage(
@@ -171,7 +171,19 @@ function getPlannedMeal(date, mealType) {
                       >
                         <h4>{mealType}</h4>
                         {plannedMeal ? (
+                          <>
                           <p>{plannedMeal.title}</p>
+                              <button
+                                onClick={() =>
+                                  setSelectedSlot({
+                                    date: isoDate,
+                                    mealType,
+                                  })
+                                }
+                              >
+                                Change meal
+                            </button>
+                            </>
                         ) : (
                           <>
                           <p>No meal planned</p>
