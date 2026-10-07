@@ -244,7 +244,7 @@ function getPlannedMeal(date, mealType) {
         })}
       </div>
       {plannerLoading && <p>Loading planner data...</p>}
-      {error && <p className="error">{error}</p>}
+      {error && <p className="error-message">{error}</p>}
       {message && (
         <p className="planner-message">
           {message}

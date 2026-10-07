@@ -12,7 +12,6 @@ function Shopping() {
   const [shoppingList, setShoppingList] = useState([]);
   const [ingredientsLoading, setIngredientsLoading] = useState(true);
   const [error, setError] = useState(null);
-  /*const [message, setMessage] = useState("");*/
   const [currentMonday, setCurrentMonday] = useState(() =>
     getWeekStart(new Date())
   );
@@ -76,7 +75,7 @@ function Shopping() {
     {ingredientsLoading ? (
     <p>Loading shopping list...</p>
   ) :  error ? (
-    <p className="error">{error}</p>
+    <p className="error-message">{error}</p>
   ) : shoppingList.length === 0 ? (
         <p>No shopping items for this week.</p>
       ) : (
@@ -86,11 +85,10 @@ function Shopping() {
             key={`${item.ingredientId}-${index}`}
             className="shopping-item"
           >
-            <div>
-              <strong>{item.name}</strong>
+            <div className="ingredient-name">
+              <strong>{item.name}</strong> <span className="ingredient-measure">{item.measure}</span>
             </div>
 
-            <span>{item.measure}</span>
           </div>
         ))}
       </div>
