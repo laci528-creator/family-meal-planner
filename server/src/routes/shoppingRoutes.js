@@ -1,6 +1,7 @@
 import express from 'express';
 import {
   getShoppingList,
+  generateShoppingList,
   /*addItemToShoppingList,
   removeItemFromShoppingList,
   clearShoppingList,*/
@@ -11,6 +12,7 @@ import { requireAuth } from '../middleware/authMiddleware.js';
 const router = express.Router();
 
 router.get('/', requireAuth, getShoppingList);
+router.post("/generate",requireAuth,generateShoppingList);
 /*router.post('/', requireAuth, addItemToShoppingList);
 router.patch("/:id", requireAuth, updateShoppingItem);
 router.delete('/:id', requireAuth, removeItemFromShoppingList);
