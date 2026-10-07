@@ -6,6 +6,7 @@ import {
   getWeekDays,
   formatDateForApi,
   getWeekStart,
+  addWeeks,
 } from "../utils/dateUtils";
 
 const dayNames = [
@@ -32,14 +33,13 @@ function Planner() {
     getWeekStart(new Date())
   );
 
+  
   const changeWeek = (weeks) => {
-    const newMonday = new Date(currentMonday);
-    newMonday.setDate(
-      currentMonday.getDate() + weeks * 7
+    setCurrentMonday(
+      addWeeks(currentMonday, weeks)
     );
-
-    setCurrentMonday(newMonday);
   };
+
 
   const weekDays = getWeekDays(currentMonday);
 
