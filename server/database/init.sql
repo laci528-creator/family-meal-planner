@@ -92,3 +92,37 @@ CREATE TABLE IF NOT EXISTS meal_plan_entries (
     CONSTRAINT meal_plan_unique
         UNIQUE (user_id, plan_date, meal_type)
 );
+
+CREATE TABLE IF NOT EXISTS shopping_list_items (
+    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+
+    user_id INTEGER NOT NULL
+        REFERENCES users(id)
+        ON DELETE CASCADE,
+
+    meal_plan_entry_id INTEGER
+        REFERENCES meal_plan_entries(id)
+        ON DELETE CASCADE,
+
+    ingredient_id INTEGER
+        REFERENCES ingredients(id)
+        ON DELETE SET NULL,
+
+    week_start DATE NOT NULL,
+
+    name VARCHAR(255) NOT NULL,
+
+    measure VARCHAR(255),
+
+    status VARCHAR(20) NOT NULL DEFAULT 'needed',
+
+    source VARCHAR(20) NOT NULL DEFAULT 'planner',
+
+    created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT shopping_status_check
+        CHECK (status IN ('needed', 'at_home', 'purchased')),
+
+    CONSTRAINT shopping_source_check
+        CHECK (source IN ('planner', 'manual'))
+);
