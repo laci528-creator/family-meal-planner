@@ -12,6 +12,7 @@ function Shopping() {
   const [shoppingList, setShoppingList] = useState([]);
   const [ingredientsLoading, setIngredientsLoading] = useState(true);
   const [error, setError] = useState(null);
+const [itemStatus, setItemStatus] = useState({});
   const [currentMonday, setCurrentMonday] = useState(() =>
     getWeekStart(new Date())
   );
@@ -29,6 +30,7 @@ function Shopping() {
 
       setIngredientsLoading(true);
       setError(null);
+      setItemStatus({});
       
       try {
         const startDate =
@@ -58,6 +60,14 @@ function Shopping() {
     fetchShoppingList();
   }, [currentMonday]);
 
+
+  function handleStatusChange(itemKey, newStatus, checked) {
+  setItemStatus((previousStatus) => ({
+    ...previousStatus,
+    [itemKey]: checked ? newStatus : "needed",
+  }));
+}
+
   return (
     <main className="shopping-page">
       <h1>Weekly Shopping List</h1>
@@ -80,25 +90,45 @@ function Shopping() {
         <p>No shopping items for this week.</p>
       ) : (
       <div className="shopping-list">
-        {shoppingList.map((item, index) => (
+        {shoppingList.map((item, index) => {
+            const itemKey = `${item.ingredientId}-${index}`;
+            const status = itemStatus[itemKey] || "needed";
+          
+          return (
           <div
-            key={`${item.ingredientId}-${index}`}
+            key={itemKey}
             className="shopping-item"
           >
             <div className="shopping-item-info">
               <strong className="ingredient-name">{item.name}</strong> <span className="ingredient-measure">{item.measure}</span>
             </div>
             <div className="shopping-item-actions">
-              
-                <label className="shopping-checkbox">
+
+              <label className="shopping-checkbox">
+                <input
+                  type="checkbox"
+                  checked={status === "at_home"}
+                  onChange={(e) =>
+                    handleStatusChange(
+                      itemKey,
+                      "at_home",
+                      e.target.checked
+                    )
+                  }
+                />
+                <span>At home</span>
+              </label>
+                        <label className="shopping-checkbox">
                   <input
                     type="checkbox"
-                  />
-                  <span>At home</span>
-                </label>
-                <label className="shopping-checkbox">
-                  <input
-                    type="checkbox"
+                    checked={status === "purchased"}
+                    onChange={(e) =>
+                      handleStatusChange(
+                        itemKey,
+                        "purchased",
+                        e.target.checked
+                      )
+                    }
                   />
                   <span>Purchased</span>
                 </label>
@@ -109,9 +139,9 @@ function Shopping() {
                   Delete
                 </button>
             </div>
-
           </div>
-        ))}
+        );
+      })}
       </div>
       )}
     </main>
