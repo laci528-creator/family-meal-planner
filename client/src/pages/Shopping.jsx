@@ -99,6 +99,12 @@ const [itemStatus, setItemStatus] = useState({});
             key={itemKey}
             className="shopping-item"
           >
+            <button
+              className="shopping-delete-button"
+                type="button"
+            >
+              Delete
+            </button>
             <div className="shopping-item-info">
               <strong className="ingredient-name">{item.name}</strong> <span className="ingredient-measure">{item.measure}</span>
             </div>
@@ -132,12 +138,6 @@ const [itemStatus, setItemStatus] = useState({});
                   />
                   <span>Purchased</span>
                 </label>
-                <button
-                  className="shopping-delete-button"
-                  type="button"
-                >
-                  Delete
-                </button>
             </div>
           </div>
         );

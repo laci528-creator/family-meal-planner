@@ -710,6 +710,7 @@ body {
 
   border: 1px solid var(--danger);
   border-radius: 5px;
+  flex-shrink: 0;
 
   background: transparent;
   color: var(--danger);
