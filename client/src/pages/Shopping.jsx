@@ -5,10 +5,14 @@ import {
   getWeekStart,
   formatDateForApi,
   addWeeks,
+  addDays,
 } from "../utils/dateUtils";
 
 function Shopping() {
   const [shoppingList, setShoppingList] = useState([]);
+  const [ingredientsLoading, setIngredientsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  /*const [message, setMessage] = useState("");*/
   const [currentMonday, setCurrentMonday] = useState(() =>
     getWeekStart(new Date())
   );
@@ -23,6 +27,10 @@ function Shopping() {
 
   useEffect(() => {
     async function fetchShoppingList() {
+
+      setIngredientsLoading(true);
+      setError(null);
+      
       try {
         const startDate =
           formatDateForApi(currentMonday);
@@ -38,10 +46,13 @@ function Shopping() {
         );
 
       } catch (error) {
+        setError("Could not load shopping list.");
         console.error(
           "Could not load shopping list:",
           error
         );
+      } finally {
+        setIngredientsLoading(false);
       }
     }
 
@@ -53,7 +64,8 @@ function Shopping() {
       <h1>Weekly Shopping List</h1>
       <div className="calendar-header">
         <h3>
-          {currentMonday.toLocaleDateString('en-GB', { year: 'numeric', month: 'long' })}
+          {currentMonday.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })} - 
+          {addDays(currentMonday, 6).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric'  })}
         </h3>
         <button onClick={() => changeWeek(-1)}>&lt; Previous week</button>
         <button onClick={() => setCurrentMonday(getWeekStart(new Date()))}>Current week</button>
@@ -61,6 +73,13 @@ function Shopping() {
         <button onClick={() => changeWeek(1)}>Next week &gt;</button>
       </div>
 
+    {ingredientsLoading ? (
+    <p>Loading shopping list...</p>
+  ) :  error ? (
+    <p className="error">{error}</p>
+  ) : shoppingList.length === 0 ? (
+        <p>No shopping items for this week.</p>
+      ) : (
       <div className="shopping-list">
         {shoppingList.map((item, index) => (
           <div
@@ -75,6 +94,7 @@ function Shopping() {
           </div>
         ))}
       </div>
+      )}
     </main>
   );
 }

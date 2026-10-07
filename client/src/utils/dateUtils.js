@@ -54,3 +54,10 @@ export function addWeeks(date, weeks) {
 
   return newDate;
 }
+
+export function addDays(date, days) {
+  const newDate = new Date(date);
+  newDate.setDate(newDate.getDate() + days);
+
+  return newDate;
+}
