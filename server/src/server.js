@@ -7,6 +7,7 @@ import recipeRoutes from "./routes/recipeRoutes.js";
 
 import authRoutes from "./routes/authRoutes.js";
 import plannerRoutes from "./routes/plannerRoutes.js";
+import shoppingRoutes from "./routes/shoppingRoutes.js";
 
 
 const app = express();
@@ -38,6 +39,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/recipes", recipeRoutes);
 
 app.use("/api/planner", plannerRoutes);
+
+app.use("/api/shopping", shoppingRoutes);
 
 app.get("/api/test", (req, res) => {
   res.json({
