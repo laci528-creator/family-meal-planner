@@ -649,6 +649,95 @@ body {
   color: var(--color-surface);
 }
 
+/*---Shopping-List---*/
+
+.shopping-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.shopping-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  padding: 0.75rem 1rem;
+
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.shopping-item-info {
+  flex: 1;
+
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  min-width: 0;
+}
+
+.ingredient-name {
+  flex: 1;
+}
+
+.ingredient-measure {
+  min-width: 100px;
+
+  color: var(--color-text-muted);
+}
+
+.shopping-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.shopping-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+
+  cursor: pointer;
+}
+
+.shopping-delete-button {
+  padding: 0.4rem 0.7rem;
+
+  border: 1px solid var(--danger);
+  border-radius: 5px;
+
+  background: transparent;
+  color: var(--danger);
+
+  cursor: pointer;
+}
+
+.shopping-delete-button:hover {
+  background: var(--danger);
+  color: white;
+}
+
+@media (max-width: 600px) {
+  .shopping-item {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .shopping-item-info,
+  .shopping-item-actions {
+    width: 100%;
+  }
+
+  .shopping-item-actions {
+    justify-content: space-between;
+  }
+}
+
 
 /*---Footer---*/
 

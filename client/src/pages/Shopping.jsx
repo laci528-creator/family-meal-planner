@@ -85,8 +85,29 @@ function Shopping() {
             key={`${item.ingredientId}-${index}`}
             className="shopping-item"
           >
-            <div className="ingredient-name">
-              <strong>{item.name}</strong> <span className="ingredient-measure">{item.measure}</span>
+            <div className="shopping-item-info">
+              <strong className="ingredient-name">{item.name}</strong> <span className="ingredient-measure">{item.measure}</span>
+            </div>
+            <div className="shopping-item-actions">
+              
+                <label className="shopping-checkbox">
+                  <input
+                    type="checkbox"
+                  />
+                  <span>At home</span>
+                </label>
+                <label className="shopping-checkbox">
+                  <input
+                    type="checkbox"
+                  />
+                  <span>Purchased</span>
+                </label>
+                <button
+                  className="shopping-delete-button"
+                  type="button"
+                >
+                  Delete
+                </button>
             </div>
 
           </div>
