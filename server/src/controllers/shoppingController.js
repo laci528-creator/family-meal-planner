@@ -14,47 +14,38 @@ export async function getShoppingList(req, res) {
             });
         }
 
-        const endDate = getEndDate(startDate);
-
         try {
 
             const shoppingListQuery = await pool.query(
                 `
-                SELECT mpe.recipe_id, ri.ingredient_id, ri.measure, i.name
-                FROM meal_plan_entries mpe
-
-                JOIN recipe_ingredients ri ON mpe.recipe_id = ri.recipe_id
-
-                JOIN ingredients i ON ri.ingredient_id = i.id
-
-                WHERE mpe.user_id = $1
-                    AND mpe.plan_date BETWEEN $2 AND $3
-
-                order by mpe.recipe_id
+                SELECT 
+                    id,
+                    meal_plan_entry_id AS "mealPlanEntryId",
+                    ingredient_id AS "ingredientId",
+                    name,
+                    measure,
+                    status,
+                    source
+                FROM shopping_list_items
+                WHERE user_id = $1
+                    AND week_start = $2
+                    ORDER BY name ASC
                 `,
-                [userId, startDate, endDate]
+                [userId, startDate]
             );
-
-            const shoppingList = shoppingListQuery.rows.map(row => ({
-                recipeId: row.recipe_id,
-                ingredientId: row.ingredient_id,
-                measure: row.measure,
-                name: row.name
-            }));
 
             res.status(200).json({
                 error: false,
                 message: "Shopping list fetched successfully.",
                 startDate,
-                endDate,
-                shoppingList: shoppingList
+                shoppingList: shoppingListQuery.rows,
             });
 
         } catch (error) {
             console.error("Error fetching shopping list:", error);
             res.status(500).json({
                 error: true,
-                message: "Internal server error.",
+                message: "Could not load shopping list. Please try again later.",
             });
     } 
 }
@@ -80,8 +71,6 @@ export async function generateShoppingList(req, res) {
             client = await pool.connect();
 
             await client.query('BEGIN');
-
-
 
         const shoppingListQuery = await client.query(
                 `
@@ -129,7 +118,7 @@ export async function generateShoppingList(req, res) {
 
         const { mealPlanEntryId, ingredientId, measure, name } = item;
         
-        const insertShoppingListQuery = await client.query(
+        await client.query(
             `
             INSERT INTO shopping_list_items (
                 user_id,
@@ -142,7 +131,6 @@ export async function generateShoppingList(req, res) {
                 source
             )
             VALUES ($1, $2, $3, $4, $5, $6, 'needed', 'planner')
-            RETURNING id
             `,
             [userId, mealPlanEntryId, ingredientId, startDate, name, measure]
         );
@@ -151,7 +139,7 @@ export async function generateShoppingList(req, res) {
 
             await client.query('COMMIT');
 
-            res.status(200).json({
+            res.status(201).json({
                 error: false,
                 message: "Shopping list generated successfully.",
                 startDate,
@@ -166,7 +154,7 @@ export async function generateShoppingList(req, res) {
             console.error("Error generating shopping list:", error);
             res.status(500).json({
                 error: true,
-                message: "Internal server error.",
+                message: "Could not generate shopping list. Please try again later.",
             });
         } finally {
             if (client) {
