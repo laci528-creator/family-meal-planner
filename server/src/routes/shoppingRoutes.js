@@ -2,6 +2,7 @@ import express from 'express';
 import {
   getShoppingList,
   generateShoppingList,
+  updateShoppingItemStatus
   /*addItemToShoppingList,
   removeItemFromShoppingList,
   clearShoppingList,*/
@@ -13,6 +14,11 @@ const router = express.Router();
 
 router.get('/', requireAuth, getShoppingList);
 router.post("/generate",requireAuth,generateShoppingList);
+router.patch(
+  "/:id",
+  requireAuth,
+  updateShoppingItemStatus
+);
 /*router.post('/', requireAuth, addItemToShoppingList);
 router.patch("/:id", requireAuth, updateShoppingItem);
 router.delete('/:id', requireAuth, removeItemFromShoppingList);

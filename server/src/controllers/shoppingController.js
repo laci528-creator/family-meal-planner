@@ -162,3 +162,66 @@ export async function generateShoppingList(req, res) {
             }
     }
 }
+
+export async function updateShoppingItemStatus(req, res) {
+  const { id } = req.params;
+  const { status } = req.body;
+  const userId = req.session.user.id;
+
+  const allowedStatuses = [
+    "needed",
+    "at_home",
+    "purchased",
+  ];
+
+  if (!/^\d+$/.test(id)) {
+    return res.status(400).json({
+      error: true,
+      message: "Invalid shopping item ID.",
+    });
+  }
+
+  if (!allowedStatuses.includes(status)) {
+    return res.status(400).json({
+      error: true,
+      message: "Invalid shopping item status.",
+    });
+  }
+
+  try {
+    const result = await pool.query(
+      `
+        UPDATE shopping_list_items
+        SET status = $1
+        WHERE id = $2
+          AND user_id = $3
+        RETURNING id, status
+      `,
+      [status, id, userId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        error: true,
+        message: "Shopping item not found.",
+      });
+    }
+
+    return res.status(200).json({
+      error: false,
+      message: "Shopping item status updated.",
+      item: result.rows[0],
+    });
+
+  } catch (error) {
+    console.error(
+      "Update shopping item status error:",
+      error
+    );
+
+    return res.status(500).json({
+      error: true,
+      message: "Could not update shopping item status.",
+    });
+  }
+}
