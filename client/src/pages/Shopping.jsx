@@ -70,7 +70,7 @@ function Shopping() {
         const startDate =
           formatDateForApi(currentMonday);
 
-        const response = await api.post("/shopping/generate", null, {
+        const response = await api.post("/shopping/generate", {}, {
           params: {
             startDate,
           },
