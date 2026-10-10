@@ -94,12 +94,40 @@ function Shopping() {
       }
     }
 
-  function handleStatusChange(itemKey, newStatus, checked) {
+async function handleStatusChange(
+  itemId,
+  newStatus,
+  checked
+) {
+  const status = checked
+    ? newStatus
+    : "needed";
+
+  try {
+    await api.patch(
+      `/shopping/${itemId}`,
+      {
+        status,
+      }
+    );
+
     setItemStatus((previousStatus) => ({
       ...previousStatus,
-      [itemKey]: checked ? newStatus : "needed",
+      [itemId]: status,
     }));
+
+  } catch (error) {
+    setError(
+      "Could not update shopping item status."
+    );
+
+    console.error(
+      "Could not update shopping item status:",
+      error
+    );
   }
+}
+
 
   return (
     <main className="shopping-page">
