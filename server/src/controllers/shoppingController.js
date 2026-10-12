@@ -103,6 +103,32 @@ export async function generateShoppingList(req, res) {
                 name: row.name
             }));
 
+        const existingItemsQuery = await client.query(
+                `
+                    SELECT
+                    meal_plan_entry_id,
+                    ingredient_id,
+                    status
+                    FROM shopping_list_items
+                    WHERE user_id = $1
+                    AND week_start = $2
+                    AND source = 'planner'
+                `,
+                [userId, startDate]
+                );
+
+        const existingStatuses = new Map();
+
+            for (const item of existingItemsQuery.rows) {
+            const key =
+                `${item.meal_plan_entry_id}-${item.ingredient_id}`;
+
+                existingStatuses.set(
+                    key,
+                    item.status
+                );
+            }
+
         await client.query(
             `
                 DELETE FROM shopping_list_items
@@ -117,6 +143,12 @@ export async function generateShoppingList(req, res) {
     for (const item of shoppingList) {
 
         const { mealPlanEntryId, ingredientId, measure, name } = item;
+
+        const key =
+            `${mealPlanEntryId}-${ingredientId}`;
+
+        const status =
+            existingStatuses.get(key) ?? "needed";
         
         await client.query(
             `
@@ -130,9 +162,9 @@ export async function generateShoppingList(req, res) {
                 status,
                 source
             )
-            VALUES ($1, $2, $3, $4, $5, $6, 'needed', 'planner')
+            VALUES ($1, $2, $3, $4, $5, $6, $7, 'planner')
             `,
-            [userId, mealPlanEntryId, ingredientId, startDate, name, measure]
+            [userId, mealPlanEntryId, ingredientId, startDate, name, measure, status]
         );
 
     }
