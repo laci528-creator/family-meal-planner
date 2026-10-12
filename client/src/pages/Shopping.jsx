@@ -182,10 +182,11 @@ async function handleAddItem({ name, measure }) {
       }
     );
 
-        setShoppingList((prevList) => [
-          ...prevList,
-          response.data.item,
-        ]);
+    setShoppingList((prevList) =>
+      [...prevList, response.data.item].sort((a, b) =>
+        a.name.localeCompare(b.name)
+      )
+    );
 
     setMessage(response.data.message);
 
