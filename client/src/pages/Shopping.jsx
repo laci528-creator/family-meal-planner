@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import ShoppingItemForm from "../components/ShoppingItemForm";
 import api from "../services/api";
 
 import {
@@ -12,6 +13,7 @@ function Shopping() {
   const [shoppingList, setShoppingList] = useState([]);
   const [ingredientsLoading, setIngredientsLoading] = useState(true);
   const [deletingItemId, setDeletingItemId] = useState(null);
+  const [itemSaving, setItemSaving] = useState(false);
   const [listGenerate, setListGenerate] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState(null);
@@ -30,6 +32,7 @@ function Shopping() {
 
       setIngredientsLoading(true);
       setError(null);
+      setMessage("");
       setItemStatus({});
       
       try {
@@ -161,6 +164,46 @@ async function deleteItem(itemId) {
 }
 
 
+async function handleAddItem({ name, measure }) {
+
+    const weekStart = formatDateForApi(currentMonday);
+
+    setItemSaving(true);
+    setError(null);
+    setMessage("");
+
+    try {
+
+    const response = await api.post(
+      `/shopping`, {
+        weekStart,
+        name,
+        measure 
+      }
+    );
+
+        setShoppingList((prevList) => [
+          ...prevList,
+          response.data.item,
+        ]);
+
+    setMessage(response.data.message);
+
+  } catch (error) {
+    setError(
+      "Could not save new shopping item."
+    );
+
+    console.error(
+      "Could not save new shopping item.",
+      error
+    );
+  } finally {
+    setItemSaving(false);
+  }
+}
+
+
   return (
     <main className="shopping-page">
       <h1>Weekly Shopping List</h1>
@@ -186,6 +229,12 @@ async function deleteItem(itemId) {
               ? "Generate shopping list"
               : "Refresh from planner"}
         </button>
+      </div>
+      <div>
+        <ShoppingItemForm
+          onAddItem={handleAddItem}
+          isSaving={itemSaving}
+        />
       </div>
     {message && (
       <p className="shopping-message">
