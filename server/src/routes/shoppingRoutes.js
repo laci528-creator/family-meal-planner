@@ -2,9 +2,10 @@ import express from 'express';
 import {
   getShoppingList,
   generateShoppingList,
-  updateShoppingItemStatus
+  updateShoppingItemStatus,
+  removeItemFromShoppingList
   /*addItemToShoppingList,
-  removeItemFromShoppingList,
+  ,
   clearShoppingList,*/
 } from '../controllers/shoppingController.js';
 
@@ -19,9 +20,10 @@ router.patch(
   requireAuth,
   updateShoppingItemStatus
 );
+router.delete('/:id', requireAuth, removeItemFromShoppingList);
 /*router.post('/', requireAuth, addItemToShoppingList);
 router.patch("/:id", requireAuth, updateShoppingItem);
-router.delete('/:id', requireAuth, removeItemFromShoppingList);
+
 router.delete('/', requireAuth, clearShoppingList);*/
 
 export default router;
