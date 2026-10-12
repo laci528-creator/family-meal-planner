@@ -3,10 +3,9 @@ import {
   getShoppingList,
   generateShoppingList,
   updateShoppingItemStatus,
-  removeItemFromShoppingList
-  /*addItemToShoppingList,
-  ,
-  clearShoppingList,*/
+  removeItemFromShoppingList,
+  addItemToShoppingList
+  /*clearShoppingList,*/
 } from '../controllers/shoppingController.js';
 
 import { requireAuth } from '../middleware/authMiddleware.js';
@@ -21,8 +20,8 @@ router.patch(
   updateShoppingItemStatus
 );
 router.delete('/:id', requireAuth, removeItemFromShoppingList);
-/*router.post('/', requireAuth, addItemToShoppingList);
-router.patch("/:id", requireAuth, updateShoppingItem);
+router.post('/', requireAuth, addItemToShoppingList);
+/*router.patch("/:id", requireAuth, updateShoppingItem);
 
 router.delete('/', requireAuth, clearShoppingList);*/
 

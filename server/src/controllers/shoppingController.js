@@ -305,3 +305,82 @@ export async function removeItemFromShoppingList(req,res) {
     });
   }
 }
+
+
+export async function addItemToShoppingList(req,res) {
+
+  const { weekStart, name, measure } = req.body;
+
+  const userId = req.session.user.id;
+
+          if (!isValidISODate(weekStart)) {
+            return res.status(400).json({
+                error: true,
+                message: "Invalid start date. Please provide a valid date in YYYY-MM-DD format.",
+            });
+        }
+
+          if (
+            typeof name !== "string" ||
+            name.trim() === ""
+          ) {
+            return res.status(400).json({
+              error: true,
+              message: "Shopping item name is required.",
+            });
+          }
+
+        try {
+
+          const response = await pool.query(
+            `
+            INSERT INTO shopping_list_items (
+              user_id,
+              meal_plan_entry_id,
+              ingredient_id,
+              week_start,
+              name,
+              measure,
+              status,
+              source
+            )
+            VALUES (
+              $1,
+              NULL,
+              NULL,
+              $2,
+              $3,
+              $4,
+              'needed',
+              'manual'
+            )
+            RETURNING           
+              id,
+              week_start::text AS "weekStart",
+              name,
+              measure,
+              status,
+              source;
+            `
+          , [userId, weekStart, name.trim(), measure?.trim() || null]
+        );
+
+        return res.status(201).json({
+          error: false,
+          message: "Shopping item saved succesfully.",
+          item: response.rows[0],
+        });
+
+        } catch (error) {
+    console.error(
+      "Save new shopping item error:",
+      error
+    );
+
+    return res.status(500).json({
+      error: true,
+      message: "Could not save new shopping item",
+    });
+  }
+
+}
