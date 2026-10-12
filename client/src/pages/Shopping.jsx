@@ -11,6 +11,7 @@ import {
 function Shopping() {
   const [shoppingList, setShoppingList] = useState([]);
   const [ingredientsLoading, setIngredientsLoading] = useState(true);
+  const [deletingItemId, setDeletingItemId] = useState(null);
   const [listGenerate, setListGenerate] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState(null);
@@ -127,6 +128,39 @@ async function handleStatusChange(
 }
 
 
+async function deleteItem(itemId) {
+
+  setDeletingItemId(itemId);
+  setError(null);
+  setMessage("");
+
+  try {
+
+    const response = await api.delete(
+      `/shopping/${itemId}`
+    );
+
+      setShoppingList(prevList => prevList.filter(item => item.id !== itemId))
+
+      setMessage(
+       `${response.data.message} (${response.data.name})`
+      );
+
+    } catch (error) {
+    setError(
+      "Could not delete shopping item."
+    );
+
+    console.error(
+      "Could not delete shopping item.",
+      error
+    );
+  } finally {
+    setDeletingItemId(null);
+    }
+}
+
+
   return (
     <main className="shopping-page">
       <h1>Weekly Shopping List</h1>
@@ -182,8 +216,12 @@ async function handleStatusChange(
             <button
               className="shopping-delete-button"
                 type="button"
+                onClick={() => deleteItem(item.id)}
+                disabled={deletingItemId === item.id}
             >
-              Delete
+                {deletingItemId === item.id
+                  ? "Deleting..."
+                  : "Delete"}
             </button>
             <div className="shopping-item-info">
               <strong className="ingredient-name">{item.name}</strong> <span className="ingredient-measure">{item.measure}</span>
