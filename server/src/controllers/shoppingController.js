@@ -52,7 +52,7 @@ export async function getShoppingList(req, res) {
 
 export async function generateShoppingList(req, res) { 
 
-        const { startDate } = req.query;
+        const { startDate } = req.body;
 
         const userId = req.session.user.id;
 
