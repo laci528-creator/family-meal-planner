@@ -161,3 +161,31 @@ export function getMeasureType(unit) {
 
   return "unknown";
 }
+
+function roundMeasure(value, decimals = 2) {
+  return Number(value.toFixed(decimals));
+}
+
+export function formatGroupedMeasure(item) {
+  if (item.type === "weight") {
+    if (item.amount >= 1000) {
+      return `${roundMeasure(item.amount / 1000)} kg`;
+    }
+
+    return `${roundMeasure(item.amount)} g`;
+  }
+
+  if (item.type === "volume") {
+    if (item.amount >= 1000) {
+      return `${roundMeasure(item.amount / 1000)} l`;
+    }
+
+    return `${roundMeasure(item.amount)} ml`;
+  }
+
+  if (item.type === "unknown") {
+    return item.measures.join(" + ");
+  }
+
+  return "";
+}
