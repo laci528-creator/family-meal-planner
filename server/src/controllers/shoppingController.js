@@ -35,11 +35,14 @@ export async function getShoppingList(req, res) {
                 [userId, startDate]
             );
 
+            const shoppingList =
+                groupShoppingItems(shoppingListQuery.rows);
+
             res.status(200).json({
                 error: false,
                 message: "Shopping list fetched successfully.",
                 startDate,
-                shoppingList: shoppingListQuery.rows,
+                shoppingList,
             });
 
         } catch (error) {
