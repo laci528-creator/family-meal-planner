@@ -66,13 +66,39 @@ function Shopping() {
 
 
       async function handleGenerateShoppingList() {
-      setListGenerate(true);
+      
       setError(null);
       setMessage("");
 
       try {
         const startDate =
           formatDateForApi(currentMonday);
+
+        const plannerResponse = await api.get(
+          "/planner",
+          {
+            params: {
+              startDate,
+            },
+          }
+        );
+
+        const plannedMeals =
+          plannerResponse.data.weeklyPlannerData.length;
+
+        const totalSlots = 21;
+
+        if (plannedMeals < totalSlots) {
+          const confirmed = window.confirm(
+            `Only ${plannedMeals} of ${totalSlots} meal slots are planned. Generate shopping list anyway?`
+          );
+
+          if (!confirmed) {
+            return;
+          }
+        }
+
+        setListGenerate(true);
 
         const response = await api.post("/shopping/generate", {
           startDate,
