@@ -45,12 +45,13 @@ const handleSubmit = async (e) => {
   };
 
   return (
-    <div className="login-container">
+    <main className="auth-page">
+    <div className="auth-card">
       <h1>Login</h1>
 
       {error && <div className="error-message">{error}</div>}
 
-        <form onSubmit={handleSubmit} className="login-form">
+        <form onSubmit={handleSubmit} className="auth-form">
         <div className="form-group">
           <label htmlFor="email" className="form-label">Email address:</label>
           <input
@@ -79,13 +80,14 @@ const handleSubmit = async (e) => {
 
         <button 
           type="submit" 
-          className="login-button"
+          className="primary-button"
           disabled={isSubmitting}
         >
           {isSubmitting ? 'Logging in...' : 'Login'}
         </button>
       </form>
     </div>
+    </main>
 )}
 
 export default Login;
