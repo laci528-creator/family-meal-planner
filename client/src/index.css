@@ -670,22 +670,12 @@ body {
   border-radius: 8px;
 }
 
-.shopping-item-info {
-  flex: 1;
-
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-
-  min-width: 0;
-}
-
 .ingredient-name {
-  flex: 1;
+  width: 200px;
 }
 
 .ingredient-measure {
-  min-width: 100px;
+  width: 150px;
 
   color: var(--color-text-muted);
 }
@@ -707,6 +697,7 @@ body {
 
 .shopping-delete-button {
   padding: 0.4rem 0.7rem;
+  margin-right: 15px;
 
   border: 1px solid var(--danger);
   border-radius: 5px;

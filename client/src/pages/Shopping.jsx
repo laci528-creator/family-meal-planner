@@ -263,21 +263,26 @@ async function handleAddItem({ name, measure }) {
             key={itemKey}
             className="shopping-item"
           >
+            <div className="ingredient-name">
             <button
               className="shopping-delete-button"
+              title="Delete Item"
+              
                 type="button"
                 onClick={() => deleteItem(item.id)}
                 disabled={deletingItemId === item.id}
             >
                 {deletingItemId === item.id
                   ? "Deleting..."
-                  : "Delete"}
+                  : "X"}
             </button>
-            <div className="shopping-item-info">
-              <strong className="ingredient-name">{item.name}</strong> <span className="ingredient-measure">{item.measure}</span>
+            
+              <strong>{item.name}</strong> 
+            </div>
+            <div className="ingredient-measure">
+              <p>{item.measure}</p>
             </div>
             <div className="shopping-item-actions">
-
               <label className="shopping-checkbox">
                 <input
                   type="checkbox"
