@@ -75,6 +75,10 @@ if (groupedItems.has(key)) {
   existingItem.itemIds.push(
     processed.item.id
   );
+
+    existingItem.statuses.push(
+    processed.item.status
+  );
 }
 
  else {
@@ -87,12 +91,26 @@ if (groupedItems.has(key)) {
                 ? [processed.item.measure]
                 : [],
         itemIds: [processed.item.id],
+        statuses: [processed.item.status],
       });
     }
   }
 
-  return [...groupedItems.values()].map((item) => ({
-  ...item,
-  measure: formatGroupedMeasure(item),
-}));
+return [...groupedItems.values()].map((item) => {
+  const firstStatus = item.statuses[0];
+
+  const sameStatus = item.statuses.every(
+    (status) => status === firstStatus
+  );
+
+  return {
+    ...item,
+
+    status: sameStatus
+      ? firstStatus
+      : "mixed",
+
+    measure: formatGroupedMeasure(item),
+  };
+});
 }
