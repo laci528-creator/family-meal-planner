@@ -1,5 +1,6 @@
 import pool from '../config/db.js';
 import { isValidISODate, getEndDate } from '../utils/dateUtils.js';
+import { groupShoppingItems } from "../utils/shoppingUtils.js";
 
 export async function getShoppingList(req, res) {
 
@@ -196,8 +197,7 @@ export async function generateShoppingList(req, res) {
 }
 
 export async function updateShoppingItemStatus(req, res) {
-  const { id } = req.params;
-  const { status } = req.body;
+  const { itemIds, status } = req.body;
   const userId = req.session.user.id;
 
   const allowedStatuses = [
@@ -206,10 +206,16 @@ export async function updateShoppingItemStatus(req, res) {
     "purchased",
   ];
 
-  if (!/^\d+$/.test(id)) {
+  if (
+    !Array.isArray(itemIds) ||
+    itemIds.length === 0 ||
+    !itemIds.every(
+      (id) => Number.isInteger(id) && id > 0
+    )
+  ) {
     return res.status(400).json({
       error: true,
-      message: "Invalid shopping item ID.",
+      message: "Invalid shopping item IDs.",
     });
   }
 
@@ -225,11 +231,11 @@ export async function updateShoppingItemStatus(req, res) {
       `
         UPDATE shopping_list_items
         SET status = $1
-        WHERE id = $2
-          AND user_id = $3
+        WHERE user_id = $2
+          AND id = ANY($3::int[])
         RETURNING id, status
       `,
-      [status, id, userId]
+      [status, userId, itemIds]
     );
 
     if (result.rows.length === 0) {
@@ -242,7 +248,7 @@ export async function updateShoppingItemStatus(req, res) {
     return res.status(200).json({
       error: false,
       message: "Shopping item status updated.",
-      item: result.rows[0],
+      items: result.rows,
     });
 
   } catch (error) {

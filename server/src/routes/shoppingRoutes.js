@@ -15,7 +15,7 @@ const router = express.Router();
 router.get('/', requireAuth, getShoppingList);
 router.post("/generate",requireAuth,generateShoppingList);
 router.patch(
-  "/:id",
+  "/status",
   requireAuth,
   updateShoppingItemStatus
 );
