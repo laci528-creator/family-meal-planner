@@ -19,7 +19,7 @@ router.patch(
   requireAuth,
   updateShoppingItemStatus
 );
-router.delete('/:id', requireAuth, removeItemFromShoppingList);
+router.delete('/', requireAuth, removeItemFromShoppingList);
 router.post('/', requireAuth, addItemToShoppingList);
 /*router.patch("/:id", requireAuth, updateShoppingItem);
 

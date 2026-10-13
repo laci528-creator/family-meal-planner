@@ -264,42 +264,49 @@ export async function updateShoppingItemStatus(req, res) {
   }
 }
 
-export async function removeItemFromShoppingList(req,res) {
-    const { id }  = req.params;
-    const userId = req.session.user.id;
+export async function removeItemFromShoppingList(req, res) {
+  const { itemIds } = req.body;
+  const userId = req.session.user.id;
 
-      if (!/^\d+$/.test(id)) {
-            return res.status(400).json({
-            error: true,
-            message: "Invalid shopping item ID.",
-            });
-        }
+  if (
+    !Array.isArray(itemIds) ||
+    itemIds.length === 0 ||
+    !itemIds.every(
+      (id) => Number.isInteger(id) && id > 0
+    )
+  ) {
+    return res.status(400).json({
+      error: true,
+      message: "Invalid shopping item IDs.",
+    });
+  }
 
   try {
     const deleteResult = await pool.query(
       `
         DELETE FROM shopping_list_items
-        WHERE id = $1
-          AND user_id = $2
-          RETURNING name
+        WHERE user_id = $1
+          AND id = ANY($2::int[])
+        RETURNING id, name
       `,
-      [id, userId]
+      [userId, itemIds]
     );
 
     if (deleteResult.rows.length === 0) {
       return res.status(404).json({
         error: true,
-        message: "Shopping item not found.",
+        message: "Shopping items not found.",
       });
     }
 
     return res.status(200).json({
       error: false,
-      message: "Shopping item deleted succesfully.",
+      message: "Shopping items deleted successfully.",
       name: deleteResult.rows[0].name,
+      deletedItems: deleteResult.rows,
     });
 
-    } catch (error) {
+  } catch (error) {
     console.error(
       "Delete shopping item error:",
       error
@@ -307,7 +314,7 @@ export async function removeItemFromShoppingList(req,res) {
 
     return res.status(500).json({
       error: true,
-      message: "Could not delete shopping item",
+      message: "Could not delete shopping item.",
     });
   }
 }
