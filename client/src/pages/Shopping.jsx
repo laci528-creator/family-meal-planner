@@ -12,7 +12,7 @@ import {
 function Shopping() {
   const [shoppingList, setShoppingList] = useState([]);
   const [ingredientsLoading, setIngredientsLoading] = useState(true);
-  const [deletingItemId, setDeletingItemId] = useState(null);
+  const [deletingItemKey, setDeletingItemKey] = useState(null);
   const [itemSaving, setItemSaving] = useState(false);
   const [listGenerate, setListGenerate] = useState(false);
   const [message, setMessage] = useState("");
@@ -123,7 +123,8 @@ function Shopping() {
     }
 
 async function handleStatusChange(
-  itemId,
+  itemIds,
+  itemKey,
   newStatus,
   checked
 ) {
@@ -133,15 +134,16 @@ async function handleStatusChange(
 
   try {
     await api.patch(
-      `/shopping/${itemId}`,
+      `/shopping/status`,
       {
+        itemIds,
         status,
       }
     );
 
     setItemStatus((previousStatus) => ({
       ...previousStatus,
-      [itemId]: status,
+      [itemKey]: status,
     }));
 
   } catch (error) {
@@ -157,19 +159,24 @@ async function handleStatusChange(
 }
 
 
-async function deleteItem(itemId) {
+async function deleteItem(itemIds, itemKey) {
 
-  setDeletingItemId(itemId);
+  setDeletingItemKey(itemKey);
   setError(null);
   setMessage("");
 
   try {
 
     const response = await api.delete(
-      `/shopping/${itemId}`
+      `/shopping`,
+      {
+        data: {
+          itemIds,
+        },
+      }
     );
 
-      setShoppingList(prevList => prevList.filter(item => item.id !== itemId))
+      await fetchShoppingList();
 
       setMessage(
        `${response.data.message} (${response.data.name})`
@@ -185,7 +192,7 @@ async function deleteItem(itemId) {
       error
     );
   } finally {
-    setDeletingItemId(null);
+    setDeletingItemKey(null);
     }
 }
 
@@ -208,11 +215,7 @@ async function handleAddItem({ name, measure }) {
       }
     );
 
-    setShoppingList((prevList) =>
-      [...prevList, response.data.item].sort((a, b) =>
-        a.name.localeCompare(b.name)
-      )
-    );
+  await fetchShoppingList();
 
     setMessage(response.data.message);
 
@@ -281,7 +284,7 @@ async function handleAddItem({ name, measure }) {
       ) : (
       <div className="shopping-list">
         {shoppingList.map((item) => {
-            const itemKey = item.id;
+            const itemKey = item.itemIds.join("-");
             const status =
               itemStatus[itemKey] ??
               item.status ??
@@ -297,10 +300,10 @@ async function handleAddItem({ name, measure }) {
               className="shopping-delete-button"
               aria-label={`Delete ${item.name}`}
               type="button"
-              onClick={() => deleteItem(item.id)}
-              disabled={deletingItemId === item.id}
+              onClick={() => deleteItem(item.itemIds, itemKey)}
+              disabled={deletingItemKey === itemKey}
             >
-                {deletingItemId === item.id
+                {deletingItemKey === itemKey
                   ? "Deleting..."
                   : "X"}
             </button>
@@ -317,6 +320,7 @@ async function handleAddItem({ name, measure }) {
                   checked={status === "at_home"}
                   onChange={(e) =>
                     handleStatusChange(
+                      item.itemIds,
                       itemKey,
                       "at_home",
                       e.target.checked
@@ -331,6 +335,7 @@ async function handleAddItem({ name, measure }) {
                     checked={status === "purchased"}
                     onChange={(e) =>
                       handleStatusChange(
+                        item.itemIds,
                         itemKey,
                         "purchased",
                         e.target.checked
