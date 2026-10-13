@@ -208,19 +208,23 @@ async function handleAddItem({ name, measure }) {
   return (
     <main className="shopping-page">
       <h1>Weekly Shopping List</h1>
-      <div className="calendar-header">
-        <h3>
+
+      <div className="week-navigation">
+        <h2 className="week-date">
           {currentMonday.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })} - 
           {addDays(currentMonday, 6).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric'  })}
-        </h3>
-      <div className="shopping-week-actions">
+        </h2>
+      <div className="week-navigation-buttons">
         <button onClick={() => changeWeek(-1)}>&lt; Previous week</button>
         <button onClick={() => setCurrentMonday(getWeekStart(new Date()))}>Current week</button>
  
         <button onClick={() => changeWeek(1)}>Next week &gt;</button>
       </div>
+
+      </div>
+      <div className="shopping-actions-panel">
         <button
-          className="primary-button"
+          className="primary-button refresh-shopping-button"
           onClick={handleGenerateShoppingList}
           disabled={listGenerate}
         >
@@ -230,8 +234,7 @@ async function handleAddItem({ name, measure }) {
               ? "Generate shopping list"
               : "Refresh from planner"}
         </button>
-      </div>
-      <div>
+
         <ShoppingItemForm
           onAddItem={handleAddItem}
           isSaving={itemSaving}

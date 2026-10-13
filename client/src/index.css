@@ -651,6 +651,74 @@ body {
 
 /*---Shopping-List---*/
 
+.shopping-page h1 {
+  margin: 1rem auto;
+}
+
+.week-navigation {
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.week-date {
+  text-align: center;
+  margin: 0 0 0.8rem;
+}
+
+.week-navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.week-navigation-buttons button {
+  padding: 0.55rem 0.9rem;
+  border: none;
+  border-radius: 5px;
+
+  background: var(--color-primary);
+  color: white;
+
+  cursor: pointer;
+}
+
+.week-navigation-buttons button:hover {
+  background: var(--color-primary-hover);
+}
+
+.refresh-shopping-button {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 600px) {
+  .week-navigation-buttons {
+    gap: 0.4rem;
+  }
+
+  .week-navigation-buttons button {
+    flex: 1;
+    padding: 0.5rem 0.3rem;
+    font-size: 0.85rem;
+  }
+    .refresh-shopping-button {
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+.shopping-actions-panel {
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
 .shopping-list {
   display: flex;
   flex-direction: column;
