@@ -146,7 +146,7 @@ function Register() {
           className="primary-button"
           disabled={isSubmitting}
         >
-          {isSubmitting ? 'Creating account...' : 'Create an Account '}
+          {isSubmitting ? 'Creating account...' : 'Create account '}
         </button>
       </form>
     </div>
