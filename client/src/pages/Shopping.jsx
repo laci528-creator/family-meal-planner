@@ -263,14 +263,13 @@ async function handleAddItem({ name, measure }) {
             key={itemKey}
             className="shopping-item"
           >
-            <div className="ingredient-name">
+            <div className="shopping-item-main">
             <button
               className="shopping-delete-button"
-              title="Delete Item"
-              
-                type="button"
-                onClick={() => deleteItem(item.id)}
-                disabled={deletingItemId === item.id}
+              aria-label={`Delete ${item.name}`}
+              type="button"
+              onClick={() => deleteItem(item.id)}
+              disabled={deletingItemId === item.id}
             >
                 {deletingItemId === item.id
                   ? "Deleting..."
@@ -279,7 +278,7 @@ async function handleAddItem({ name, measure }) {
             
               <strong>{item.name}</strong> 
             </div>
-            <div className="ingredient-measure">
+            <div className="shopping-item-measure">
               <p>{item.measure}</p>
             </div>
             <div className="shopping-item-actions">

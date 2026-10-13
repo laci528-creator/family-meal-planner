@@ -670,11 +670,11 @@ body {
   border-radius: 8px;
 }
 
-.ingredient-name {
+.shopping-item-main {
   width: 200px;
 }
 
-.ingredient-measure {
+.shopping-item-measure {
   width: 150px;
 
   color: var(--color-text-muted);
@@ -720,13 +720,65 @@ body {
     flex-direction: column;
   }
 
-  .shopping-item-info,
+  .shopping-item-main,
+  .shopping-item-measure
   .shopping-item-actions {
     width: 100%;
   }
 
   .shopping-item-actions {
     justify-content: space-between;
+  }
+}
+
+/*---Formular Global---*/
+
+.form-input {
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+
+  font: inherit;
+  color: var(--color-text);
+  background: var(--color-surface);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+/*---shopping-item-form---*/
+
+.shopping-item-form {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+}
+
+.shopping-item-form .form-input {
+  width: 175px;
+  height: 42px;
+}
+
+.shopping-item-form .primary-button {
+  width: 145px;
+  height: 42px;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .shopping-item-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .shopping-item-form .form-input,
+  .shopping-item-form .primary-button {
+    width: 100%;
   }
 }
 

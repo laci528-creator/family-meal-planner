@@ -26,6 +26,7 @@ function ShoppingItemForm({ onAddItem, isSaving }) {
       onSubmit={handleSubmit}
     >
       <input
+        className="form-input"
         type="text"
         placeholder="Item name"
         value={name}
@@ -33,6 +34,7 @@ function ShoppingItemForm({ onAddItem, isSaving }) {
       />
 
       <input
+        className="form-input"      
         type="text"
         placeholder="Amount / measure"
         value={measure}
