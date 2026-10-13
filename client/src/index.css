@@ -228,6 +228,17 @@ body {
   background-color: var(--color-primary-hover);
 }
 
+.secondary-button {
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--color-primary);
+  border-radius: 5px;
+
+  background: transparent;
+  color: var(--color-primary);
+
+  cursor: pointer;
+}
+
 /*---Recipe Page---*/
 
 .recipes-grid {
@@ -544,6 +555,146 @@ body {
 .meal-actions .delete-meal-button:hover {
   background: var(--danger);
   color: white;
+}
+
+/*--- Family recipe form ---*/
+
+.family-recipe-page h1 {
+  margin: 1rem auto;
+  text-align: center;
+}
+
+.recipe-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.instructions-field {
+  grid-column: 1 / -1;
+}
+
+.family-recipe-form {
+  max-width: 800px;
+  padding: 1.5rem;
+  margin: 1.5rem auto;
+
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.recipe-fields .form-label {
+    display: block;
+  margin-top: 0.9rem;
+  margin-bottom: 0.35rem;
+
+  font-weight: 600;
+}
+
+.family-recipe-form .form-label {
+  display: block;
+  margin-bottom: 0.35rem;
+
+  font-weight: 600;
+}
+
+.family-recipe-form .form-input,
+.family-recipe-form .form-textarea {
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+
+  font: inherit;
+  background: var(--color-surface);
+  color: var(--color-text);
+
+  box-sizing: border-box;
+}
+
+.family-recipe-form .form-textarea {
+  min-height: 140px;
+  resize: vertical;
+  margin-bottom: 1rem;
+}
+
+.family-recipe-form .form-input:focus,
+.family-recipe-form .form-textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.ingredients-field-container {
+  margin-top: 1rem;
+}
+
+.ingredient-field {
+  display: grid;
+  grid-template-columns: 1fr 160px auto;
+  gap: 0.6rem;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.ingredient-remove-button {
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--danger);
+  border-radius: 5px;
+
+  background: transparent;
+  color: var(--danger);
+
+  cursor: pointer;
+}
+
+.ingredient-remove-button:hover {
+  background: var(--danger);
+  color: white;
+}
+
+.family-recipe-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.family-recipe-actions button {
+  height: 42px;
+}
+
+@media (max-width: 600px) {
+  .recipe-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .ingredient-field {
+    grid-template-columns: 1fr;
+  }
+
+    .instructions-field {
+    grid-column: auto;
+  }
+
+  .family-recipe-form {
+    padding: 1rem;
+  }
+    .family-recipe-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+    .ingredient-remove-button {
+    justify-self: end;
+    margin-top: 0.25rem;
+  }
+
+    .ingredient-remove-button {
+    justify-self: end;
+  }
 }
 
 /* Calendar recipeCards */

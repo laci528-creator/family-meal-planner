@@ -109,8 +109,12 @@ return (
     )}
     
       <form onSubmit={handleSubmit} className="family-recipe-form">
+        <div className="recipe-fields">
+
+          <div className="form-group">
         <label htmlFor="title" className="form-label">Recipe Title:</label>
             <input
+                className="form-input"
                 type="text"
                 id="title"
                 name="title"
@@ -120,6 +124,7 @@ return (
                 />
             <label htmlFor="category" className="form-label">Category:</label>
             <input
+                className="form-input"
                 type="text"
                 id="category"
                 name="category"
@@ -127,8 +132,11 @@ return (
                 onChange={handleChange}
                 required
                 />
+                </div>
+              <div className="form-group">
             <label htmlFor="cuisine" className="form-label">Cuisine:</label>
             <input
+                className="form-input"
                 type="text"
                 id="cuisine"
                 name="cuisine"
@@ -136,17 +144,9 @@ return (
                 onChange={handleChange}
                 required
                 />
-            <label htmlFor="instructions" className="form-label">Instructions:</label>
-            <textarea
-                id="instructions"
-                name="instructions"
-                value={formData.instructions}
-                onChange={handleChange}
-                rows="8"
-                required
-                />
-            <label htmlFor="imageUrl" className="form-label">ImageUrl:</label>
+            <label htmlFor="imageUrl" className="form-label">Image URL:</label>
             <input
+                className="form-input"
                 type="url"
                 id="imageUrl"
                 name="imageUrl"
@@ -154,7 +154,21 @@ return (
                 onChange={handleChange}
                 placeholder="https://..."
                 />
-        
+              </div>
+              <div className="form-group instructions-field">
+            <label htmlFor="instructions" className="form-label">Instructions:</label>
+            <textarea
+                className="form-textarea"
+                id="instructions"
+                name="instructions"
+                value={formData.instructions}
+                onChange={handleChange}
+                rows="8"
+                required
+                />
+              </div>
+
+        </div>
         <h3>Ingredients</h3>
 
         <div className="ingredients-field-container">
@@ -164,6 +178,7 @@ return (
                 key={index}
                 >
                 <input
+                    className="form-input"
                     type="text"
                     placeholder="Ingredient"
                     value={ingredient.name}
@@ -177,6 +192,7 @@ return (
                     required={index === 0}
                 />
                 <input
+                    className="form-input"
                     type="text"
                     placeholder="Measure"
                     value={ingredient.measure}
@@ -188,9 +204,12 @@ return (
                         )
                     }
                 />
+                
                 {ingredients.length > 1 && (
+                  
                     <button
                     type="button"
+                    className="ingredient-remove-button"
                     onClick={() => removeIngredient(index)}
                     >
                     X
@@ -198,9 +217,10 @@ return (
                 )}
                 </div>
             ))}
-            </div>
+            <div className="family-recipe-actions">
             <button
                 type="button"
+                className="secondary-button"
                 onClick={addIngredient}
                 disabled={ingredients.length >= 20}
                 >
@@ -208,6 +228,8 @@ return (
             </button>
 
             <button type="submit" className="primary-button" disabled={isSubmitting}>{isSubmitting ? "Saving..." : submitText}</button>
+        </div>
+        </div>
         </form>
         </>
     );
