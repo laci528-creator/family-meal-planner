@@ -3,6 +3,7 @@ import {
   getMeasureType,
   convertWeightToGrams,
   convertVolumeToMl,
+  formatGroupedMeasure,
 } from "./measureUtils.js";
 
 
@@ -90,5 +91,8 @@ if (groupedItems.has(key)) {
     }
   }
 
-  return [...groupedItems.values()];
+  return [...groupedItems.values()].map((item) => ({
+  ...item,
+  measure: formatGroupedMeasure(item),
+}));
 }
