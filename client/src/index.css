@@ -1058,6 +1058,36 @@ body {
   }
 }
 
+.shopping-error-message {
+  position: fixed;
+  top: 70px;
+  right: 20px;
+  z-index: 1000;
+
+  padding: 0.8rem 1rem;
+
+  background-color: var(--danger-bg);
+  border: 1px solid var(--danger-border);
+  border-left: 4px solid var(--danger);
+  border-radius: 6px;
+
+  color: var(--danger);
+  font-weight: 600;
+
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+}
+
+@media (max-width: 600px) {
+  .shopping-message,
+  .shopping-error-message {
+    top: 60px;
+    left: 1rem;
+    right: 1rem;
+    text-align: center;
+  }
+}
+
+
 /*---Formular Global---*/
 
 .form-input {

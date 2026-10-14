@@ -74,6 +74,16 @@ function Shopping() {
     return () => clearTimeout(timer);
   }, [message]);
 
+  useEffect(() => {
+    if (!error) return;
+
+    const timer = setTimeout(() => {
+      setError(null);
+    }, 8000);
+
+    return () => clearTimeout(timer);
+  }, [error]);
+
 
   async function handleGenerateShoppingList() {
 
@@ -287,14 +297,23 @@ function Shopping() {
         </p>
       )}
 
+      {error && (
+        <p
+          className="shopping-error-message"
+          role="alert"
+        >
+          {error}
+        </p>
+      )}
+
       {ingredientsLoading ? (
         <p>Loading shopping list...</p>
-      ) : error ? (
-        <p className="error-message">{error}</p>
       ) : shoppingList.length === 0 ? (
         <p>No shopping items for this week.</p>
       ) : (
-        <div className="shopping-list">
+        <div className="shopping-list"
+          role="alert"
+          aria-live="assertive">
           {shoppingList.map((item) => {
             const itemKey = item.itemIds.join("-");
             const status =
