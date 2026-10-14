@@ -26,7 +26,7 @@ export function parseAmount(value) {
 
 export function parseMeasure(measure) {
 
-if (
+  if (
     typeof measure !== "string" ||
     measure.trim() === ""
   ) {
@@ -48,7 +48,7 @@ if (
 
   if (!Number.isFinite(amount)) {
     return null;
-}
+  }
 
   return {
     amount,
@@ -116,9 +116,9 @@ export function convertWeightToGrams(measure) {
 
   const gramFactor = WEIGHT_UNITS[unit];
 
-if (gramFactor === undefined) {
-  return null;
-}
+  if (gramFactor === undefined) {
+    return null;
+  }
 
   return amount * gramFactor;
 }
@@ -184,7 +184,16 @@ export function formatGroupedMeasure(item) {
   }
 
   if (item.type === "unknown") {
-    return item.measures.join(" + ");
+    const formattedMeasures =
+      item.unknownMeasures.map(
+        (measure) =>
+          `${roundMeasure(measure.amount)} ${measure.unit}`
+      );
+
+    return [
+      ...formattedMeasures,
+      ...item.rawMeasures,
+    ].join(" + ");
   }
 
   return "";
