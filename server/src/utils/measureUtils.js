@@ -25,7 +25,6 @@ export function parseAmount(value) {
 
 
 export function parseMeasure(measure) {
-
   if (
     typeof measure !== "string" ||
     measure.trim() === ""
@@ -35,26 +34,34 @@ export function parseMeasure(measure) {
 
   const match = measure
     .trim()
-    .match(/^([\d./\s]+)\s*([a-zA-Z]+)$/);
+    .match(/^([\d./\s]+)\s*([a-zA-Z]+)?$/);
 
   if (!match) {
     return null;
   }
 
   const amountText = match[1].trim();
-  const unit = match[2].toLowerCase();
-
   const amount = parseAmount(amountText);
 
   if (!Number.isFinite(amount)) {
     return null;
   }
 
+  const unit = match[2]
+    ? match[2].toLowerCase()
+    : null;
+
   return {
     amount,
     unit,
   };
 }
+
+console.log(parseMeasure("2"));
+console.log(parseMeasure("1/4"));
+console.log(parseMeasure("1 1/2"));
+console.log(parseMeasure("500 g"));
+console.log(parseMeasure("to taste"));
 
 const WEIGHT_UNITS = {
   mg: 0.001,
