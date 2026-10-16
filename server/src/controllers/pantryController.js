@@ -86,3 +86,49 @@ export async function addItemForPantry(req, res) {
 
 
 }
+
+
+export async function deletePantryItem(req, res) {
+    const { id } = req.params;
+    const userId = req.session.user.id;
+
+    if (!/^\d+$/.test(id)) {
+        return res.status(400).json({
+            error: true,
+            message: "Invalid pantry item ID.",
+        });
+    }
+
+    try {
+        const result = await pool.query(
+            `
+        DELETE FROM pantry_staples
+        WHERE id = $1
+          AND user_id = $2
+        RETURNING id, name
+      `,
+            [id, userId]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({
+                error: true,
+                message: "Pantry item not found.",
+            });
+        }
+
+        return res.status(200).json({
+            error: false,
+            message: "Pantry item deleted successfully.",
+            item: result.rows[0],
+        });
+
+    } catch (error) {
+        console.error("Delete pantry item error:", error);
+
+        return res.status(500).json({
+            error: true,
+            message: "Could not delete pantry item.",
+        });
+    }
+}
