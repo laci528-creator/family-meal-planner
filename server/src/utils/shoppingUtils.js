@@ -82,6 +82,8 @@ export function groupShoppingItems(items) {
                 measure.unit === processed.unit
             );
 
+
+
           if (existingMeasure) {
             existingMeasure.amount +=
               processed.amount;
@@ -92,14 +94,32 @@ export function groupShoppingItems(items) {
             });
           }
         } else {
-          existingItem.rawMeasures.push(
-            processed.item.measure
-          );
+          const currentRawMeasure =
+            typeof processed.item.measure === "string"
+              ? processed.item.measure.trim()
+              : "";
+
+          const rawMeasureExists =
+            existingItem.rawMeasures.some(
+              (measure) =>
+                measure.trim().toLowerCase() ===
+                processed.item.measure.trim().toLowerCase()
+            );
+
+          if (
+            currentRawMeasure !== "" &&
+            !rawMeasureExists
+          ) {
+            existingItem.rawMeasures.push(
+              processed.item.measure
+            );
+          }
         }
       } else {
         existingItem.amount +=
           processed.convertedAmount;
       }
+
 
       existingItem.itemIds.push(
         processed.item.id
@@ -133,8 +153,10 @@ export function groupShoppingItems(items) {
 
         rawMeasures:
           unitType === "unknown" &&
-            processed.unit === null
-            ? [processed.item.measure]
+            processed.unit === null &&
+            typeof processed.item.measure === "string" &&
+            processed.item.measure.trim() !== ""
+            ? [processed.item.measure.trim()]
             : [],
 
         itemIds: [processed.item.id],

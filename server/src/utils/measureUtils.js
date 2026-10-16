@@ -184,9 +184,9 @@ export function formatGroupedMeasure(item) {
     return `${roundMeasure(item.amount)} ml`;
   }
 
-    if (item.type === "count") {
-      return `${roundMeasure(item.amount)}`;
-    }
+  if (item.type === "count") {
+    return `${roundMeasure(item.amount)}`;
+  }
 
   if (item.type === "unknown") {
     const formattedMeasures =
@@ -194,8 +194,6 @@ export function formatGroupedMeasure(item) {
         (measure) =>
           `${roundMeasure(measure.amount)} ${measure.unit}`
       );
-
-
 
     return [
       ...formattedMeasures,
