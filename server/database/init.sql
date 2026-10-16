@@ -126,3 +126,24 @@ CREATE TABLE IF NOT EXISTS shopping_list_items (
     CONSTRAINT shopping_source_check
         CHECK (source IN ('planner', 'manual'))
 );
+
+CREATE TABLE IF NOT EXISTS pantry_staples (
+  id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+
+  user_id INTEGER NOT NULL
+    REFERENCES users(id)
+    ON DELETE CASCADE,
+
+  name VARCHAR(255) NOT NULL,
+
+  created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+
+      CONSTRAINT pantry_staples_name_not_blank
+        CHECK (BTRIM(name) <> '')
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS pantry_staples_user_name_unique
+ON pantry_staples (
+  user_id,
+  LOWER(BTRIM(name))
+);
