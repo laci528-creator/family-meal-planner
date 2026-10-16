@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS pantry_staples (
 
   name VARCHAR(255) NOT NULL,
 
-  created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+  created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
       CONSTRAINT pantry_staples_name_not_blank
         CHECK (BTRIM(name) <> '')
