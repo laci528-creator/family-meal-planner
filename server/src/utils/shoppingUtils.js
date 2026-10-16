@@ -21,7 +21,9 @@ function getShoppingItemGroup(item) {
   }
 
   const unitType =
-    getMeasureType(parsedItem.unit);
+    parsedItem.unit === null
+      ? "count"
+      : getMeasureType(parsedItem.unit);
 
   let convertedAmount = null;
 
@@ -32,8 +34,8 @@ function getShoppingItemGroup(item) {
   } else if (unitType === "volume") {
     convertedAmount =
       convertVolumeToMl(item.measure);
-  } else if (unitType == "string") {
-    convertedAmount = item.measure;
+  } else if (unitType === "count") {
+    convertedAmount = parsedItem.amount;
   }
 
   return {
@@ -56,7 +58,6 @@ export function groupShoppingItems(items) {
       .toLowerCase();
 
     const unitType = processed.unitType;
-    const newUnit = processed.unit;
 
     let key;
 

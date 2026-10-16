@@ -57,12 +57,6 @@ export function parseMeasure(measure) {
   };
 }
 
-console.log(parseMeasure("2"));
-console.log(parseMeasure("1/4"));
-console.log(parseMeasure("1 1/2"));
-console.log(parseMeasure("500 g"));
-console.log(parseMeasure("to taste"));
-
 const WEIGHT_UNITS = {
   mg: 0.001,
   milligram: 0.001,
@@ -190,12 +184,18 @@ export function formatGroupedMeasure(item) {
     return `${roundMeasure(item.amount)} ml`;
   }
 
+    if (item.type === "count") {
+      return `${roundMeasure(item.amount)}`;
+    }
+
   if (item.type === "unknown") {
     const formattedMeasures =
       item.unknownMeasures.map(
         (measure) =>
           `${roundMeasure(measure.amount)} ${measure.unit}`
       );
+
+
 
     return [
       ...formattedMeasures,
