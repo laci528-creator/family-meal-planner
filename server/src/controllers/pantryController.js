@@ -82,9 +82,6 @@ export async function addItemForPantry(req, res) {
             message: "Could not add pantry item.",
         });
     }
-
-
-
 }
 
 
