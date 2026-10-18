@@ -14,6 +14,7 @@ function Navbar() {
             <NavLink to="/recipes" className={({ isActive }) => `nav-link-a${isActive ? " active" : ""}`}>Recipes</NavLink>
             <NavLink to="/planner" className={({ isActive }) => `nav-link-a${isActive ? " active" : ""}`}>Planner</NavLink>
             <NavLink to="/shopping" className={({ isActive }) => `nav-link-a${isActive ? " active" : ""}`}>Shopping</NavLink>
+            <NavLink to="/pantry" className={({ isActive }) => `nav-link-a${isActive ? " active" : ""}`}>Pantry</NavLink>
             {user ? (
                 <>
                   <span className="nav-user">Hello, {user.firstName}</span>

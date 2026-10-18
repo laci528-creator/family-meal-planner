@@ -17,6 +17,7 @@ import SavedRecipeDetails from "./pages/SavedRecipeDetails";
 import DiscoverRecipes from "./pages/DiscoverRecipes";
 import AddFamilyRecipes from "./pages/AddFamilyRecipe";
 import EditFamilyRecipes from "./pages/EditFamilyRecipe";
+import Pantry from "./pages/Pantry";
 
 import './App.css'
 import RecipeCard from "./components/RecipeCard";
@@ -81,6 +82,15 @@ function App() {
                   element={
                     <ProtectedRoute>
                       <ShoppingList />
+                    </ProtectedRoute>
+                  }
+                />
+
+                <Route
+                  path="/pantry"
+                  element={
+                    <ProtectedRoute>
+                      <Pantry />
                     </ProtectedRoute>
                   }
                 />
