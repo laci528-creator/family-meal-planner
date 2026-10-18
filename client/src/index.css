@@ -1139,6 +1139,90 @@ body {
   }
 }
 
+/*---Pantry---*/
+
+.pantry-page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.pantry-form-panel {
+  padding: 1rem;
+  margin-bottom: 1rem;
+
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.pantry-items-form {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-end;
+}
+
+.pantry-items-form .form-label {
+  margin: auto 0;
+}
+
+.pantry-items-form .form-input {
+  margin: auto 0;
+}
+
+.pantry-items-form .primary-button {
+  height: 42px;
+}
+
+.pantry-fields {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.pantry-fields .form-input {
+  flex: 1;
+}
+
+.pantry-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pantry-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0.75rem 1rem;
+
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.pantry-delete-button {
+  border: 1px solid var(--danger);
+  background: transparent;
+  color: var(--danger);
+
+  border-radius: 5px;
+  padding: 0.35rem 0.55rem;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .pantry-fields {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .pantry-fields .primary-button {
+    width: 100%;
+  }
+}
 
 /*---Footer---*/
 

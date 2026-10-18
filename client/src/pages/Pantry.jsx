@@ -120,7 +120,7 @@ function Pantry() {
         <main className="pantry-page">
             <h1>My Pantry List</h1>
 
-            <div>
+            <div className="pantry-form-panel">
                 <h3>Add new Pantry item:</h3>
                 <PantryItemForm
                     onAddItem={handleAddItem}
