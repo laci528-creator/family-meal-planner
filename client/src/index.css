@@ -207,6 +207,47 @@ body {
   object-fit: cover;
 }
 
+/*--- About-projekt---*/
+
+.about-project {
+  margin-top: 2rem;
+  padding: 1.5rem;
+
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.about-project h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.about-project h3 {
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.about-project-text {
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+}
+
+.about-project-list {
+  padding-left: 1.25rem;
+  line-height: 1.6;
+}
+
+.about-project-stack {
+  line-height: 1.6;
+}
+
+.about-project-text,
+.about-project-list,
+.about-project-stack {
+  max-width: 950px;
+}
+
 /*--- Buttons --*/
 
 .primary-button {

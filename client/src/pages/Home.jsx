@@ -40,7 +40,7 @@ function Home() {
           <h2>Discover Recipes</h2>
           <p>Find new recipes and save your favourites.</p>
           <div className="button-container">
-          <Link to="/discover" className="primary-button">Discover recipes</Link>
+            <Link to="/discover" className="primary-button">Discover recipes</Link>
           </div>
         </article>
 
@@ -48,7 +48,7 @@ function Home() {
           <h2>Family Recipes</h2>
           <p>Keep your own and traditional family recipes in one place.</p>
           <div className="button-container">
-          <Link to="/recipes/family/new" className="primary-button"> Add family recipe </Link>
+            <Link to="/recipes/family/new" className="primary-button"> Add family recipe </Link>
           </div>
         </article>
 
@@ -56,7 +56,7 @@ function Home() {
           <h2>Weekly Planner</h2>
           <p>Plan your meals for the upcoming week.</p>
           <div className="button-container">
-          <Link to="/planner" className="primary-button">Plan your week</Link>
+            <Link to="/planner" className="primary-button">Plan your week</Link>
           </div>
         </article>
 
@@ -64,7 +64,7 @@ function Home() {
           <h2>Shopping List</h2>
           <p>Create a shopping list automatically from your meal plan.</p>
           <div className="button-container">
-          <Link to="/shopping" className="primary-button">View shopping list</Link>
+            <Link to="/shopping" className="primary-button">View shopping list</Link>
           </div>
         </article>
       </div>
@@ -97,25 +97,19 @@ function Home() {
                 <p>{recipe.cuisine}</p>
               )}
               <br></br>
-               <Link
-              to={`/recipes/${recipe.externalId}`}
-              className="primary-button"
-            >
-              View recipe
-            </Link>
+              <Link
+                to={`/recipes/${recipe.externalId}`}
+                className="primary-button"
+              >
+                View recipe
+              </Link>
             </div>
-           
+
           </article>
         )}
       </section>
       <AboutProject />
-
     </section>
-
-    
-
-
-    
   );
 }
 
