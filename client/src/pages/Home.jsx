@@ -70,7 +70,6 @@ function Home() {
       </div>
 
       <section className="recipe-inspiration">
-        <h2>Recipe Inspiration</h2>
 
         {loading && <p>Loading recipe...</p>}
 
@@ -88,13 +87,24 @@ function Home() {
               className="recipe-inspiration-image"
             />
 
-            <div>
+            <div className="recipe-inspiration-text">
+
+              <h2>Daily Recipe Inspiration</h2>
+
               <h3>{recipe.title}</h3>
 
-              <p>{recipe.category}</p>
+              <p>                
+                <span className="recipe-inspiration-label">
+                Category:
+              </span>{" "}     
+              {recipe.category}</p>
 
               {recipe.cuisine && (
-                <p>{recipe.cuisine}</p>
+                <p>
+                  <span className="recipe-inspiration-label">
+                Cuisine:
+              </span>{" "} 
+              {recipe.cuisine}</p>
               )}
               <br></br>
               <Link

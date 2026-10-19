@@ -148,7 +148,7 @@ body {
 .feature-card {
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--color-text);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   padding: 15px;
   background-color: var(--color-surface);
@@ -159,11 +159,12 @@ body {
 
 .feature-card:hover {
   transform: translateY(-2px);
-  box-shadow: 3px 2px var(--color-text-muted);
+  box-shadow: 3px 3px 2px  var(--color-text-muted);
 }
 
 .feature-card h2 {
   margin: 0 0 20px;
+  text-align: center;
 }
 
 .feature-card p {
@@ -183,7 +184,8 @@ body {
 }
 
 .recipe-inspiration h2 {
-  padding: 20px 0;
+  padding: 20px 0px 40px;
+  color: var(--color-text);
 }
 
 .recipe-inspiration-card {
@@ -197,7 +199,7 @@ body {
 
   background-color: var(--color-surface);
   border: 2px solid var(--color-border);
-  border-radius: 15px;
+  border-radius: 10px;
   overflow: hidden;
 }
 
@@ -205,6 +207,22 @@ body {
   width: 320px;
   height: 320px;
   object-fit: cover;
+}
+
+
+.recipe-inspiration-text p {
+  margin: 1.25rem 0;
+
+}
+
+.recipe-inspiration-text {
+  margin: 0.75rem 0;
+  color: var(--color-text-muted);
+}
+
+.recipe-inspiration-label {
+  font-weight: 600;
+  color: var(--color-text);
 }
 
 /*--- About-projekt---*/
@@ -215,12 +233,12 @@ body {
 
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: 10px;
 }
 
 .about-project h2 {
-  margin-top: 0;
-  margin-bottom: 1rem;
+  margin: 0 auto 1rem;
+  text-align: center;
 }
 
 .about-project h3 {
@@ -246,6 +264,14 @@ body {
 .about-project-list,
 .about-project-stack {
   max-width: 950px;
+}
+
+/*----*/
+
+.home-feature-card,
+.recipe-inspiration-card,
+.about-project {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 /*--- Buttons --*/
