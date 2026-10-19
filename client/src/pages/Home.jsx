@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import api from "../services/api";
+import AboutProject from '../components/AboutProject';
 
 function Home() {
   const [recipe, setRecipe] = useState(null);
@@ -107,7 +108,12 @@ function Home() {
           </article>
         )}
       </section>
+      <AboutProject />
+
     </section>
+
+    
+
 
     
   );
