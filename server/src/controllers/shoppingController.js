@@ -93,6 +93,14 @@ export async function generateShoppingList(req, res) {
                 WHERE mpe.user_id = $1
                     AND mpe.plan_date BETWEEN $2 AND $3
 
+                AND NOT EXISTS (
+                    SELECT 1
+                    FROM pantry_staples ps
+                    WHERE ps.user_id = $1
+                      AND LOWER(BTRIM(ps.name)) =
+                          LOWER(BTRIM(i.name))
+                  )    
+
                 order by mpe.recipe_id
                 `,
                 [userId, startDate, endDate]
