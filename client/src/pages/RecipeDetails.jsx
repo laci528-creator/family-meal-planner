@@ -9,32 +9,81 @@ function RecipeDetails() {
     const [recipe, setRecipe] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+const [completedStep, setCompletedStep] =
+  useState(-1);
 
-      useEffect(() => {
-    const fetchRecipe = async () => {
-      try {
-          setLoading(true);
-          setError(null);
-          setRecipe(null);
 
-          const response = await api.get(`/recipes/${id}`);
-          setRecipe(response.data.recipe);
-        } catch (err) {
-          console.error('Error loading recipe:', err);
+useEffect(() => {
+  if (!recipe) return;
 
-          if (err.response?.status === 404) {
-            setError('Recipe not found.');
-          } else {
-            setError('The recipe could not be loaded.');
-          }
-        }
-        finally {
-        setLoading(false);
+  localStorage.setItem(
+    `cooking-progress-${id}`,
+    completedStep.toString()
+  );
+}, [completedStep, id, recipe]);
+
+    function splitInstructionsIntoSentences(text) {
+      if (!text) return [];
+
+      const segmenter = new Intl.Segmenter(
+        "en",
+        { granularity: "sentence" }
+      );
+
+      return Array.from(
+        segmenter.segment(text),
+        (segment) => segment.segment.trim()
+      ).filter(Boolean);
+    }
+
+    const instructionSteps =
+      splitInstructionsIntoSentences(
+        recipe?.instructions
+      );
+
+useEffect(() => {
+  const fetchRecipe = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      setRecipe(null);
+
+      const response =
+        await api.get(`/recipes/${id}`);
+
+      const savedProgress =
+        localStorage.getItem(
+          `cooking-progress-${id}`
+        );
+
+      setCompletedStep(
+        savedProgress !== null
+          ? Number(savedProgress)
+          : -1
+      );
+
+      setRecipe(response.data.recipe);
+
+    } catch (err) {
+      console.error(
+        "Error loading recipe:",
+        err
+      );
+
+      if (err.response?.status === 404) {
+        setError("Recipe not found.");
+      } else {
+        setError(
+          "The recipe could not be loaded."
+        );
       }
-    };
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchRecipe();
-  }, [id]);
+  fetchRecipe();
+}, [id]);
 
   if (loading) {
     return <p>Loading recipe...</p>;
@@ -84,9 +133,21 @@ function RecipeDetails() {
 
     <section className="recipe-details-section">
       <h2>Instructions</h2>
-      <p className="recipe-instructions">
-        {recipe.instructions}
-      </p>
+        <p className="cooking-instructions">
+          {instructionSteps.map((step, index) => (
+            <span
+              key={index}
+              onClick={() => setCompletedStep(index)}
+              className={
+                index <= completedStep
+                  ? "cooking-text-completed"
+                  : "cooking-text"
+              }
+            >
+              {step}{" "}
+            </span>
+          ))}
+        </p>
     </section>
 
     {recipe.ingredients?.length > 0 && (
