@@ -49,34 +49,69 @@ function RecipeDetails() {
   }
 
   return (
-    <div className="recipe-details-page">
-      <h1>{recipe.title}</h1>
+<div className="recipe-details-page">
+  <div className="recipe-details-card">
 
-      <p>Recipe ID: {recipe.externalId}</p>
+    <div className="recipe-details-header">
+      <img
+        className="recipe-details-image"
+        src={recipe.image}
+        alt={recipe.title}
+      />
 
-      <p>{recipe.category}</p>
+      <div className="recipe-details-info">
+        <h1>{recipe.title}</h1>
 
-      {recipe.cuisine && <p>{recipe.cuisine}</p>}
+        <div className="recipe-details-meta">
+          <p>
+            <strong>Category:</strong>{" "}
+            {recipe.category}
+          </p>
 
-      <img src={recipe.image} alt={recipe.title} />
+          {recipe.cuisine && (
+            <p>
+              <strong>Cuisine:</strong>{" "}
+              {recipe.cuisine}
+            </p>
+          )}
+        </div>
 
+        <SaveRecipeButton
+          externalId={recipe.externalId}
+        />
+      </div>
+    </div>
+
+    <section className="recipe-details-section">
       <h2>Instructions</h2>
-      <p>{recipe.instructions}</p>
-      {recipe.ingredients?.length > 0 && (
-        <>
+      <p className="recipe-instructions">
+        {recipe.instructions}
+      </p>
+    </section>
+
+    {recipe.ingredients?.length > 0 && (
+      <section className="recipe-details-section">
         <h2>Ingredients</h2>
 
         <ul className="ingredients-list">
-        {recipe.ingredients.map((ingredient, index) => (
-            <li key={`${ingredient.name}-${index}`}>
-            {ingredient.name}: {ingredient.measure}
-            </li>
-        ))}
+          {recipe.ingredients.map(
+            (ingredient, index) => (
+              <li
+                key={`${ingredient.name}-${index}`}
+              >
+                <span>{ingredient.name}</span>
+                <strong>
+                  {ingredient.measure}
+                </strong>
+              </li>
+            )
+          )}
         </ul>
-        <SaveRecipeButton externalId={recipe.externalId} />
-          </>
-        )}
-    </div>
+      </section>
+    )}
+
+  </div>
+</div>
   );
 }
 
