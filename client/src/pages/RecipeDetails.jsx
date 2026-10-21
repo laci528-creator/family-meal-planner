@@ -10,18 +10,8 @@ function RecipeDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [cookingMode, setCookingMode] = useState(false);
-  const [completedStep, setCompletedStep] =
-    useState(-1);
+  const [completedStep, setCompletedStep] = useState(-1); // must smaller 0 index(sentinel value)
 
-
-  useEffect(() => {
-    if (!recipe) return;
-
-    localStorage.setItem(
-      `cooking-progress-${id}`,
-      completedStep.toString()
-    );
-  }, [completedStep, id, recipe]);
 
   function splitInstructionsIntoSentences(text) {
     if (!text) return [];
@@ -37,10 +27,19 @@ function RecipeDetails() {
     ).filter(Boolean);
   }
 
+
+  function handleResetCookingProgress() {
+    setCompletedStep(-1);
+    setCookingMode(false);
+  }
+
+
   const instructionSteps =
     splitInstructionsIntoSentences(
       recipe?.instructions
     );
+
+
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -86,6 +85,25 @@ function RecipeDetails() {
     fetchRecipe();
   }, [id]);
 
+
+  useEffect(() => {
+    if (!recipe) return;
+
+    const progressKey =
+      `cooking-progress-${id}`;
+
+    if (completedStep < 0) {
+      localStorage.removeItem(progressKey);
+      return;
+    }
+
+    localStorage.setItem(
+      progressKey,
+      completedStep.toString()
+    );
+  }, [completedStep, id, recipe]);
+
+
   if (loading) {
     return <p>Loading recipe...</p>;
   }
@@ -130,22 +148,35 @@ function RecipeDetails() {
               externalId={recipe.externalId}
             />
             <div className="cooking-mode-controls">
-              {cookingMode && (
-                <p className="cooking-mode-hint">
-                  Tap a sentence to update your cooking progress.
-                  <br />
-                  Your progress is saved automatically on this device.
-                </p>
-              )}
-              <button
-                type="button"
-                className="primary-button cooking-mode-button"
-                onClick={() => setCookingMode(true)}
-              >
-                {completedStep >= 0
-                  ? "Continue cooking"
-                  : "Start cooking"}
-              </button>
+              {!cookingMode ? (
+  <button
+    type="button"
+    className="primary-button cooking-mode-button"
+    onClick={() => setCookingMode(true)}
+  >
+    {completedStep >= 0
+      ? "Continue cooking"
+      : "Start cooking"}
+  </button>
+) : (
+  <div className="cooking-mode-panel">
+    <h3>Cooking Mode</h3>
+
+    <p className="cooking-mode-hint">
+      Tap a sentence to update your cooking progress.
+      <br />
+      Your progress is saved automatically on this device.
+    </p>
+
+    <button
+      type="button"
+      className="primary-button reset-cooking"
+      onClick={handleResetCookingProgress}
+    >
+      Reset cooking progress
+    </button>
+  </div>
+)}
             </div>
           </div>
         </div>
@@ -161,11 +192,11 @@ function RecipeDetails() {
                     ? () => setCompletedStep(index)
                     : undefined}
                 className={
-                    cookingMode
-                      ? index <= completedStep
-                        ? "cooking-text-completed"
-                        : "cooking-text-active"
-                        : "cooking-text"
+                  cookingMode
+                    ? index <= completedStep
+                      ? "cooking-text-completed"
+                      : "cooking-text-active"
+                    : "cooking-text"
                 }
               >
                 {step}{" "}

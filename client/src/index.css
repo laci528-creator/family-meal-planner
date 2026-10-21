@@ -401,6 +401,44 @@ body {
   cursor: pointer;
 }
 
+.cooking-mode-button {
+  margin-top: 1.5rem;
+}
+
+.cooking-mode-panel {
+  margin-top: 1.25rem;
+  padding: 0.85rem;
+
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-background);
+}
+
+.cooking-mode-panel h3 {
+  margin: 0 0 0.5rem;
+}
+
+.cooking-mode-hint {
+  margin: 0 0 0.75rem;
+  line-height: 1.35;
+}
+
+.reset-cooking {
+  background: transparent;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  margin: 3px 0;
+}
+
+.cooking-mode-panel {
+  margin-top: 1rem;
+  padding: 0.75rem;
+}
+
+.cooking-mode-hint {
+  margin-bottom: 0.65rem;
+}
+
 @media (max-width: 700px) {
   .recipe-details-header {
     grid-template-columns: 1fr;
