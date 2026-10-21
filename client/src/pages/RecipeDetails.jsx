@@ -4,7 +4,7 @@ import api from '../services/api';
 import SaveRecipeButton from '../components/SaveRecipeButton';
 import CookingMode from "../components/CookingMode";
 
-function RecipeDetails() {
+function RecipeDetails({ source = "external" }) {
   const { id } = useParams();
 
   const [recipe, setRecipe] = useState(null);
@@ -19,8 +19,12 @@ function RecipeDetails() {
         setError(null);
         setRecipe(null);
 
-        const response =
-          await api.get(`/recipes/${id}`);
+        const endpoint =
+          source === "saved"
+            ? `/recipes/saved-recipe/${id}`
+            : `/recipes/${id}`;
+
+        const response = await api.get(endpoint);
 
         setRecipe(response.data.recipe);
 
@@ -43,7 +47,7 @@ function RecipeDetails() {
     };
 
     fetchRecipe();
-  }, [id]);
+  }, [id, source]);
 
 
   if (loading) {
@@ -58,15 +62,24 @@ function RecipeDetails() {
     return null;
   }
 
+    const recipeImage =
+  source === "saved"
+    ? recipe.image_url
+    : recipe.image;
+
   return (
     <div className="recipe-details-page">
       <div className="recipe-details-card">
 
         <div className="recipe-details-header">
           <img
-            className="recipe-details-image"
-            src={recipe.image}
-            alt={recipe.title}
+              className="recipe-details-image"
+              src={recipeImage || "/images/recipe-placeholder.jpg"}
+              alt={recipeImage ? recipe.title : "No recipe image available"}
+              onError={(event) => {
+                event.currentTarget.src =
+                  "/images/recipe-placeholder.jpg";
+              }}
           />
 
           <div className="recipe-details-info">
@@ -86,19 +99,21 @@ function RecipeDetails() {
               )}
             </div>
 
-            <SaveRecipeButton
-              externalId={recipe.externalId}
-            />
+            {source !== "saved" && (
+              <SaveRecipeButton
+                externalId={recipe.externalId}
+              />
+            )}
 
           </div>
         </div>
 
         <section className="recipe-details-section">
           <h2>Instructions</h2>
-            <CookingMode
-    recipeId={recipe.externalId}
-    instructions={recipe.instructions}
-  />
+          <CookingMode
+            recipeId={`${source}-${id}`}
+            instructions={recipe.instructions}
+          />
 
         </section>
 

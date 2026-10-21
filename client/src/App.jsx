@@ -32,7 +32,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/recipes/:id" element={<RecipeDetails />} />
+                <Route path="/recipes/:id" element={<RecipeDetails source="external" />} />
                 <Route path="/discover" element={<DiscoverRecipes />} />
                 <Route
                   path="/recipes"
@@ -53,10 +53,9 @@ function App() {
                 <Route
                   path="/recipes/saved/:id"
                   element={
-                    <ProtectedRoute>
-                      <SavedRecipeDetails />
-                    </ProtectedRoute>
-                  }
+                  <ProtectedRoute>
+                    <RecipeDetails source="saved" />
+                  </ProtectedRoute>}
                 />
 
                 <Route
