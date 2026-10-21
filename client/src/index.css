@@ -440,6 +440,10 @@ body {
   margin-bottom: 0.65rem;
 }
 
+.edit-recipe-button {
+  margin-left: 0;
+}
+
 @media (max-width: 700px) {
   .recipe-details-header {
     grid-template-columns: 1fr;

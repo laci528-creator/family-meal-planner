@@ -13,7 +13,6 @@ import WeeklyPlanner from './pages/Planner';
 import ShoppingList from './pages/Shopping';
 import NotFound from "./pages/NotFound";
 import RecipeDetails from "./pages/RecipeDetails";
-import SavedRecipeDetails from "./pages/SavedRecipeDetails";
 import DiscoverRecipes from "./pages/DiscoverRecipes";
 import AddFamilyRecipes from "./pages/AddFamilyRecipe";
 import EditFamilyRecipes from "./pages/EditFamilyRecipe";

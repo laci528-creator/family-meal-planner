@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import api from '../services/api';
 import SaveRecipeButton from '../components/SaveRecipeButton';
 import CookingMode from "../components/CookingMode";
@@ -62,10 +62,10 @@ function RecipeDetails({ source = "external" }) {
     return null;
   }
 
-    const recipeImage =
-  source === "saved"
-    ? recipe.image_url
-    : recipe.image;
+  const recipeImage =
+    source === "saved"
+      ? recipe.image_url
+      : recipe.image;
 
   return (
     <div className="recipe-details-page">
@@ -73,13 +73,13 @@ function RecipeDetails({ source = "external" }) {
 
         <div className="recipe-details-header">
           <img
-              className="recipe-details-image"
-              src={recipeImage || "/images/recipe-placeholder.jpg"}
-              alt={recipeImage ? recipe.title : "No recipe image available"}
-              onError={(event) => {
-                event.currentTarget.src =
-                  "/images/recipe-placeholder.jpg";
-              }}
+            className="recipe-details-image"
+            src={recipeImage || "/images/recipe-placeholder.jpg"}
+            alt={recipeImage ? recipe.title : "No recipe image available"}
+            onError={(event) => {
+              event.currentTarget.src =
+                "/images/recipe-placeholder.jpg";
+            }}
           />
 
           <div className="recipe-details-info">
@@ -104,6 +104,16 @@ function RecipeDetails({ source = "external" }) {
                 externalId={recipe.externalId}
               />
             )}
+
+            {source === "saved" &&
+              recipe.source === "custom" && (
+                <Link
+                  to={`/recipes/saved/${recipe.id}/edit`}
+                  className="primary-button edit-recipe-button"
+                >
+                  Edit recipe
+                </Link>
+              )}
 
           </div>
         </div>
