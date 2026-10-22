@@ -9,6 +9,7 @@ import authRoutes from "./routes/authRoutes.js";
 import plannerRoutes from "./routes/plannerRoutes.js";
 import shoppingRoutes from "./routes/shoppingRoutes.js";
 import pantryRoutes from "./routes/pantryRoutes.js";
+import uploadRoutes from "./routes/uploadRoutes.js";
 
 
 const app = express();
@@ -44,6 +45,8 @@ app.use("/api/planner", plannerRoutes);
 app.use("/api/shopping", shoppingRoutes);
 
 app.use("/api/pantry", pantryRoutes);
+
+app.use("/api/uploads", uploadRoutes);
 
 app.get("/api/test", (req, res) => {
   res.json({
