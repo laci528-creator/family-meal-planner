@@ -434,7 +434,7 @@ export async function saveFamilyRecipe(req, res) {
     category,
     cuisine,
     instructions,
-    imageUrl,
+    image,
     ingredients,
   } = req.body;
 
@@ -496,7 +496,7 @@ export async function saveFamilyRecipe(req, res) {
                   category?.trim() || null,
                   cuisine?.trim() || null,
                   instructions.trim(),
-                  imageUrl?.trim() || null,
+                  image?.trim() || null,
                     "custom"
                   ]
               );
@@ -567,7 +567,7 @@ export async function updateRecipe(req, res) {
     category,
     cuisine,
     instructions,
-    imageUrl,
+    image,
     ingredients,
   } = req.body;
 
@@ -644,7 +644,7 @@ export async function updateRecipe(req, res) {
         category?.trim() || null,
         cuisine?.trim() || null,
         instructions.trim(),
-        imageUrl?.trim() || null,
+        image?.trim() || null,
         id,
         userId,
       ]
