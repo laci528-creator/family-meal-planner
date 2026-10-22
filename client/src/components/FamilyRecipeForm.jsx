@@ -11,7 +11,7 @@ function FamilyRecipeForm({
     category: initialData?.category || "",
     cuisine: initialData?.cuisine || "",
     instructions: initialData?.instructions || "",
-    imageUrl: initialData?.image_url || "",
+    imageUrl: initialData?.image || "",
     });
 
     const [ingredients, setIngredients] = useState(

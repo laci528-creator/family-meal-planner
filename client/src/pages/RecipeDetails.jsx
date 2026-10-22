@@ -62,10 +62,8 @@ function RecipeDetails({ source = "external" }) {
     return null;
   }
 
-  const recipeImage =
-    source === "saved"
-      ? recipe.image_url
-      : recipe.image;
+  const recipeImage = recipe.image;
+
 
   return (
     <div className="recipe-details-page">

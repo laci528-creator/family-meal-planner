@@ -1,9 +1,9 @@
 function PlannerRecipeCard({ recipe, onSelect, isSaving }) {
   return (
     <div className="planner-recipe-card">
-      {recipe.image_url ? (
+      {recipe.image ? (
         <img className="planner-recipe-image"
-          src={recipe.image_url}
+          src={recipe.image}
           alt={recipe.title}
         />
       ) : (

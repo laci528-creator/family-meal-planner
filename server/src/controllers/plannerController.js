@@ -148,7 +148,7 @@ export async function getWeeklyPlannerData(req, res) {
                     mpe.plan_date::text AS plan_date,
                     mpe.meal_type,
                     r.title,
-                    r.image_url 
+                    r.image 
                 FROM meal_plan_entries mpe
                 JOIN recipes r
                     ON r.id = mpe.recipe_id

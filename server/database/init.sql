@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS recipes (
 
     instructions TEXT,
 
-    image_url TEXT,
+    image TEXT,
 
     source VARCHAR(20) NOT NULL DEFAULT 'custom',
 

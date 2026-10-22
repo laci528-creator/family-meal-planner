@@ -143,7 +143,7 @@ export async function saveRecipe(req, res) {
                 category, 
                 cuisine,
                 instructions,
-                image_url,
+                image,
                 source
               ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id `,
                 [
@@ -260,7 +260,7 @@ export async function getSavedRecipes(req,res) {
           title,
           category,
           cuisine,
-          image_url,
+          image,
           source,
           created_at
         FROM recipes
@@ -305,7 +305,7 @@ export async function getSavedRecipeById(req, res) {
           category,
           cuisine,
           instructions,
-          image_url,
+          image,
           source,
           created_at
         FROM recipes
@@ -487,7 +487,7 @@ export async function saveFamilyRecipe(req, res) {
                   category, 
                   cuisine,
                   instructions,
-                  image_url,
+                  image,
                   source
                 ) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id `,
                   [
@@ -634,7 +634,7 @@ export async function updateRecipe(req, res) {
           category = $2,
           cuisine = $3,
           instructions = $4,
-          image_url = $5
+          image = $5
         WHERE id = $6
           AND user_id = $7
           AND source = 'custom'

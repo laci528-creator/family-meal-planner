@@ -4,9 +4,9 @@ import DeleteRecipeButton from "./DeleteRecipeButton";
 function RecipeCard({ recipe, onDeleted }) {
   return (
     <article className="recipe-card">
-    {recipe.image_url ? (
+    {recipe.image ? (
           <img
-            src={recipe.image_url}
+            src={recipe.image}
             alt={recipe.title}
             className="recipe-card-image"
           />
