@@ -58,22 +58,22 @@ function EditFamilyRecipes() {
     return null;
   }
 
-  if (recipe.source !== "custom") {
-    return (
-        <p className="error-message">
-        Only custom recipes can be edited.
-        </p>
-    );
-}
 
   return (
     <main className="family-recipe-page">
-      <h1>Edit your Family Recipe</h1>
-
+      <h1>
+        {recipe.source === "api"
+          ? "Customize your saved Api Recipe"
+          : "Edit your Family Recipe"}
+      </h1>
       <FamilyRecipeForm
         initialData={recipe}
         onSubmit={handleUpdate}
-        submitText="Update recipe"
+        submitText={
+          recipe.source === "api"
+            ? "Save changes"
+            : "Update recipe"
+        }
       />
     </main>
   );

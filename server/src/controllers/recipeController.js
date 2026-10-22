@@ -637,7 +637,6 @@ export async function updateRecipe(req, res) {
           image = $5
         WHERE id = $6
           AND user_id = $7
-          AND source = 'custom'
         RETURNING id
       `,
       [

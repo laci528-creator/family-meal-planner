@@ -142,7 +142,6 @@ return (
                 name="cuisine"
                 value={formData.cuisine}
                 onChange={handleChange}
-                required
                 />
             <label htmlFor="imageUrl" className="form-label">Image URL:</label>
             <input

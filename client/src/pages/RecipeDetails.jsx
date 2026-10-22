@@ -113,6 +113,16 @@ function RecipeDetails({ source = "external" }) {
                 </Link>
               )}
 
+              {source === "saved" &&
+                recipe.source === "api" && (
+                  <Link
+                    to={`/recipes/saved/${recipe.id}/edit`}
+                    className="primary-button edit-recipe-button"
+                  >
+                    Customize recipe
+                  </Link>
+              )}
+
           </div>
         </div>
 
