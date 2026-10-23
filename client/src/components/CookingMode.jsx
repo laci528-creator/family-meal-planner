@@ -18,10 +18,29 @@ function CookingMode({
             { granularity: "sentence" }
         );
 
-        return Array.from(
+        const segments = Array.from(
             segmenter.segment(text),
             (segment) => segment.segment.trim()
         ).filter(Boolean);
+
+        const mergedSteps = [];
+
+        for (let i = 0; i < segments.length; i++) {
+            if (
+                /^\d+[.)]?$/.test(segments[i]) &&
+                segments[i + 1]
+            ) {
+                mergedSteps.push(
+                    `${segments[i]} ${segments[i + 1]}`
+                );
+
+                i++;
+            } else {
+                mergedSteps.push(segments[i]);
+            }
+        }
+
+        return mergedSteps;
     }
 
     function handleStepClick(index) {
@@ -97,9 +116,9 @@ function CookingMode({
                     </div>
                 )}
             </div>
-            <p className="cooking-instructions">
+            <div className="cooking-instructions">
                 {instructionSteps.map((step, index) => (
-                    <span
+                    <p
                         key={index}
                         onClick={
                             cookingMode
@@ -114,10 +133,10 @@ function CookingMode({
                                 : "cooking-text"
                         }
                     >
-                        {step}{" "}
-                    </span>
+                        {step}
+                    </p>
                 ))}
-            </p>
+            </div>
         </>
     )
 }

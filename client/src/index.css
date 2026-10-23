@@ -138,7 +138,7 @@ body {
 
   background: var(--color-primary);
   border: 1px solid var(--color-primary-hover);
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 12px 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
 
   display: none;
@@ -486,6 +486,17 @@ body {
 
 .cooking-mode-hint {
   margin-bottom: 0.65rem;
+}
+
+.cooking-instructions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cooking-instructions p {
+  margin: 0;
+  line-height: 1.5;
 }
 
 .edit-recipe-button {
