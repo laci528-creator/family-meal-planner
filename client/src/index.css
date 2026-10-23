@@ -58,6 +58,20 @@ body {
   border-radius: 4px;
 }
 
+/*---Unify page und title css---*/
+
+.page-container {
+  width: min(100% - 2rem, 1200px);
+  margin: 0 auto;
+  padding: 1rem 0 2rem;
+}
+
+.page-title {
+  margin: 0 0 1rem;
+  font-size: 2rem;
+  line-height: 1.2;
+  font-weight: 700;
+}
 
 /*---NAVIGATION---*/
 
@@ -1110,9 +1124,6 @@ body {
 
 /*---Shopping-List---*/
 
-.shopping-page h1 {
-  margin: 1rem auto;
-}
 
 .week-navigation {
   padding: 1rem;

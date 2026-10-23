@@ -40,8 +40,8 @@ function DiscoverRecipes() {
   }
 
   return (
-    <main className="discover-recipes-page">
-      <h1>Discover Recipes</h1>
+    <main className="page-container discover-recipes-page">
+      <h1 className="page-title">Discover Recipes</h1>
       {loading && <p>Loading recipe...</p>}
 
       {error && <p className="error-message">{error}</p>}
@@ -73,4 +73,4 @@ function DiscoverRecipes() {
   );
 }
 
-export default DiscoverRecipes;
+export default DiscoverRecipes; 

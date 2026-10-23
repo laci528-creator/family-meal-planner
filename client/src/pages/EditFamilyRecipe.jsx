@@ -60,8 +60,8 @@ function EditFamilyRecipes() {
 
 
   return (
-    <main className="family-recipe-page">
-      <h1>
+    <main className="page-container family-recipe-page">
+      <h1 className="page-title">
         {recipe.source === "api"
           ? "Customize your saved Api Recipe"
           : "Edit your Family Recipe"}
@@ -79,4 +79,4 @@ function EditFamilyRecipes() {
   );
 }
 
-export default EditFamilyRecipes;
+export default EditFamilyRecipes; 

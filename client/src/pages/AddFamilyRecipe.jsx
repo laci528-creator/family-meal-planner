@@ -11,8 +11,8 @@ const navigate = useNavigate();
   }
 
   return (
-    <main className="family-recipe-page">
-      <h1>Save your Family Recipe</h1>
+    <main className="page-container family-recipe-page">
+      <h1 className="page-title">Save your Family Recipe</h1>
 
       <FamilyRecipeForm
         onSubmit={handleSave}
@@ -21,4 +21,4 @@ const navigate = useNavigate();
     </main>
   );
 }
-export default AddFamilyRecipes;
+export default AddFamilyRecipes; 

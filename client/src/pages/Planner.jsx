@@ -144,17 +144,18 @@ function getPlannedMeal(date, mealType) {
   }
 
   return (
-    <div className="planner-calendar">
+    <main className="page-container planner-calendar">
 
-      <div className="calendar-header">
-        <h3>
+        <h1 className="page-title">
           {currentMonday.toLocaleDateString('en-GB', { year: 'numeric', month: 'long' })}
-        </h3>
+        </h1>
+        <div className="calendar-header">
         <button onClick={() => changeWeek(-1)}>&lt; Previous week</button>
         <button onClick={() => setCurrentMonday(getWeekStart(new Date()))}>Current week</button>
  
         <button onClick={() => changeWeek(1)}>Next week &gt;</button>
-      </div>
+        </div>
+      
 
       <div className="calendar-grid">
         {weekDays.map((date, index) => {
@@ -287,8 +288,8 @@ function getPlannedMeal(date, mealType) {
           )}
         </div>
       )}
-    </div>
+    </main>
   );
 }
 
-export default Planner;
+export default Planner; 

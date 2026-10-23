@@ -25,6 +25,7 @@ function Home() {
   }, []);
 
   return (
+    <main className="page-container">
     <section className="home-page">
       <div className="home-hero">
         <h1 className="home-title">Plan meals. Shop smarter.</h1>
@@ -120,7 +121,8 @@ function Home() {
       </section>
       <AboutProject />
     </section>
+    </main>
   );
 }
 
-export default Home;
+export default Home; 

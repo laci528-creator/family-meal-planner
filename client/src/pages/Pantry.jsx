@@ -117,8 +117,8 @@ function Pantry() {
     }
 
     return (
-        <main className="pantry-page">
-            <h1>My Pantry List</h1>
+        <main className="page-container pantry-page">
+            <h1 className="page-title">My Pantry List</h1>
 
             <div className="pantry-form-panel">
                 <h3>Add new Pantry item:</h3>
@@ -173,4 +173,4 @@ function Pantry() {
 }
 
 
-export default Pantry;
+export default Pantry; 

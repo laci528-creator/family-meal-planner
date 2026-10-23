@@ -39,8 +39,8 @@ function Recipes() {
   }, []);
 
   return (
-    <main className="recipes-page">
-      <h1>My Recipes</h1>
+    <main className="page-container recipes-page">
+      <h1 className="page-title">My Recipes</h1>
       {message && (
         <p className="success-message">
           {message}
@@ -76,4 +76,4 @@ function Recipes() {
   );
 }
 
-export default Recipes;
+export default Recipes; 

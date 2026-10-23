@@ -1,5 +1,8 @@
 function NotFound() {
-  return <h1>404 - Page not found</h1>;
+  return 
+  <main className="page-container">
+    <h1>404 - Page not found</h1>
+  </main>
 }
 
-export default NotFound;
+export default NotFound; 

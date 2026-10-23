@@ -66,7 +66,7 @@ function RecipeDetails({ source = "external" }) {
 
 
   return (
-    <div className="recipe-details-page">
+    <main className="page-container recipe-details-page">
       <div className="recipe-details-card">
 
         <div className="recipe-details-header">
@@ -157,8 +157,8 @@ function RecipeDetails({ source = "external" }) {
         )}
 
       </div>
-    </div>
+    </main>
   );
 }
 
-export default RecipeDetails;
+export default RecipeDetails; 

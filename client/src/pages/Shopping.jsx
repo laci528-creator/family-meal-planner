@@ -255,8 +255,8 @@ function Shopping() {
 
 
   return (
-    <main className="shopping-page">
-      <h1>Weekly Shopping List</h1>
+    <main className="page-container shopping-page">
+      <h1 className="page-title">Weekly Shopping List</h1>
 
       <div className="week-navigation">
         <h2 className="week-date">
@@ -385,4 +385,4 @@ function Shopping() {
   );
 }
 
-export default Shopping;
+export default Shopping; 

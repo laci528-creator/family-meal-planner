@@ -45,7 +45,7 @@ const handleSubmit = async (e) => {
   };
 
   return (
-    <main className="auth-page">
+    <main className="page-container auth-page">
     <div className="auth-card">
       <h1>Login</h1>
 
@@ -90,4 +90,4 @@ const handleSubmit = async (e) => {
     </main>
 )}
 
-export default Login;
+export default Login; 
