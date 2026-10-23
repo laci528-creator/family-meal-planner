@@ -1,9 +1,11 @@
 import { NavLink, useLocation } from 'react-router-dom';
+import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 
 
 function Navbar() {
   const { user, logout } = useAuth();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const location = useLocation();
 
@@ -15,7 +17,26 @@ function Navbar() {
     <nav className="navbar">
       <div className="navbar-content">
 
-        <div className="nav-links">
+        <button
+          type="button"
+          className={`nav-toggle${menuOpen ? " open" : ""}`}
+          onClick={() => setMenuOpen((current) => !current)}
+          aria-expanded={menuOpen}
+          aria-controls="main-navigation"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+        >
+          <img
+            src={
+              menuOpen
+                ? "/icons/close.svg"
+                : "/icons/menu.svg"
+            }
+            alt=""
+            aria-hidden="true"
+          />
+        </button>
+
+        <div className={`nav-links${menuOpen ? " open" : ""}`}>
           <NavLink to="/" end className={({ isActive }) => `nav-link-a${isActive ? " active" : ""}`} >Home</NavLink>
           <div className="nav-dropdown">
             <NavLink to="/recipes" className={`nav-link-a${recipesActive ? " active" : ""}`}>
@@ -24,10 +45,10 @@ function Navbar() {
 
             <div className="nav-dropdown-menu">
               <NavLink to="/recipes"
-              end
-              className={({ isActive }) =>
-                `nav-link-a${isActive ? " active" : ""}`
-              }>
+                end
+                className={({ isActive }) =>
+                  `nav-link-a${isActive ? " active" : ""}`
+                }>
                 My Recipes
               </NavLink>
 
