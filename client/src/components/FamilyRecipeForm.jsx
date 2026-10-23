@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import api from "../services/api";
+import { splitMeasure } from "../utils/measureUtils";
 
 function FamilyRecipeForm({
   initialData,
@@ -17,11 +18,27 @@ function FamilyRecipeForm({
 
   const [imageFile, setImageFile] = useState(null);
 
-  const [ingredients, setIngredients] = useState(
-    initialData?.ingredients?.length
-      ? initialData.ingredients
-      : [{ name: "", measure: "" }]
-  );
+const [ingredients, setIngredients] = useState(
+  initialData?.ingredients?.length
+    ? initialData.ingredients.map((ingredient) => {
+        const { amount, unit } =
+          splitMeasure(ingredient.measure);
+
+        return {
+          ...ingredient,
+          amount,
+          unit,
+        };
+      })
+    : [
+        {
+          name: "",
+          amount: "",
+          unit: "",
+        },
+      ]
+);
+
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
@@ -57,6 +74,13 @@ function FamilyRecipeForm({
       (ingredient) => ingredient.name.trim() !== ""
     );
 
+    const formattedIngredients =
+      validIngredients.map((ingredient) => ({
+        name: ingredient.name.trim(),
+        measure:
+          `${ingredient.amount} ${ingredient.unit}`.trim(),
+      }));
+
     if (validIngredients.length === 0) {
       setError("At least one ingredient is required.");
       return;
@@ -83,7 +107,7 @@ function FamilyRecipeForm({
       await onSubmit({
         ...formData,
         image,
-        ingredients: validIngredients,
+        ingredients: formattedIngredients,
       });
     } catch (error) {
       console.error("Recipe form error:", error);
@@ -107,7 +131,8 @@ function FamilyRecipeForm({
       ...currentIngredients,
       {
         name: "",
-        measure: "",
+        amount: "",
+        unit: ""
       },
     ]);
   }
@@ -219,16 +244,40 @@ function FamilyRecipeForm({
               <input
                 className="form-input"
                 type="text"
-                placeholder="Measure"
-                value={ingredient.measure}
+                placeholder="Amount"
+                value={ingredient.amount}
                 onChange={(event) =>
                   handleIngredientChange(
                     index,
-                    "measure",
+                    "amount",
                     event.target.value
                   )
                 }
               />
+              <select
+                className="form-input"
+                value={ingredient.unit}
+                onChange={(event) =>
+                  handleIngredientChange(
+                    index,
+                    "unit",
+                    event.target.value
+                  )
+                }
+              >
+                <option value="">No unit</option>
+                <option value="mg">mg</option>
+                <option value="g">g</option>
+                <option value="kg">kg</option>
+                <option value="ml">ml</option>
+                <option value="l">l</option>
+                <option value="tsp">tsp</option>
+                <option value="tbsp">tbsp</option>
+                <option value="cup">cup</option>
+                <option value="piece">piece</option>
+                <option value="cloves">cloves</option>
+                <option value="slices">slices</option>
+              </select>
 
               {ingredients.length > 1 && (
 
