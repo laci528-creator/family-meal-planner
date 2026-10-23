@@ -20,11 +20,17 @@ function RecipeCard({ recipe, onDeleted }) {
         <h2>{recipe.title}</h2>
 
         {recipe.category && (
-          <p>{recipe.category}</p>
+          <p>
+            <strong>Category:</strong>{" "}
+            {recipe.category}
+          </p>
         )}
 
         {recipe.cuisine && (
-          <p>{recipe.cuisine}</p>
+          <p>
+            <strong>Cuisine:</strong>{" "}
+            {recipe.cuisine}
+          </p>
         )}
         <div className="recipe-card-actions">
             <Link
