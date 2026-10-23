@@ -36,6 +36,7 @@ body {
 
 }
 
+
 .app {
   min-height: 100vh;
   display: flex;
@@ -125,6 +126,7 @@ body {
   margin: 5px auto 35px;
   padding: 36px 24px 28px;
   text-align: center;
+  color: var(--color-background);
 
   background:
     linear-gradient(135deg,
@@ -555,7 +557,7 @@ body {
 
 .recipe-card {
   background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  border: 2px solid var(--color-border);
   border-radius: 10px;
   overflow: hidden;
 
@@ -567,6 +569,7 @@ body {
 .recipe-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  border: 2px solid var(--color-primary);
 }
 
 .recipe-card-image {
@@ -668,7 +671,7 @@ body {
   }
 }
 
-/*---save recipe button---*/
+/*---Save recipe button---*/
 
 .save-recipe-container {
   margin-top: 16px;

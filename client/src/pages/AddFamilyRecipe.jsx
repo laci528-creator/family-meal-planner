@@ -1,9 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import FamilyRecipeForm from "../components/FamilyRecipeForm";
 
 function AddFamilyRecipes() {
+const navigate = useNavigate();
+
   async function handleSave(recipeData) {
     await api.post("/recipes/custom", recipeData);
+    navigate("/recipes");
   }
 
   return (
