@@ -1,5 +1,5 @@
 import pool from '../config/db.js';
-
+import { capitalizeFirstLetter } from "../utils/stringUtils.js";
 
 export async function getPantryList(req, res) {
 
@@ -48,6 +48,9 @@ export async function addItemForPantry(req, res) {
         });
     }
 
+    const formattedName =
+        capitalizeFirstLetter(name);
+
     try {
         const result = await pool.query(
             `
@@ -58,7 +61,7 @@ export async function addItemForPantry(req, res) {
       VALUES ($1, $2)
       RETURNING id, name
     `,
-            [userId, name.trim()]
+            [userId, formattedName]
         );
 
         return res.status(201).json({
