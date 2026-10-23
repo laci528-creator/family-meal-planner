@@ -334,13 +334,39 @@ body {
 }
 
 .recipe-inspiration-text {
-  margin: 0.75rem 0;
+  margin: 0;
+  padding: 1rem;
   color: var(--color-text-muted);
 }
 
 .recipe-inspiration-label {
   font-weight: 600;
   color: var(--color-text);
+}
+
+
+@media (max-width: 768px) {
+  .recipe-inspiration-card {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .recipe-inspiration-image {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+  }
+
+  .recipe-inspiration-text {
+    width: 100%;
+    margin: 0;
+    padding: 1.25rem;
+    box-sizing: border-box;
+  }
+
+  .recipe-inspiration-text p {
+    margin: 0.75rem 0;
+  }
 }
 
 /*--- About-projekt---*/
