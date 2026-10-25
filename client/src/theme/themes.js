@@ -23,5 +23,25 @@ export const themes = [
   id: "crimson",
   name: "Crimson Night",
 },
+{
+  id: "aqua",
+  name: "Tropical Aqua",
+},
+{
+  id: "fiesta",
+  name: "Color Fiesta",
+},
+{
+  id: "caramel",
+  name: "Cozy Caramel",
+},
+{
+  id: "mint",
+  name: "Mint Serenity",
+},
+{
+  id: "summer",
+  name: "Summer Breeze",
+},
 
 ];
