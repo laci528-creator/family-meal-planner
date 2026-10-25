@@ -22,3 +22,21 @@
   --color-text-muted: #687d8b;
   --color-border: #d5e0e8;
 }
+
+/* SOFT ROSE */
+
+[data-theme="rose"] {
+  --color-primary: #765760;
+  --color-primary-hover: #60434c;
+
+  --color-accent: #f4acb7;
+
+  --color-background: #ffe5d9;
+  --color-surface: #ffffff;
+
+  --color-text: #352a30;
+  --color-text-muted: #68565f;
+
+  --color-border: #d8c5ca;
+  --color-on-primary: #ffffff;
+}
