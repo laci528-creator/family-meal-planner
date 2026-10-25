@@ -11,4 +11,9 @@ export const themes = [
   id: "rose",
   name: "Soft Rose",
 },
+{
+  id: "dark",
+  name: "Golden Twilight",
+},
+
 ];

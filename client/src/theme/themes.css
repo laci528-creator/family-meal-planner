@@ -40,3 +40,21 @@
   --color-border: #d8c5ca;
   --color-on-primary: #ffffff;
 }
+
+/* GOLDEN TWILIGHT - DARK MODE */
+
+[data-theme="dark"] {
+  --color-primary: #ffc300;
+  --color-primary-hover: #ffd60a;
+
+  --color-accent: #ffd60a;
+
+  --color-background: #000814;
+  --color-surface: #001d3d;
+
+  --color-text: #f5f7fa;
+  --color-text-muted: #b8c6d8;
+
+  --color-border: #294766;
+  --color-on-primary: #000814;
+}
