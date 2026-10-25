@@ -1,4 +1,5 @@
 import { useTheme } from "./useTheme";
+import { themes } from "./themes.js";
 
 export default function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
@@ -9,8 +10,11 @@ export default function ThemeSwitcher() {
       onChange={(e) => setTheme(e.target.value)}
       aria-label="Choose color theme"
     >
-      <option value="green">Natural Green</option>
-      <option value="blue">Ocean Blue</option>
+      {themes.map((item) => (
+        <option key={item.id} value={item.id}>
+          {item.name}
+        </option>
+      ))}
     </select>
   );
 }
