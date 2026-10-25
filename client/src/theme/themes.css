@@ -1,0 +1,24 @@
+/* Default theme */
+:root,
+[data-theme="green"] {
+  --color-primary: #3f6654;
+  --color-primary-hover: #2f5141;
+  --color-accent: #d97757;
+  --color-background: #f7f5f0;
+  --color-surface: #ffffff;
+  --color-text: #2d3430;
+  --color-text-muted: #6e7771;
+  --color-border: #dde2de;
+}
+
+/* Blue theme */
+[data-theme="blue"] {
+  --color-primary: #356b91;
+  --color-primary-hover: #285473;
+  --color-accent: #e5a45d;
+  --color-background: #f0f5fa;
+  --color-surface: #ffffff;
+  --color-text: #273b4a;
+  --color-text-muted: #687d8b;
+  --color-border: #d5e0e8;
+}
