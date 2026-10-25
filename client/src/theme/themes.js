@@ -15,5 +15,13 @@ export const themes = [
   id: "dark",
   name: "Golden Twilight",
 },
+{
+  id: "forest",
+  name: "Forest Garden",
+},
+{
+  id: "crimson",
+  name: "Crimson Night",
+},
 
 ];

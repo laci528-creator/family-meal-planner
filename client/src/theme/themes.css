@@ -57,4 +57,38 @@
 
   --color-border: #294766;
   --color-on-primary: #000814;
+  --shadow-hero: 0 4px 10px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="forest"] {
+  --color-primary: #31572c;
+  --color-primary-hover: #132a13;
+
+  --color-accent: #90a955;
+
+  --color-background: #f5f7e8;
+  --color-surface: #ffffff;
+
+  --color-text: #1e301c;
+  --color-text-muted: #53664d;
+
+  --color-border: #d4dfbd;
+  --color-on-primary: #ffffff;
+}
+
+[data-theme="crimson"] {
+  --color-primary: #ad2831;
+  --color-primary-hover: #c43b46;
+
+  --color-accent: #e06b73;
+
+  --color-background: #250902;
+  --color-surface: #38040e;
+
+  --color-text: #fff1ee;
+  --color-text-muted: #dfb9bb;
+
+  --color-border: #75313a;
+  --color-on-primary: #ffffff;
+  --shadow-hero: 0 4px 10px rgba(0, 0, 0, 0.45);
 }
