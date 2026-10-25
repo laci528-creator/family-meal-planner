@@ -171,4 +171,8 @@
 
   --color-border: #c5e4ef;
   --color-on-primary: #ffffff;
+
+    --color-hero-start: #8ecae6;
+  --color-hero-middle: #219ebc;
+  --color-hero-end: #023047;
 }
