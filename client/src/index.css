@@ -172,6 +172,16 @@ body {
   border: none;
 }
 
+.theme-switcher-container select {
+  padding: 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  cursor: pointer;
+}
+
 @media (max-width: 768px) {
   .nav-toggle {
     display: block;

@@ -1,6 +1,7 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import ThemeSwitcher from "../theme/ThemeSwitcher";
 
 
 function Navbar() {
@@ -79,6 +80,9 @@ function Navbar() {
               <NavLink to="/register" className={({ isActive }) => `nav-link-a${isActive ? " active" : ""}`}>Register</NavLink>
             </>
           )}
+          <div className="theme-switcher-container">
+            <ThemeSwitcher />
+          </div>
         </div>
       </div>
     </nav>
