@@ -450,7 +450,7 @@ body {
   var(--color-text-muted)
 );
   color: var(--color-on-primary, #ffffff);color: var(--color-button-text, var(--color-on-primary, #ffffff));
-  
+
   transition: filter 0.2s ease;
   margin: 10px auto;
   border: none;
@@ -571,7 +571,7 @@ body {
 }
 
 .cooking-text-completed {
-  background-color: #dce9e2;
+  background-color: var(--color-background);
   cursor: pointer;
 }
 
