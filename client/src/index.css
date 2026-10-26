@@ -135,6 +135,7 @@ body {
   position: absolute;
   top: 100%;
   left: 0;
+  margin-top: 20px;
 
   min-width: 180px;
   padding: 0.5rem;
@@ -188,10 +189,6 @@ body {
   .nav-toggle {
     display: block;
   }
-
-  .nav-toggle img {
-  display: block;
-}
 
   .nav-links {
     display: none;
@@ -449,7 +446,7 @@ body {
   var(--color-primary),
   var(--color-text-muted)
 );
-  color: var(--color-on-primary, #ffffff);color: var(--color-button-text, var(--color-on-primary, #ffffff));
+  color: var(--color-button-text, var(--color-on-primary, #ffffff));
 
   transition: filter 0.2s ease;
   margin: 10px auto;
@@ -580,9 +577,9 @@ body {
 }
 
 .cooking-mode-panel {
-  margin: 1.25rem 0;
+  margin: 1rem 0;
   
-  padding: 0.85rem;
+  padding: 0.75rem;
 
   border: 1px solid var(--color-border);
   border-radius: 8px;
@@ -594,7 +591,7 @@ body {
 }
 
 .cooking-mode-hint {
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.65rem;
   line-height: 1.35;
 }
 
@@ -603,15 +600,6 @@ body {
   color: var(--color-primary);
   border: 1px solid var(--color-primary);
   margin: 3px 0;
-}
-
-.cooking-mode-panel {
-  margin-top: 1rem;
-  padding: 0.75rem;
-}
-
-.cooking-mode-hint {
-  margin-bottom: 0.65rem;
 }
 
 .cooking-instructions {
@@ -844,9 +832,7 @@ body {
   .recipes-grid {
     grid-template-columns: 1fr;
   }
-}
 
-@media (max-width: 600px) {
   .success-message {
     left: 16px;
     right: 16px;
@@ -1202,9 +1188,6 @@ body {
     gap: 0.75rem;
   }
 
-  .ingredient-remove-button {
-  justify-self: end;
-}
 }
 
 /* Calendar recipeCards */
@@ -1274,10 +1257,6 @@ body {
 .planner-recipe-info p {
   margin: 0 0 0.5rem;
   color: var(--color-text-muted);
-}
-
-.recipe-selector {
-  margin-top: 2rem;
 }
 
 .recipe-selector-list {
@@ -1445,7 +1424,8 @@ body {
   }
 
   .shopping-item-main,
-  .shopping-item-measure .shopping-item-actions {
+  .shopping-item-measure,
+  .shopping-item-actions {
     width: 100%;
   }
 
@@ -1474,7 +1454,8 @@ body {
 }
 
 @media (max-width: 600px) {
-  .shopping-message {
+  .shopping-message,
+  .shopping-error-message {
     top: 60px;
     left: 1rem;
     right: 1rem;
@@ -1499,16 +1480,6 @@ body {
   font-weight: 600;
 
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
-}
-
-@media (max-width: 600px) {
-  .shopping-message,
-  .shopping-error-message {
-    top: 60px;
-    left: 1rem;
-    right: 1rem;
-    text-align: center;
-  }
 }
 
 
