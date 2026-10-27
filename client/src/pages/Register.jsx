@@ -120,7 +120,7 @@ function Register() {
             minLength={8}
             value={password}
             onChange={(e) => {
-              setPassword2(e.target.value);
+              setPassword(e.target.value);
               setError(null);
             }}
             required
