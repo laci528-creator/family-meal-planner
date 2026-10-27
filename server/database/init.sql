@@ -49,10 +49,13 @@ WHERE source = 'api' AND external_id IS NOT NULL;
 CREATE TABLE IF NOT EXISTS ingredients (
     id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name VARCHAR(255) NOT NULL
+
+    CONSTRAINT ingredients_name_not_blank
+        CHECK (BTRIM(name) <> '');
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS ingredients_name_unique
-ON ingredients (LOWER(name));
+ON ingredients (LOWER(BTRIM(name)));
 
 
 CREATE TABLE IF NOT EXISTS recipe_ingredients (
