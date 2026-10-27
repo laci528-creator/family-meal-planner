@@ -431,7 +431,7 @@ http://localhost:3000
 
 The production version is available here:
 
-https://family-meal-planner-ewy5.onrender.com
+https://family-meal-planner-evy5.onrender.com
 
 The demo uses individual user accounts. Recipes, meal plans, shopping lists and pantry data are therefore separated by user.
 
@@ -829,6 +829,6 @@ http://localhost:3000
 
 Die Live-Version ist hier verfügbar:
 
-https://family-meal-planner-ewy5.onrender.com
+https://family-meal-planner-evy5.onrender.com
 
 Die Demo verwendet individuelle Benutzerkonten. Rezepte, Wochenpläne, Einkaufslisten und Vorratsdaten sind daher nach Benutzer getrennt.

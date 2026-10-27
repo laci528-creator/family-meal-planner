@@ -159,6 +159,17 @@ body {
   text-decoration: none;
 }
 
+.nav-dropdown::after {
+  content: "";
+  position: absolute;
+
+  top: 100%;
+  left: 0;
+
+  width: 100%;
+  height: 20px;
+}
+
 .nav-dropdown-menu {
   position: absolute;
   top: 100%;
