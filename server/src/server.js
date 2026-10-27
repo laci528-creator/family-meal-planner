@@ -1,10 +1,13 @@
 import "dotenv/config";  //Load environment variables first
+
 import express from "express";
 import cors from "cors";
 import session from "express-session";
-import pool from "./config/db.js";
-import recipeRoutes from "./routes/recipeRoutes.js";
+import connectPgSimple from "connect-pg-simple";
 
+import pool from "./config/db.js";
+
+import recipeRoutes from "./routes/recipeRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import plannerRoutes from "./routes/plannerRoutes.js";
 import shoppingRoutes from "./routes/shoppingRoutes.js";
@@ -16,24 +19,58 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true,
-}));
+const PgSession = connectPgSimple(session);
+
+const isProduction =
+  process.env.NODE_ENV === "production";
+
+const clientUrl =
+  process.env.CLIENT_URL ||
+  "http://localhost:5173";
+
+if (isProduction) {
+  app.set("trust proxy", 1);
+}
+
+app.use(
+  cors({
+    origin: clientUrl,
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    httpOnly: true,
-    secure: false,  //just in localhost
-    sameSite: "lax",
-    maxAge: 1000 * 60 * 60 * 24,
-  },
-}));
+app.use(
+  session({
+    store: new PgSession({
+      pool,
+      tableName: "user_sessions",
+      createTableIfMissing: true,
+    }),
+
+    name: "familyMealPlannerSession",
+
+    secret: process.env.SESSION_SECRET,
+
+    resave: false,
+    saveUninitialized: false,
+
+    cookie: {
+      httpOnly: true,
+
+      secure: isProduction,
+
+      sameSite: isProduction
+        ? "none"
+        : "lax",
+
+      maxAge:
+        1000 * 60 * 60 * 24,
+    },
+  })
+);
+
 
 
 app.use("/api/auth", authRoutes);
