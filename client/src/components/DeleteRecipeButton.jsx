@@ -1,5 +1,6 @@
 import { useState } from "react";
 import api from "../services/api";
+import StatusMessage from "./StatusMessage";
 
 function DeleteRecipeButton({ recipeId, onDeleted }) {
   const [isDeleting, setIsDeleting] = useState(false);
@@ -7,11 +8,11 @@ function DeleteRecipeButton({ recipeId, onDeleted }) {
 
   async function handleDelete() {
     const confirmed = window.confirm(
-        "Are you sure you want to delete this recipe?"
+      "Are you sure you want to delete this recipe?"
     );
 
     if (!confirmed) {
-        return;
+      return;
     }
     try {
       setIsDeleting(true);
@@ -39,7 +40,9 @@ function DeleteRecipeButton({ recipeId, onDeleted }) {
         {isDeleting ? "Deleting..." : "Delete"}
       </button>
 
-      {error && <p className="error-message">{error}</p>}
+      <StatusMessage type="error">
+        {error}
+      </StatusMessage>
     </div>
   );
 }

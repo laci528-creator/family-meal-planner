@@ -2,11 +2,14 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
+import StatusMessage from "./StatusMessage";
+
 
 function SaveRecipeButton({ externalId }) {
   const [isSaving, setIsSaving] = useState(false);
   const [isChecking, setIsChecking] = useState(true);
   const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   const [isSaved, setIsSaved] = useState(false);
   const { user, loading } = useAuth();
 
@@ -20,28 +23,32 @@ function SaveRecipeButton({ externalId }) {
       return;
     }
 
-  async function checkSaved() {
-    try {
-      setIsChecking(true);
-      const response = await api.get(
-        `/recipes/saved/${externalId}`
-      );
+    async function checkSaved() {
+      try {
+        setIsChecking(true);
+        setError("");
 
-      setIsSaved(response.data.saved);
-    } catch (error) {
-      console.error("Could not check recipe status:", error);
-    } finally {
-      setIsChecking(false);
+        const response = await api.get(
+          `/recipes/saved/${externalId}`
+        );
+
+        setIsSaved(response.data.saved);
+      } catch (error) {
+        console.error("Could not check recipe status:", error);
+        setError("Could not check recipe status.");
+      } finally {
+        setIsChecking(false);
+      }
     }
-  }
 
-  checkSaved();
-}, [externalId, user, loading]);
+    checkSaved();
+  }, [externalId, user, loading]);
 
   async function handleSave() {
     try {
       setIsSaving(true);
       setMessage("");
+      setError("");
 
       await api.post("/recipes/api", {
         externalId,
@@ -50,7 +57,7 @@ function SaveRecipeButton({ externalId }) {
       setIsSaved(true);
       setMessage("Recipe saved.");
     } catch (err) {
-      setMessage(
+      setError(
         err.response?.data?.message ||
         "Could not save recipe."
       );
@@ -58,7 +65,7 @@ function SaveRecipeButton({ externalId }) {
       setIsSaving(false);
     }
   }
-    
+
   if (loading) {
     return null;
   }
@@ -85,12 +92,21 @@ function SaveRecipeButton({ externalId }) {
         disabled={isChecking || isSaving || isSaved}
       >
         {isChecking
-          ? "Checking..." :
-          isSaved ? "Saved" : 
-          isSaving ? "Saving..." : "Save recipe"}
+          ? "Checking..."
+          : isSaving
+            ? "Saving..."
+            : isSaved
+              ? "Saved"
+              : "Save recipe"}
       </button>
 
-      {message && <p>{message}</p>}
+      <StatusMessage type="success">
+        {message}
+      </StatusMessage>
+
+      <StatusMessage type="error">
+        {error}
+      </StatusMessage>
     </div>
   );
 }

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import api from "../services/api";
 import AboutProject from '../components/AboutProject';
+import StatusMessage from "../components/StatusMessage";
 
 function Home() {
   const [recipe, setRecipe] = useState(null);
@@ -26,101 +27,103 @@ function Home() {
 
   return (
     <main className="page-container">
-    <section className="home-page">
-      <div className="home-hero">
-        <h1 className="home-title">Plan meals. Shop smarter.</h1>
+      <section className="home-page">
+        <div className="home-hero">
+          <h1 className="home-title">Plan meals. Shop smarter.</h1>
 
-        <p className="home-description">
-          Discover recipes, save family favourites, plan your week
-          and create your shopping list automatically.
-        </p>
-      </div>
-
-      <div className="home-features">
-        <article className="feature-card">
-          <h2>Discover Recipes</h2>
-          <p>Find new recipes and save your favourites.</p>
-          <div className="button-container">
-            <Link to="/discover" className="primary-button">Discover recipes</Link>
-          </div>
-        </article>
-
-        <article className="feature-card">
-          <h2>Family Recipes</h2>
-          <p>Keep your own and traditional family recipes in one place.</p>
-          <div className="button-container">
-            <Link to="/recipes/family/new" className="primary-button"> Add family recipe </Link>
-          </div>
-        </article>
-
-        <article className="feature-card">
-          <h2>Weekly Planner</h2>
-          <p>Plan your meals for the upcoming week.</p>
-          <div className="button-container">
-            <Link to="/planner" className="primary-button">Plan your week</Link>
-          </div>
-        </article>
-
-        <article className="feature-card">
-          <h2>Shopping List</h2>
-          <p>Create a shopping list automatically from your meal plan.</p>
-          <div className="button-container">
-            <Link to="/shopping" className="primary-button">View shopping list</Link>
-          </div>
-        </article>
-      </div>
-
-      <section className="recipe-inspiration">
-
-        {loading && <p>Loading recipe...</p>}
-
-        {error && (
-          <p className="error-message">
-            {error}
+          <p className="home-description">
+            Discover recipes, save family favourites, plan your week
+            and create your shopping list automatically.
           </p>
-        )}
+        </div>
 
-        {recipe && (
-          <article className="recipe-inspiration-card">
-            <img
-              src={recipe.image}
-              alt={recipe.title}
-              className="recipe-inspiration-image"
-            />
+        <div className="home-features">
+          <article className="feature-card">
+            <h2>Discover Recipes</h2>
+            <p>Find new recipes and save your favourites.</p>
+            <div className="button-container">
+              <Link to="/discover" className="primary-button">Discover recipes</Link>
+            </div>
+          </article>
 
-            <div className="recipe-inspiration-text">
+          <article className="feature-card">
+            <h2>Family Recipes</h2>
+            <p>Keep your own and traditional family recipes in one place.</p>
+            <div className="button-container">
+              <Link to="/recipes/family/new" className="primary-button"> Add family recipe </Link>
+            </div>
+          </article>
 
-              <h2>Daily Recipe Inspiration</h2>
+          <article className="feature-card">
+            <h2>Weekly Planner</h2>
+            <p>Plan your meals for the upcoming week.</p>
+            <div className="button-container">
+              <Link to="/planner" className="primary-button">Plan your week</Link>
+            </div>
+          </article>
 
-              <h3>{recipe.title}</h3>
+          <article className="feature-card">
+            <h2>Shopping List</h2>
+            <p>Create a shopping list automatically from your meal plan.</p>
+            <div className="button-container">
+              <Link to="/shopping" className="primary-button">View shopping list</Link>
+            </div>
+          </article>
+        </div>
 
-              <p>                
-                <span className="recipe-inspiration-label">
-                Category:
-              </span>{" "}     
-              {recipe.category}</p>
+        <section className="recipe-inspiration">
 
-              {recipe.cuisine && (
+          <StatusMessage type="info">
+            {loading ? "Loading recipe..." : null}
+          </StatusMessage>
+
+          <StatusMessage type="error">
+            {error}
+          </StatusMessage>
+
+          {recipe && (
+            <article className="recipe-inspiration-card">
+              <img
+                src={recipe.image}
+                alt={recipe.title}
+                className="recipe-inspiration-image"
+              />
+
+              <div className="recipe-inspiration-text">
+
+                <h2>Daily Recipe Inspiration</h2>
+
+                <h3>{recipe.title}</h3>
+
                 <p>
                   <span className="recipe-inspiration-label">
-                Cuisine:
-              </span>{" "} 
-              {recipe.cuisine}</p>
-              )}
-              <br></br>
-              <Link
-                to={`/recipes/${recipe.externalId}`}
-                className="primary-button"
-              >
-                View recipe
-              </Link>
-            </div>
+                    Category:
+                  </span>{" "}
+                  {recipe.category}
+                </p>
 
-          </article>
-        )}
+                {recipe.cuisine && (
+                  <p>
+                    <span className="recipe-inspiration-label">
+                      Cuisine:
+                    </span>{" "}
+                    {recipe.cuisine}
+                  </p>
+                )}
+                <br />
+                <Link
+                  to={`/recipes/${recipe.externalId}`}
+                  className="primary-button"
+                >
+                  View recipe
+                </Link>
+              </div>
+
+            </article>
+          )}
+        </section>
+        <AboutProject />
       </section>
-      <AboutProject />
-    </section>
     </main>
   );
 }

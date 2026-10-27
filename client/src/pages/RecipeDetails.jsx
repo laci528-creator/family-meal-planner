@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Navigate } from 'react-router-dom';
 import api from '../services/api';
 import SaveRecipeButton from '../components/SaveRecipeButton';
 import CookingMode from "../components/CookingMode";
+import StatusMessage from "../components/StatusMessage";
 
 function RecipeDetails({ source = "external" }) {
   const { id } = useParams();
@@ -51,15 +52,27 @@ function RecipeDetails({ source = "external" }) {
 
 
   if (loading) {
-    return <p>Loading recipe...</p>;
+    return (
+    <main className="page-container recipe-details-page">
+      <StatusMessage type="info">
+        Loading recipe...
+      </StatusMessage>
+    </main>
+    );
   }
 
   if (error) {
-    return <p className="error-message">{error}</p>;
+    return (
+    <main className="page-container recipe-details-page">
+      <StatusMessage type="error">
+        {error}
+      </StatusMessage>
+    </main>
+    );
   }
 
   if (!recipe) {
-    return null;
+    return <Navigate to="/404" replace />;
   }
 
   const recipeImage = recipe.image;
@@ -113,14 +126,14 @@ function RecipeDetails({ source = "external" }) {
                 </Link>
               )}
 
-              {source === "saved" &&
-                recipe.source === "api" && (
-                  <Link
-                    to={`/recipes/saved/${recipe.id}/edit`}
-                    className="primary-button edit-recipe-button"
-                  >
-                    Customize recipe
-                  </Link>
+            {source === "saved" &&
+              recipe.source === "api" && (
+                <Link
+                  to={`/recipes/saved/${recipe.id}/edit`}
+                  className="primary-button edit-recipe-button"
+                >
+                  Customize recipe
+                </Link>
               )}
 
           </div>

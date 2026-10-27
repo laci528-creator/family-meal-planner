@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import PantryItemForm from "../components/PantryItemForm";
 import PantryItem from "../components/PantryItem";
+import StatusMessage from "../components/StatusMessage";
 import api from "../services/api";
 
 function Pantry() {
@@ -10,7 +11,7 @@ function Pantry() {
     const [error, setError] = useState(null);
     const [pantryList, setPantryList] = useState([]);
     const [pantryListLoading, setPantryListLoading] = useState(true);
-    const [deletingItemId, setdeletingItemId] = useState(null);
+    const [deletingItemId, setDeletingItemId] = useState(null);
 
 
     async function fetchPantryList() {
@@ -85,7 +86,7 @@ function Pantry() {
 
     async function handleDeleteItem(itemId) {
 
-        setdeletingItemId(itemId);
+        setDeletingItemId(itemId);
         setError(null);
         setMessage("");
 
@@ -112,13 +113,26 @@ function Pantry() {
                 error
             );
         } finally {
-            setdeletingItemId(null);
+            setDeletingItemId(null);
         }
     }
 
     return (
         <main className="page-container pantry-page">
             <h1 className="page-title">My Pantry List</h1>
+
+
+            <StatusMessage type="success">
+                {message}
+            </StatusMessage>
+
+            <StatusMessage type="error">
+                {error}
+            </StatusMessage>
+
+            <StatusMessage type="info">
+                {pantryListLoading ? "Loading pantry list..." : null}
+            </StatusMessage>
 
             <div className="pantry-form-panel">
                 <h3>Add new Pantry item:</h3>
@@ -128,46 +142,31 @@ function Pantry() {
                 />
             </div>
 
-            {message && (
-                <p className="pantry-message"
-                    role="status"
-                    aria-live="polite"
-                >
-                    {message}
-                </p>
-            )}
+            {!pantryListLoading &&
+                !error &&
+                pantryList.length === 0 && (
+                    <StatusMessage type="info">
+                        No pantry items in your list.
+                    </StatusMessage>
+                )}
 
-            {error && (
-                <p
-                    className="pantry-error-message"
-                    role="alert"
-                >
-                    {error}
-                </p>
-            )}
-
-            {pantryListLoading ? (
-                <p>Loading Pantry List...</p>
-
-            ) : pantryList.length === 0 ? (
-                <p>No Pantry Items in your List</p>
-
-            ) : (
-                <div className="pantry-list"
-                >
-                    {pantryList.map((item) => {
-                        return (
-                            <PantryItem
-                                key={item.id}
-                                item={item}
-                                onDelete={handleDeleteItem}
-                                isDeleting={deletingItemId === item.id}
-                            />
-                        )
-                    })
-                    }
-                </div>
-            )}
+            {!pantryListLoading &&
+                pantryList.length > 0 && (
+                    <div className="pantry-list"
+                    >
+                        {pantryList.map((item) => {
+                            return (
+                                <PantryItem
+                                    key={item.id}
+                                    item={item}
+                                    onDelete={handleDeleteItem}
+                                    isDeleting={deletingItemId === item.id}
+                                />
+                            )
+                        })
+                        }
+                    </div>
+                )}
         </main>
     )
 }

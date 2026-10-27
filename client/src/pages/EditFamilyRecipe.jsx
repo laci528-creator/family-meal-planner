@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { useNavigate,useParams } from "react-router-dom";
+import { useNavigate,useParams, Navigate } from "react-router-dom";
 import api from "../services/api";
 import FamilyRecipeForm from "../components/FamilyRecipeForm";
+import StatusMessage from "../components/StatusMessage";
 
 function EditFamilyRecipes() {
 
@@ -46,18 +47,29 @@ function EditFamilyRecipes() {
     navigate(`/recipes/saved/${id}`);
   }
 
-  if (loading) {
-    return <p>Loading recipe...</p>;
+    if (loading) {
+    return (
+    <main className="page-container family-recipe-page">
+      <StatusMessage type="info">
+        Loading recipe...
+      </StatusMessage>
+    </main>
+    );
   }
 
   if (error) {
-    return <p className="error-message">{error}</p>;
+    return (
+    <main className="page-container family-recipe-page">
+      <StatusMessage type="error">
+        {error}
+      </StatusMessage>
+    </main>
+    );
   }
 
   if (!recipe) {
-    return null;
+    return <Navigate to="/404" replace />;
   }
-
 
   return (
     <main className="page-container family-recipe-page">

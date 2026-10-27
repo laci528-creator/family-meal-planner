@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ShoppingItemForm from "../components/ShoppingItemForm";
 import api from "../services/api";
+import StatusMessage from "../components/StatusMessage";
 
 import {
   getWeekStart,
@@ -258,6 +259,18 @@ function Shopping() {
     <main className="page-container shopping-page">
       <h1 className="page-title">Weekly Shopping List</h1>
 
+      <StatusMessage type="success">
+        {message}
+      </StatusMessage>
+
+      <StatusMessage type="error">
+        {error}
+      </StatusMessage>
+
+      <StatusMessage type="info">
+        {ingredientsLoading ? "Loading shopping list..." : null}
+      </StatusMessage>
+
       <div className="week-navigation">
         <h2 className="week-date">
           {currentMonday.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })} -
@@ -289,98 +302,88 @@ function Shopping() {
           isSaving={itemSaving}
         />
       </div>
-      {message && (
-        <p className="shopping-message"
-          role="status"
-          aria-live="polite">
-          {message}
-        </p>
-      )}
 
-      {error && (
-        <p
-          className="shopping-error-message"
-          role="alert"
-        >
-          {error}
-        </p>
-      )}
 
-      {ingredientsLoading ? (
-        <p>Loading shopping list...</p>
-      ) : shoppingList.length === 0 ? (
-        <p>No shopping items for this week.</p>
-      ) : (
-        <div className="shopping-list"
-          role="alert"
-          aria-live="assertive">
-          {shoppingList.map((item) => {
-            const itemKey = item.itemIds.join("-");
-            const status =
-              itemStatus[itemKey] ??
-              item.status ??
-              "needed";
+      {!ingredientsLoading &&
+        !error &&
+        shoppingList.length === 0 && (
+          <StatusMessage type="info">
+            No shopping items for this week.
+          </StatusMessage>
+        )}
 
-            return (
-              <div
-                key={itemKey}
-                className="shopping-item"
-              >
-                <div className="shopping-item-main">
-                  <button
-                    className="shopping-delete-button"
-                    aria-label={`Delete ${item.name}`}
-                    type="button"
-                    onClick={() => deleteItem(item.itemIds, itemKey)}
-                    disabled={deletingItemKey === itemKey}
-                  >
-                    {deletingItemKey === itemKey
-                      ? "Deleting..."
-                      : "X"}
-                  </button>
+      {!ingredientsLoading &&
+        !error &&
+        shoppingList.length > 0 && (
+          <div className="shopping-list">
+            {shoppingList.map((item) => {
+              const itemKey = item.itemIds.join("-");
 
-                  <strong>{item.name}</strong>
+              const status =
+                itemStatus[itemKey] ??
+                item.status ??
+                "needed";
+
+              return (
+                <div
+                  key={itemKey}
+                  className="shopping-item"
+                >
+                  <div className="shopping-item-main">
+                    <button
+                      className="shopping-delete-button"
+                      aria-label={`Delete ${item.name}`}
+                      type="button"
+                      onClick={() => deleteItem(item.itemIds, itemKey)}
+                      disabled={deletingItemKey === itemKey}
+                    >
+                      {deletingItemKey === itemKey
+                        ? "Deleting..."
+                        : "X"}
+                    </button>
+
+                    <strong>{item.name}</strong>
+                  </div>
+                  <div className="shopping-item-measure">
+                    <p>{item.measure}</p>
+                  </div>
+                  <div className="shopping-item-actions">
+                    <label className="shopping-checkbox">
+                      <input
+                        type="checkbox"
+                        checked={status === "at_home"}
+                        onChange={(e) =>
+                          handleStatusChange(
+                            item.itemIds,
+                            itemKey,
+                            "at_home",
+                            e.target.checked
+                          )
+                        }
+                      />
+                      <span>At home</span>
+                    </label>
+                    <label className="shopping-checkbox">
+                      <input
+                        type="checkbox"
+                        checked={status === "purchased"}
+                        onChange={(e) =>
+                          handleStatusChange(
+                            item.itemIds,
+                            itemKey,
+                            "purchased",
+                            e.target.checked
+                          )
+                        }
+                      />
+                      <span>Purchased</span>
+                    </label>
+                  </div>
                 </div>
-                <div className="shopping-item-measure">
-                  <p>{item.measure}</p>
-                </div>
-                <div className="shopping-item-actions">
-                  <label className="shopping-checkbox">
-                    <input
-                      type="checkbox"
-                      checked={status === "at_home"}
-                      onChange={(e) =>
-                        handleStatusChange(
-                          item.itemIds,
-                          itemKey,
-                          "at_home",
-                          e.target.checked
-                        )
-                      }
-                    />
-                    <span>At home</span>
-                  </label>
-                  <label className="shopping-checkbox">
-                    <input
-                      type="checkbox"
-                      checked={status === "purchased"}
-                      onChange={(e) =>
-                        handleStatusChange(
-                          item.itemIds,
-                          itemKey,
-                          "purchased",
-                          e.target.checked
-                        )
-                      }
-                    />
-                    <span>Purchased</span>
-                  </label>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
+              );
+            })}
+          </div>
+        )}
     </main>
   );
 }

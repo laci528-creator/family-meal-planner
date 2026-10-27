@@ -52,15 +52,6 @@ body {
   flex: 1;
 }
 
-.error-message {
-  text-align: center;
-  color: var(--danger);
-  padding: 10px;
-  background-color: var(--danger-bg);
-  border: 2px solid var(--danger);
-  border-radius: 4px;
-}
-
 /*---Unify page und title css---*/
 
 .page-container {
@@ -74,6 +65,43 @@ body {
   font-size: 2rem;
   line-height: 1.2;
   font-weight: 700;
+}
+
+/*---message styles---*/
+
+.status-message {
+  width: 100%;
+  max-width: 100%;
+
+  margin: 0.75rem 0;
+  padding: 0.75rem 1rem;
+
+  border-radius: 8px;
+  border: 1px solid;
+
+  text-align: center;
+  font-weight: 600;
+  line-height: 1.4;
+
+  box-sizing: border-box;
+}
+
+.status-message.success {
+  background: #e7f4ec;
+  border-color: #8fc5a3;
+  color: #245c3a;
+}
+
+.status-message.error {
+  background: var(--danger-bg);
+  border-color: var(--danger-border);
+  color: var(--danger);
+}
+
+.status-message.info {
+  background: var(--color-surface);
+  border-color: var(--color-border);
+  color: var(--color-text);
 }
 
 /*---NAVIGATION---*/
@@ -1452,36 +1480,6 @@ body {
 
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
 }
-
-@media (max-width: 600px) {
-  .shopping-message,
-  .shopping-error-message {
-    top: 60px;
-    left: 1rem;
-    right: 1rem;
-    text-align: center;
-  }
-}
-
-.shopping-error-message {
-  position: fixed;
-  top: 70px;
-  right: 20px;
-  z-index: 1000;
-
-  padding: 0.8rem 1rem;
-
-  background-color: var(--danger-bg);
-  border: 1px solid var(--danger-border);
-  border-left: 4px solid var(--danger);
-  border-radius: 6px;
-
-  color: var(--danger);
-  font-weight: 600;
-
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
-}
-
 
 /*---Formular Global---*/
 

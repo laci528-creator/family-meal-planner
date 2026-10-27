@@ -1,6 +1,7 @@
 import { useState } from "react";
 import api from "../services/api";
 import ApiRecipeCard from "../components/ApiRecipeCard";
+import StatusMessage from "../components/StatusMessage";
 
 
 function DiscoverRecipes() {
@@ -8,12 +9,14 @@ function DiscoverRecipes() {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [hasSearched, setHasSearched] = useState(false);
 
 
   async function handleSearch(event) {
     event.preventDefault();
-    
+
     setError("");
+    setRecipes([]);
 
     const trimmedSearchTerm = query.trim();
 
@@ -23,43 +26,67 @@ function DiscoverRecipes() {
     }
 
     setLoading(true);
+    setHasSearched(true);
 
     try {
 
-        const response = await api.get(`/recipes/search?q=${trimmedSearchTerm}`);
+      const response = await api.get("/recipes/search", {
+        params: {
+          q: trimmedSearchTerm,
+        },
+      });
 
-        setRecipes(response.data.recipes);
+      setRecipes(response.data.recipes);
 
     } catch (error) {
-        console.error("Frontend error:", error);
-        setError(error.message);
+      console.error("Frontend error:", error);
+      setError(
+        error.response?.data?.message ||
+        "Could not search recipes."
+      );
     }
     finally {
-        setLoading(false);
+      setLoading(false);
     }
   }
 
   return (
     <main className="page-container discover-recipes-page">
       <h1 className="page-title">Discover Recipes</h1>
-      {loading && <p>Loading recipe...</p>}
 
-      {error && <p className="error-message">{error}</p>}
+      <StatusMessage type="info">
+        {loading ? "Searching recipes..." : null}
+      </StatusMessage>
 
-      {!loading && !error && recipes.length === 0 && query && (
-        <p>No recipes found.</p>
+      <StatusMessage type="error">
+        {error}
+      </StatusMessage>
+
+      {hasSearched &&
+        !loading &&
+        !error &&
+        recipes.length === 0 && (
+          <StatusMessage type="info">
+            No recipes found.
+          </StatusMessage>
         )}
 
-        <form onSubmit={handleSearch} className="recipe-search-form"> 
-            <input 
-                type="text" 
-                className="recipe-search-input"
-                placeholder="Search for recipe..." 
-                value={query} 
-                onChange={(event) => setQuery(event.target.value)} 
-                /> 
-                <button type="submit" className="primary-button" disable={loading}>{loading ? "Searching..." : "Search"}</button>
-        </form> 
+      <form onSubmit={handleSearch} className="recipe-search-form">
+        <input
+          type="text"
+          className="recipe-search-input"
+          placeholder="Search for recipe..."
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+        />
+        <button
+          type="submit"
+          className="primary-button"
+          disabled={loading}
+        >
+          {loading ? "Searching..." : "Search"}
+        </button>
+      </form>
 
       <div className="recipes-grid">
         {recipes.map((recipe) => (

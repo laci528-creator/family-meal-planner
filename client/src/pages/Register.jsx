@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import StatusMessage from "../components/StatusMessage";
 
 function Register() {
   const [firstName, setFirstName] = useState('');
@@ -14,22 +15,22 @@ function Register() {
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
-  e.preventDefault();
-  setError(null);
-  
+    e.preventDefault();
+    setError(null);
 
-  if (password !== password2) {
-    setError("Passwords do not match");
-    return;
-  }
-  setIsSubmitting(true);
 
-  try {
-      await api.post('/auth/register', { 
-      firstName,
-      lastName,
-      email,
-      password,
+    if (password !== password2) {
+      setError("Passwords do not match.");
+      return;
+    }
+    setIsSubmitting(true);
+
+    try {
+      await api.post('/auth/register', {
+        firstName,
+        lastName,
+        email,
+        password,
       });
 
       navigate("/login", {
@@ -38,7 +39,7 @@ function Register() {
     } catch (err) {
       console.error('Register error:', err);
       setError(
-        err.response?.data?.message || 
+        err.response?.data?.message ||
         'Registration failed. Please try again.'
       );
     } finally {
@@ -51,7 +52,9 @@ function Register() {
     <div className="register-container">
       <h2>Sign Up</h2>
 
-      {error && <div className="error-message" role="alert"><p>{error}</p></div>}
+      <StatusMessage type="error">
+        {error}
+      </StatusMessage>
 
       <form className="register-form" onSubmit={handleSubmit}>
         <div className="form-group">
@@ -116,7 +119,10 @@ function Register() {
             type="password"
             minLength={8}
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword2(e.target.value);
+              setError(null);
+            }}
             required
             autoComplete="new-password"
             className="form-input"
@@ -134,7 +140,10 @@ function Register() {
             type="password"
             minLength={8}
             value={password2}
-            onChange={(e) => setPassword2(e.target.value)}
+            onChange={(e) => {
+              setPassword2(e.target.value);
+              setError(null);
+            }}
             required
             autoComplete="new-password"
             className="form-input"
@@ -146,7 +155,7 @@ function Register() {
           className="primary-button"
           disabled={isSubmitting}
         >
-          {isSubmitting ? 'Creating account...' : 'Create account '}
+          {isSubmitting ? 'Creating account...' : 'Create account'}
         </button>
       </form>
     </div>

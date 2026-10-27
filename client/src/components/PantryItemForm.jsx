@@ -1,4 +1,5 @@
 import { useState } from "react";
+import StatusMessage from "./StatusMessage";
 
 function PantryItemForm({
   onAddItem,
@@ -34,11 +35,9 @@ function PantryItemForm({
 
   return (
     <>
-      {error && (
-        <p className="error-message">
-          {error}
-        </p>
-      )}
+      <StatusMessage type="error">
+        {error}
+      </StatusMessage>
 
       <form
         onSubmit={handleSubmit}
@@ -56,9 +55,10 @@ function PantryItemForm({
           className="form-input"
           type="text"
           value={ingredient}
-          onChange={(e) =>
-            setIngredient(e.target.value)
-          }
+          onChange={(e) => {
+            setIngredient(e.target.value);
+            setError("");
+          }}
           placeholder="e.g. Salt"
         />
 

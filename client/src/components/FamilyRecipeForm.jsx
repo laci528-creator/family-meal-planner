@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import api from "../services/api";
 import { splitMeasure } from "../utils/measureUtils";
+import StatusMessage from "./StatusMessage";
 
 function FamilyRecipeForm({
   initialData,
@@ -146,11 +147,11 @@ const [ingredients, setIngredients] = useState(
 
   return (
     <>
-      {error && (
-        <p className="error-message">
-          {error}
-        </p>
-      )}
+
+      <StatusMessage type="error">
+        {error}
+      </StatusMessage>
+
 
       <form onSubmit={handleSubmit} className="family-recipe-form">
         <div className="recipe-fields">
@@ -198,6 +199,8 @@ const [ingredients, setIngredients] = useState(
               accept="image/jpeg,image/png,image/webp"
               onChange={(event) => {
                 const file = event.target.files[0];
+
+                setError("");
 
                 if (file) {
                   setImageFile(file);
