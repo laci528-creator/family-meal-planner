@@ -15,10 +15,7 @@ function ApiRecipeCard({ recipe }) {
         {recipe.category && <p>{recipe.category}</p>}
         {recipe.cuisine && <p>{recipe.cuisine}</p>}
 
-        <Link
-          to={`/recipes/${recipe.externalId}`}
-          className="primary-button"
-        >
+        <Link to={`/recipes/${recipe.externalId}`} className="primary-button">
           View recipe
         </Link>
       </div>

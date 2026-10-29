@@ -3,9 +3,7 @@ export function getWeekStart(date = new Date()) {
 
   const dayOfWeek = currentDate.getDay();
 
-  const diff =
-    currentDate.getDate() -
-    (dayOfWeek === 0 ? 6 : dayOfWeek - 1);
+  const diff = currentDate.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1);
 
   const currentMonday = new Date(currentDate);
 
@@ -44,13 +42,10 @@ export function formatDateForApi(date) {
   return `${year}-${month}-${day}`;
 }
 
-
 export function addWeeks(date, weeks) {
   const newDate = new Date(date);
 
-  newDate.setDate(
-    newDate.getDate() + weeks * 7
-  );
+  newDate.setDate(newDate.getDate() + weeks * 7);
 
   return newDate;
 }

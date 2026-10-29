@@ -23,47 +23,19 @@ router.get("/random", getRandomRecipe);
 
 router.get("/search", searchRecipes);
 
-router.get(
-  "/saved/:externalId",
-  requireAuth,
-  checkRecipeSaved
-);
+router.get("/saved/:externalId", requireAuth, checkRecipeSaved);
 
-router.get(
-  "/saved-recipe/:id",
-  requireAuth,
-  getSavedRecipeById
-);
+router.get("/saved-recipe/:id", requireAuth, getSavedRecipeById);
 
+router.post("/api", requireAuth, saveRecipe);
 
-router.post(
-  "/api",
-  requireAuth,
-  saveRecipe
-);
+router.post("/custom", requireAuth, saveFamilyRecipe);
 
-router.post(
-  "/custom",
-  requireAuth,
-  saveFamilyRecipe
-);
+router.put("/:id", requireAuth, updateRecipe);
 
-router.put(
-  "/:id",
-  requireAuth,
-  updateRecipe
-);
-
-router.delete(
-  "/:id",
-  requireAuth,
-  deleteRecipe
-);
+router.delete("/:id", requireAuth, deleteRecipe);
 
 // Generic GET route always last
-router.get(
-  "/:id",
-  getRecipeById
-);
+router.get("/:id", getRecipeById);
 
 export default router;

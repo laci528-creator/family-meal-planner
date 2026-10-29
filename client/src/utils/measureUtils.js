@@ -46,9 +46,7 @@ export function splitMeasure(measure = "") {
     };
   }
 
-  const match = trimmedMeasure.match(
-    /^([\d./\s]+)\s*([a-zA-Z]+)?$/
-  );
+  const match = trimmedMeasure.match(/^([\d./\s]+)\s*([a-zA-Z]+)?$/);
 
   if (!match) {
     return {
@@ -58,8 +56,7 @@ export function splitMeasure(measure = "") {
   }
 
   const amount = match[1].trim();
-  const rawUnit =
-    match[2]?.toLowerCase() || "";
+  const rawUnit = match[2]?.toLowerCase() || "";
 
   const unit = unitAliases[rawUnit];
 

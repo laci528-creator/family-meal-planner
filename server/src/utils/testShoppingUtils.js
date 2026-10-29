@@ -52,25 +52,25 @@ const items = [
     measure: "1 cup",
     status: "purchased",
   },
-    {
+  {
     id: 9,
     name: "salt",
     measure: "To taste",
     status: "needed",
   },
-    {
+  {
     id: 10,
     name: "Salt",
     measure: "to taste",
     status: "purchased",
   },
-    {
+  {
     id: 11,
     name: "Buns",
     measure: "3",
     status: "needed",
   },
-    {
+  {
     id: 12,
     name: "Buns",
     measure: "5",
@@ -78,10 +78,4 @@ const items = [
   },
 ];
 
-console.log(
-  JSON.stringify(
-    groupShoppingItems(items),
-    null,
-    2
-  )
-);
+console.log(JSON.stringify(groupShoppingItems(items), null, 2));

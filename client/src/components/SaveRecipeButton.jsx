@@ -4,7 +4,6 @@ import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import StatusMessage from "./StatusMessage";
 
-
 function SaveRecipeButton({ externalId }) {
   const [isSaving, setIsSaving] = useState(false);
   const [isChecking, setIsChecking] = useState(true);
@@ -28,9 +27,7 @@ function SaveRecipeButton({ externalId }) {
         setIsChecking(true);
         setError("");
 
-        const response = await api.get(
-          `/recipes/saved/${externalId}`
-        );
+        const response = await api.get(`/recipes/saved/${externalId}`);
 
         setIsSaved(response.data.saved);
       } catch (error) {
@@ -57,10 +54,7 @@ function SaveRecipeButton({ externalId }) {
       setIsSaved(true);
       setMessage("Recipe saved.");
     } catch (err) {
-      setError(
-        err.response?.data?.message ||
-        "Could not save recipe."
-      );
+      setError(err.response?.data?.message || "Could not save recipe.");
     } finally {
       setIsSaving(false);
     }
@@ -73,10 +67,7 @@ function SaveRecipeButton({ externalId }) {
   if (!user) {
     return (
       <div className="save-recipe-container">
-        <Link
-          to="/login"
-          className="primary-button"
-        >
+        <Link to="/login" className="primary-button">
           Login to save
         </Link>
       </div>
@@ -100,16 +91,11 @@ function SaveRecipeButton({ externalId }) {
               : "Save recipe"}
       </button>
 
-      <StatusMessage type="success">
-        {message}
-      </StatusMessage>
+      <StatusMessage type="success">{message}</StatusMessage>
 
-      <StatusMessage type="error">
-        {error}
-      </StatusMessage>
+      <StatusMessage type="error">{error}</StatusMessage>
     </div>
   );
 }
 
 export default SaveRecipeButton;
-

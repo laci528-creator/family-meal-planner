@@ -1,14 +1,14 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import api from '../services/api';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import api from "../services/api";
 import StatusMessage from "../components/StatusMessage";
 
 function Register() {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [password2, setPassword2] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
 
@@ -18,7 +18,6 @@ function Register() {
     e.preventDefault();
     setError(null);
 
-
     if (password !== password2) {
       setError("Passwords do not match.");
       return;
@@ -26,7 +25,7 @@ function Register() {
     setIsSubmitting(true);
 
     try {
-      await api.post('/auth/register', {
+      await api.post("/auth/register", {
         firstName,
         lastName,
         email,
@@ -34,27 +33,23 @@ function Register() {
       });
 
       navigate("/login", {
-        state: { message: "Account created successfully. Please log in." }
+        state: { message: "Account created successfully. Please log in." },
       });
     } catch (err) {
-      console.error('Register error:', err);
+      console.error("Register error:", err);
       setError(
-        err.response?.data?.message ||
-        'Registration failed. Please try again.'
+        err.response?.data?.message || "Registration failed. Please try again.",
       );
     } finally {
       setIsSubmitting(false);
     }
-  };
-
+  }
 
   return (
     <div className="register-container">
       <h2>Sign Up</h2>
 
-      <StatusMessage type="error">
-        {error}
-      </StatusMessage>
+      <StatusMessage type="error">{error}</StatusMessage>
 
       <form className="register-form" onSubmit={handleSubmit}>
         <div className="form-group">
@@ -155,7 +150,7 @@ function Register() {
           className="primary-button"
           disabled={isSubmitting}
         >
-          {isSubmitting ? 'Creating account...' : 'Create account'}
+          {isSubmitting ? "Creating account..." : "Create account"}
         </button>
       </form>
     </div>

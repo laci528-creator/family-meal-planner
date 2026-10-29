@@ -1,21 +1,17 @@
-
-
 export function parseAmount(value) {
   if (value.includes(" ")) {
     const parts = value.trim().split(/\s+/);
 
     if (parts.length === 2 && parts[1].includes("/")) {
       const whole = Number(parts[0]);
-      const [numerator, denominator] =
-        parts[1].split("/").map(Number);
+      const [numerator, denominator] = parts[1].split("/").map(Number);
 
       return whole + numerator / denominator;
     }
   }
 
   if (value.includes("/")) {
-    const [numerator, denominator] =
-      value.split("/").map(Number);
+    const [numerator, denominator] = value.split("/").map(Number);
 
     return numerator / denominator;
   }
@@ -23,18 +19,12 @@ export function parseAmount(value) {
   return Number(value);
 }
 
-
 export function parseMeasure(measure) {
-  if (
-    typeof measure !== "string" ||
-    measure.trim() === ""
-  ) {
+  if (typeof measure !== "string" || measure.trim() === "") {
     return null;
   }
 
-  const match = measure
-    .trim()
-    .match(/^([\d./\s]+)\s*([a-zA-Z]+)?$/);
+  const match = measure.trim().match(/^([\d./\s]+)\s*([a-zA-Z]+)?$/);
 
   if (!match) {
     return null;
@@ -47,9 +37,7 @@ export function parseMeasure(measure) {
     return null;
   }
 
-  const unit = match[2]
-    ? match[2].toLowerCase()
-    : null;
+  const unit = match[2] ? match[2].toLowerCase() : null;
 
   return {
     amount,
@@ -105,7 +93,6 @@ const VOLUME_UNITS = {
   cups: 240,
 };
 
-
 export function convertWeightToGrams(measure) {
   const parsed = parseMeasure(measure);
 
@@ -143,10 +130,7 @@ export function convertVolumeToMl(measure) {
 }
 
 export function getMeasureType(unit) {
-  if (
-    typeof unit !== "string" ||
-    unit.trim() === ""
-  ) {
+  if (typeof unit !== "string" || unit.trim() === "") {
     return null;
   }
 
@@ -189,16 +173,11 @@ export function formatGroupedMeasure(item) {
   }
 
   if (item.type === "unknown") {
-    const formattedMeasures =
-      item.unknownMeasures.map(
-        (measure) =>
-          `${roundMeasure(measure.amount)} ${measure.unit}`
-      );
+    const formattedMeasures = item.unknownMeasures.map(
+      (measure) => `${roundMeasure(measure.amount)} ${measure.unit}`,
+    );
 
-    return [
-      ...formattedMeasures,
-      ...item.rawMeasures,
-    ].join(" + ");
+    return [...formattedMeasures, ...item.rawMeasures].join(" + ");
   }
 
   return "";

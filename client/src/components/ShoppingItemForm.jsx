@@ -21,10 +21,7 @@ function ShoppingItemForm({ onAddItem, isSaving }) {
   }
 
   return (
-    <form
-      className="shopping-item-form"
-      onSubmit={handleSubmit}
-    >
+    <form className="shopping-item-form" onSubmit={handleSubmit}>
       <input
         className="form-input"
         type="text"
@@ -34,18 +31,14 @@ function ShoppingItemForm({ onAddItem, isSaving }) {
       />
 
       <input
-        className="form-input"      
+        className="form-input"
         type="text"
         placeholder="Amount / measure"
         value={measure}
         onChange={(e) => setMeasure(e.target.value)}
       />
 
-      <button
-        type="submit"
-        className="primary-button"
-        disabled={isSaving}
-      >
+      <button type="submit" className="primary-button" disabled={isSaving}>
         {isSaving ? "Adding..." : "Add item"}
       </button>
     </form>

@@ -1,17 +1,12 @@
-import { useState } from 'react';
-import {
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import api from '../services/api';
+import api from "../services/api";
 import StatusMessage from "../components/StatusMessage";
 
-
-
 function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -23,29 +18,25 @@ function Login() {
   const successMessage = location.state?.message || "";
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // page refresh not allowed 
+    e.preventDefault(); // page refresh not allowed
     setError(null);
     setIsSubmitting(true);
 
     const trimmedEmail = email.trim();
 
     try {
-      const response =
-        await api.post('/auth/login', {
-          email: trimmedEmail,
-          password
-        });
+      const response = await api.post("/auth/login", {
+        email: trimmedEmail,
+        password,
+      });
 
       setUser(response.data.user);
 
-      navigate('/');
+      navigate("/");
     } catch (err) {
-      console.error('Login error:', err);
+      console.error("Login error:", err);
 
-      setError(
-        err.response?.data?.message ||
-        'Invalid email or password.'
-      );
+      setError(err.response?.data?.message || "Invalid email or password.");
     } finally {
       setIsSubmitting(false);
     }
@@ -56,17 +47,15 @@ function Login() {
       <div className="auth-card">
         <h1>Login</h1>
 
-        <StatusMessage type="success">
-          {successMessage}
-        </StatusMessage>
+        <StatusMessage type="success">{successMessage}</StatusMessage>
 
-        <StatusMessage type="error">
-          {error}
-        </StatusMessage>
+        <StatusMessage type="error">{error}</StatusMessage>
 
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
-            <label htmlFor="email" className="form-label">Email address:</label>
+            <label htmlFor="email" className="form-label">
+              Email address:
+            </label>
             <input
               id="email"
               type="email"
@@ -82,7 +71,9 @@ function Login() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="password" className="form-label">Password:</label>
+            <label htmlFor="password" className="form-label">
+              Password:
+            </label>
             <input
               id="password"
               type="password"
@@ -102,12 +93,12 @@ function Login() {
             className="primary-button"
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'Logging in...' : 'Login'}
+            {isSubmitting ? "Logging in..." : "Login"}
           </button>
         </form>
       </div>
     </main>
-  )
+  );
 }
 
-export default Login; 
+export default Login;

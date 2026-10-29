@@ -1,39 +1,35 @@
 import { useEffect, useState } from "react";
-import { useNavigate,useParams, Navigate } from "react-router-dom";
+import { useNavigate, useParams, Navigate } from "react-router-dom";
 import api from "../services/api";
 import FamilyRecipeForm from "../components/FamilyRecipeForm";
 import StatusMessage from "../components/StatusMessage";
 
 function EditFamilyRecipes() {
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-    const { id } = useParams();
-    const navigate = useNavigate();
+  const [recipe, setRecipe] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    const [recipe, setRecipe] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-      useEffect(() => {
+  useEffect(() => {
     const fetchRecipe = async () => {
       try {
-          setLoading(true);
-          setError(null);
-          setRecipe(null);
+        setLoading(true);
+        setError(null);
+        setRecipe(null);
 
-            const response = await api.get(
-                `/recipes/saved-recipe/${id}`
-            );
-          setRecipe(response.data.recipe);
-        } catch (err) {
-          console.error('Error loading recipe:', err);
+        const response = await api.get(`/recipes/saved-recipe/${id}`);
+        setRecipe(response.data.recipe);
+      } catch (err) {
+        console.error("Error loading recipe:", err);
 
-          if (err.response?.status === 404) {
-            setError('Recipe not found.');
-          } else {
-            setError('The recipe could not be loaded.');
-          }
+        if (err.response?.status === 404) {
+          setError("Recipe not found.");
+        } else {
+          setError("The recipe could not be loaded.");
         }
-        finally {
+      } finally {
         setLoading(false);
       }
     };
@@ -47,23 +43,19 @@ function EditFamilyRecipes() {
     navigate(`/recipes/saved/${id}`);
   }
 
-    if (loading) {
+  if (loading) {
     return (
-    <main className="page-container family-recipe-page">
-      <StatusMessage type="info">
-        Loading recipe...
-      </StatusMessage>
-    </main>
+      <main className="page-container family-recipe-page">
+        <StatusMessage type="info">Loading recipe...</StatusMessage>
+      </main>
     );
   }
 
   if (error) {
     return (
-    <main className="page-container family-recipe-page">
-      <StatusMessage type="error">
-        {error}
-      </StatusMessage>
-    </main>
+      <main className="page-container family-recipe-page">
+        <StatusMessage type="error">{error}</StatusMessage>
+      </main>
     );
   }
 
@@ -81,14 +73,10 @@ function EditFamilyRecipes() {
       <FamilyRecipeForm
         initialData={recipe}
         onSubmit={handleUpdate}
-        submitText={
-          recipe.source === "api"
-            ? "Save changes"
-            : "Update recipe"
-        }
+        submitText={recipe.source === "api" ? "Save changes" : "Update recipe"}
       />
     </main>
   );
 }
 
-export default EditFamilyRecipes; 
+export default EditFamilyRecipes;

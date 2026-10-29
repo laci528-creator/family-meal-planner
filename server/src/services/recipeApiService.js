@@ -1,6 +1,6 @@
 export async function fetchRecipeById(externalId) {
   const response = await fetch(
-    `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${externalId}`
+    `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${externalId}`,
   );
 
   if (!response.ok) {
@@ -41,7 +41,7 @@ export async function fetchRecipeById(externalId) {
 
 export async function searchRecipesByName(query) {
   const response = await fetch(
-    `https://www.themealdb.com/api/json/v1/1/search.php?s=${encodeURIComponent(query)}`
+    `https://www.themealdb.com/api/json/v1/1/search.php?s=${encodeURIComponent(query)}`,
   );
 
   if (!response.ok) {

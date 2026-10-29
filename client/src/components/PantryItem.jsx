@@ -1,8 +1,4 @@
-function PantryItem({
-  item,
-  onDelete,
-  isDeleting,
-}) {
+function PantryItem({ item, onDelete, isDeleting }) {
   return (
     <div className="pantry-item">
       <span>{item.name}</span>
@@ -14,9 +10,7 @@ function PantryItem({
         disabled={isDeleting}
         aria-label={`Delete ${item.name}`}
       >
-        {isDeleting
-          ? "Deleting..."
-          : "X"}
+        {isDeleting ? "Deleting..." : "X"}
       </button>
     </div>
   );

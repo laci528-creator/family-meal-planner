@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../services/api";
-import AboutProject from '../components/AboutProject';
+import AboutProject from "../components/AboutProject";
 import StatusMessage from "../components/StatusMessage";
 
 function Home() {
@@ -32,8 +32,8 @@ function Home() {
           <h1 className="home-title">Plan meals. Shop smarter.</h1>
 
           <p className="home-description">
-            Discover recipes, save family favourites, plan your week
-            and create your shopping list automatically.
+            Discover recipes, save family favourites, plan your week and create
+            your shopping list automatically.
           </p>
         </div>
 
@@ -42,7 +42,9 @@ function Home() {
             <h2>Discover Recipes</h2>
             <p>Find new recipes and save your favourites.</p>
             <div className="button-container">
-              <Link to="/discover" className="primary-button">Discover recipes</Link>
+              <Link to="/discover" className="primary-button">
+                Discover recipes
+              </Link>
             </div>
           </article>
 
@@ -50,7 +52,10 @@ function Home() {
             <h2>Family Recipes</h2>
             <p>Keep your own and traditional family recipes in one place.</p>
             <div className="button-container">
-              <Link to="/recipes/family/new" className="primary-button"> Add family recipe </Link>
+              <Link to="/recipes/family/new" className="primary-button">
+                {" "}
+                Add family recipe{" "}
+              </Link>
             </div>
           </article>
 
@@ -58,7 +63,9 @@ function Home() {
             <h2>Weekly Planner</h2>
             <p>Plan your meals for the upcoming week.</p>
             <div className="button-container">
-              <Link to="/planner" className="primary-button">Plan your week</Link>
+              <Link to="/planner" className="primary-button">
+                Plan your week
+              </Link>
             </div>
           </article>
 
@@ -66,20 +73,19 @@ function Home() {
             <h2>Shopping List</h2>
             <p>Create a shopping list automatically from your meal plan.</p>
             <div className="button-container">
-              <Link to="/shopping" className="primary-button">View shopping list</Link>
+              <Link to="/shopping" className="primary-button">
+                View shopping list
+              </Link>
             </div>
           </article>
         </div>
 
         <section className="recipe-inspiration">
-
           <StatusMessage type="info">
             {loading ? "Loading recipe..." : null}
           </StatusMessage>
 
-          <StatusMessage type="error">
-            {error}
-          </StatusMessage>
+          <StatusMessage type="error">{error}</StatusMessage>
 
           {recipe && (
             <article className="recipe-inspiration-card">
@@ -90,23 +96,18 @@ function Home() {
               />
 
               <div className="recipe-inspiration-text">
-
                 <h2>Daily Recipe Inspiration</h2>
 
                 <h3>{recipe.title}</h3>
 
                 <p>
-                  <span className="recipe-inspiration-label">
-                    Category:
-                  </span>{" "}
+                  <span className="recipe-inspiration-label">Category:</span>{" "}
                   {recipe.category}
                 </p>
 
                 {recipe.cuisine && (
                   <p>
-                    <span className="recipe-inspiration-label">
-                      Cuisine:
-                    </span>{" "}
+                    <span className="recipe-inspiration-label">Cuisine:</span>{" "}
                     {recipe.cuisine}
                   </p>
                 )}
@@ -118,7 +119,6 @@ function Home() {
                   View recipe
                 </Link>
               </div>
-
             </article>
           )}
         </section>
@@ -128,4 +128,4 @@ function Home() {
   );
 }
 
-export default Home; 
+export default Home;

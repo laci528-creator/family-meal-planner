@@ -27,194 +27,194 @@ The project was originally started as a practical application for everyday famil
 
 ### Authentication
 
-* User registration
-* User login and logout
-* Password hashing with bcrypt
-* Session-based authentication
-* PostgreSQL-backed session storage
-* Protected application routes
-* User-specific recipes, meal plans, shopping lists and pantry items
-* Persistent login session across page refreshes
+- User registration
+- User login and logout
+- Password hashing with bcrypt
+- Session-based authentication
+- PostgreSQL-backed session storage
+- Protected application routes
+- User-specific recipes, meal plans, shopping lists and pantry items
+- Persistent login session across page refreshes
 
 ### Recipe Discovery
 
-* Search recipes using TheMealDB API
-* Random daily recipe inspiration
-* View detailed recipe information
-* Display category and cuisine information
-* Display ingredients and measurements
-* Display recipe instructions
-* Placeholder image for recipes without an available image
-* Loading, empty and error states
+- Search recipes using TheMealDB API
+- Random daily recipe inspiration
+- View detailed recipe information
+- Display category and cuisine information
+- Display ingredients and measurements
+- Display recipe instructions
+- Placeholder image for recipes without an available image
+- Loading, empty and error states
 
 ### Saved Recipes
 
-* Save recipes from TheMealDB
-* User-specific recipe collection
-* Prevent duplicate saved API recipes
-* View saved recipe details
-* Delete saved recipes
-* Customize previously saved API recipes
-* Keep external recipes available through the original API search
+- Save recipes from TheMealDB
+- User-specific recipe collection
+- Prevent duplicate saved API recipes
+- View saved recipe details
+- Delete saved recipes
+- Customize previously saved API recipes
+- Keep external recipes available through the original API search
 
 ### Family Recipes
 
-* Create custom family recipes
-* Add recipe title, category, cuisine and instructions
-* Add up to multiple ingredients
-* Structured ingredient amount and unit fields
-* Supported measurement units such as:
-  * mg
-  * g
-  * kg
-  * ml
-  * l
-  * tsp
-  * tbsp
-  * cup
-  * piece
-  * cloves
-  * slices
-* Edit existing family recipes
-* Delete family recipes
-* Upload recipe images
-* JPEG, PNG and WebP image support
-* Cloudinary image storage and optimization
-* Automatic placeholder image when no image is available
+- Create custom family recipes
+- Add recipe title, category, cuisine and instructions
+- Add up to multiple ingredients
+- Structured ingredient amount and unit fields
+- Supported measurement units such as:
+  - mg
+  - g
+  - kg
+  - ml
+  - l
+  - tsp
+  - tbsp
+  - cup
+  - piece
+  - cloves
+  - slices
+- Edit existing family recipes
+- Delete family recipes
+- Upload recipe images
+- JPEG, PNG and WebP image support
+- Cloudinary image storage and optimization
+- Automatic placeholder image when no image is available
 
 ### Cooking Mode
 
-* Start a dedicated cooking mode from recipe instructions
-* Instructions are separated into individual cooking steps
-* Mark completed instruction steps
-* Highlight the current cooking step
-* Save cooking progress in LocalStorage
-* Continue cooking after refreshing the page
-* Separate progress tracking for individual recipes
-* Reset cooking progress
+- Start a dedicated cooking mode from recipe instructions
+- Instructions are separated into individual cooking steps
+- Mark completed instruction steps
+- Highlight the current cooking step
+- Save cooking progress in LocalStorage
+- Continue cooking after refreshing the page
+- Separate progress tracking for individual recipes
+- Reset cooking progress
 
 ### Weekly Meal Planner
 
-* Weekly calendar view
-* Breakfast, lunch and dinner slots for every day
-* Add recipes to meal slots
-* Change already planned meals
-* Delete planned meals
-* Previous week navigation
-* Current week navigation
-* Next week navigation
-* Highlight the current day
-* User-specific meal planning data
-* Loading, success and error feedback
+- Weekly calendar view
+- Breakfast, lunch and dinner slots for every day
+- Add recipes to meal slots
+- Change already planned meals
+- Delete planned meals
+- Previous week navigation
+- Current week navigation
+- Next week navigation
+- Highlight the current day
+- User-specific meal planning data
+- Loading, success and error feedback
 
 ### Shopping List
 
-* Automatically generate a shopping list from the weekly meal planner
-* Refresh an existing shopping list from planner data
-* Preserve manually added shopping items when refreshing
-* Combine duplicate ingredients
-* Combine compatible ingredient measurements
-* Normalize supported weight and volume units
-* Group ingredient quantities
-* Weekly shopping list navigation
-* Add manual shopping items
-* Delete shopping items
-* Shopping item status management:
-  * Needed
-  * At home
-  * Purchased
-* Persist shopping item status in PostgreSQL
-* Warn when the weekly meal planner is not completely filled before generating the list
-* User-specific shopping lists
+- Automatically generate a shopping list from the weekly meal planner
+- Refresh an existing shopping list from planner data
+- Preserve manually added shopping items when refreshing
+- Combine duplicate ingredients
+- Combine compatible ingredient measurements
+- Normalize supported weight and volume units
+- Group ingredient quantities
+- Weekly shopping list navigation
+- Add manual shopping items
+- Delete shopping items
+- Shopping item status management:
+  - Needed
+  - At home
+  - Purchased
+- Persist shopping item status in PostgreSQL
+- Warn when the weekly meal planner is not completely filled before generating the list
+- User-specific shopping lists
 
 ### Pantry
 
-* Add pantry staples
-* Remove pantry items
-* Prevent duplicate pantry entries
-* Case-insensitive and trimmed duplicate checking
-* Automatically exclude pantry ingredients from generated shopping lists
-* Ingredients reappear in generated shopping lists after being removed from the pantry
-* User-specific pantry data
+- Add pantry staples
+- Remove pantry items
+- Prevent duplicate pantry entries
+- Case-insensitive and trimmed duplicate checking
+- Automatically exclude pantry ingredients from generated shopping lists
+- Ingredients reappear in generated shopping lists after being removed from the pantry
+- User-specific pantry data
 
 ### User Interface
 
-* Responsive desktop and mobile layout
-* Responsive navigation
-* Mobile hamburger menu
-* Recipe dropdown navigation
-* Reusable status messages for:
-  * Success
-  * Error
-  * Information
-* Empty and loading states
-* Multiple selectable visual themes
-* Theme preference stored locally
-* DM Sans typography
-* Custom 404 page
+- Responsive desktop and mobile layout
+- Responsive navigation
+- Mobile hamburger menu
+- Recipe dropdown navigation
+- Reusable status messages for:
+  - Success
+  - Error
+  - Information
+- Empty and loading states
+- Multiple selectable visual themes
+- Theme preference stored locally
+- DM Sans typography
+- Custom 404 page
 
 ## Technologies
 
 ### Frontend
 
-* React
-* JavaScript
-* Vite
-* React Router
-* React Context API
-* Axios
-* LocalStorage
-* HTML5
-* CSS3
-* Responsive design
-* DM Sans
+- React
+- JavaScript
+- Vite
+- React Router
+- React Context API
+- Axios
+- LocalStorage
+- HTML5
+- CSS3
+- Responsive design
+- DM Sans
 
 ### Backend
 
-* Node.js
-* Express.js
-* REST API
-* express-session
-* connect-pg-simple
-* bcrypt
-* multer
-* CORS
-* dotenv
+- Node.js
+- Express.js
+- REST API
+- express-session
+- connect-pg-simple
+- bcrypt
+- multer
+- CORS
+- dotenv
 
 ### Database
 
-* PostgreSQL
-* pg
-* Foreign keys
-* CHECK constraints
-* Unique indexes
-* User-specific relational data
-* PostgreSQL session storage
+- PostgreSQL
+- pg
+- Foreign keys
+- CHECK constraints
+- Unique indexes
+- User-specific relational data
+- PostgreSQL session storage
 
 ### External Services
 
-* TheMealDB – recipe data
-* Cloudinary – uploaded recipe images and image optimization
+- TheMealDB – recipe data
+- Cloudinary – uploaded recipe images and image optimization
 
 ### Deployment
 
-* Render – React frontend
-* Vercel – Node.js / Express backend
-* Neon – hosted PostgreSQL database
-* Cloudinary – image storage
+- Render – React frontend
+- Vercel – Node.js / Express backend
+- Neon – hosted PostgreSQL database
+- Cloudinary – image storage
 
 ## Database Structure
 
 The application uses the following main database tables:
 
-* `users` – registered users and authentication-related user data
-* `recipes` – saved API recipes and custom family recipes
-* `ingredients` – normalized ingredient names
-* `recipe_ingredients` – relation between recipes and ingredients including measurements
-* `meal_plan_entries` – weekly breakfast, lunch and dinner planning
-* `shopping_list_items` – generated and manually added shopping items
-* `pantry_staples` – user-specific pantry ingredients
-* `user_sessions` – persistent server-side login sessions
+- `users` – registered users and authentication-related user data
+- `recipes` – saved API recipes and custom family recipes
+- `ingredients` – normalized ingredient names
+- `recipe_ingredients` – relation between recipes and ingredients including measurements
+- `meal_plan_entries` – weekly breakfast, lunch and dinner planning
+- `shopping_list_items` – generated and manually added shopping items
+- `pantry_staples` – user-specific pantry ingredients
+- `user_sessions` – persistent server-side login sessions
 
 Relationships between application data are managed using PostgreSQL foreign keys and database constraints.
 
@@ -280,24 +280,24 @@ The goal of this project was to develop a larger practical full-stack applicatio
 
 The project demonstrates:
 
-* React component-based frontend development
-* React state and Context API
-* Client-side routing
-* REST API communication
-* External API integration
-* User authentication
-* Server-side sessions
-* PostgreSQL relational database design
-* User-specific data management
-* CRUD operations
-* File uploads
-* Cloud-based image storage
-* Weekly date handling
-* Data aggregation
-* Ingredient and measurement normalization
-* Responsive design
-* Error and loading state handling
-* Frontend and backend deployment
+- React component-based frontend development
+- React state and Context API
+- Client-side routing
+- REST API communication
+- External API integration
+- User authentication
+- Server-side sessions
+- PostgreSQL relational database design
+- User-specific data management
+- CRUD operations
+- File uploads
+- Cloud-based image storage
+- Weekly date handling
+- Data aggregation
+- Ingredient and measurement normalization
+- Responsive design
+- Error and loading state handling
+- Frontend and backend deployment
 
 A particular focus of the project was connecting multiple features into one practical workflow:
 
@@ -453,194 +453,194 @@ Das Projekt wurde ursprünglich als praktische Anwendung für den Familienalltag
 
 ### Authentifizierung
 
-* Benutzerregistrierung
-* Benutzeranmeldung und Abmeldung
-* Passwort-Hashing mit bcrypt
-* Session-basierte Authentifizierung
-* Speicherung der Sessions in PostgreSQL
-* Geschützte Anwendungsrouten
-* Benutzerbezogene Rezepte, Wochenpläne, Einkaufslisten und Vorräte
-* Beibehaltung der Anmeldung nach einer Seitenaktualisierung
+- Benutzerregistrierung
+- Benutzeranmeldung und Abmeldung
+- Passwort-Hashing mit bcrypt
+- Session-basierte Authentifizierung
+- Speicherung der Sessions in PostgreSQL
+- Geschützte Anwendungsrouten
+- Benutzerbezogene Rezepte, Wochenpläne, Einkaufslisten und Vorräte
+- Beibehaltung der Anmeldung nach einer Seitenaktualisierung
 
 ### Rezeptsuche
 
-* Suche nach Rezepten über die TheMealDB API
-* Zufällige tägliche Rezeptempfehlung
-* Detailansicht einzelner Rezepte
-* Anzeige von Kategorie und Küche
-* Anzeige von Zutaten und Mengenangaben
-* Anzeige der Zubereitungsanleitung
-* Platzhalterbild bei fehlendem Rezeptbild
-* Lade-, Leer- und Fehlerzustände
+- Suche nach Rezepten über die TheMealDB API
+- Zufällige tägliche Rezeptempfehlung
+- Detailansicht einzelner Rezepte
+- Anzeige von Kategorie und Küche
+- Anzeige von Zutaten und Mengenangaben
+- Anzeige der Zubereitungsanleitung
+- Platzhalterbild bei fehlendem Rezeptbild
+- Lade-, Leer- und Fehlerzustände
 
 ### Gespeicherte Rezepte
 
-* Rezepte aus TheMealDB speichern
-* Persönliche Rezeptsammlung pro Benutzer
-* Vermeidung doppelter gespeicherter API-Rezepte
-* Detailansicht gespeicherter Rezepte
-* Gespeicherte Rezepte löschen
-* Gespeicherte API-Rezepte individuell anpassen
-* Das ursprüngliche externe Rezept bleibt weiterhin über die API-Suche verfügbar
+- Rezepte aus TheMealDB speichern
+- Persönliche Rezeptsammlung pro Benutzer
+- Vermeidung doppelter gespeicherter API-Rezepte
+- Detailansicht gespeicherter Rezepte
+- Gespeicherte Rezepte löschen
+- Gespeicherte API-Rezepte individuell anpassen
+- Das ursprüngliche externe Rezept bleibt weiterhin über die API-Suche verfügbar
 
 ### Familienrezepte
 
-* Eigene Familienrezepte erstellen
-* Titel, Kategorie, Küche und Zubereitungsanleitung eingeben
-* Mehrere Zutaten hinzufügen
-* Strukturierte Eingabe von Menge und Einheit
-* Unterstützte Maßeinheiten wie:
-  * mg
-  * g
-  * kg
-  * ml
-  * l
-  * tsp
-  * tbsp
-  * cup
-  * piece
-  * cloves
-  * slices
-* Familienrezepte bearbeiten
-* Familienrezepte löschen
-* Rezeptbilder hochladen
-* Unterstützung für JPEG, PNG und WebP
-* Speicherung und Optimierung der Bilder über Cloudinary
-* Automatisches Platzhalterbild bei fehlendem Bild
+- Eigene Familienrezepte erstellen
+- Titel, Kategorie, Küche und Zubereitungsanleitung eingeben
+- Mehrere Zutaten hinzufügen
+- Strukturierte Eingabe von Menge und Einheit
+- Unterstützte Maßeinheiten wie:
+  - mg
+  - g
+  - kg
+  - ml
+  - l
+  - tsp
+  - tbsp
+  - cup
+  - piece
+  - cloves
+  - slices
+- Familienrezepte bearbeiten
+- Familienrezepte löschen
+- Rezeptbilder hochladen
+- Unterstützung für JPEG, PNG und WebP
+- Speicherung und Optimierung der Bilder über Cloudinary
+- Automatisches Platzhalterbild bei fehlendem Bild
 
 ### Cooking Mode
 
-* Spezieller Kochmodus für Rezeptanweisungen
-* Aufteilung der Anleitung in einzelne Schritte
-* Erledigte Schritte markieren
-* Aktuellen Kochschritt hervorheben
-* Speicherung des Fortschritts im LocalStorage
-* Fortsetzen des Kochfortschritts nach einer Seitenaktualisierung
-* Separater Fortschritt für einzelne Rezepte
-* Kochfortschritt zurücksetzen
+- Spezieller Kochmodus für Rezeptanweisungen
+- Aufteilung der Anleitung in einzelne Schritte
+- Erledigte Schritte markieren
+- Aktuellen Kochschritt hervorheben
+- Speicherung des Fortschritts im LocalStorage
+- Fortsetzen des Kochfortschritts nach einer Seitenaktualisierung
+- Separater Fortschritt für einzelne Rezepte
+- Kochfortschritt zurücksetzen
 
 ### Wochenplaner
 
-* Wochenansicht
-* Frühstück, Mittagessen und Abendessen für jeden Tag
-* Rezepte zu Mahlzeiten hinzufügen
-* Bereits geplante Mahlzeiten ändern
-* Mahlzeiten löschen
-* Navigation zur vorherigen Woche
-* Navigation zur aktuellen Woche
-* Navigation zur nächsten Woche
-* Hervorhebung des aktuellen Tages
-* Benutzerbezogene Wochenplanung
-* Lade-, Erfolgs- und Fehlermeldungen
+- Wochenansicht
+- Frühstück, Mittagessen und Abendessen für jeden Tag
+- Rezepte zu Mahlzeiten hinzufügen
+- Bereits geplante Mahlzeiten ändern
+- Mahlzeiten löschen
+- Navigation zur vorherigen Woche
+- Navigation zur aktuellen Woche
+- Navigation zur nächsten Woche
+- Hervorhebung des aktuellen Tages
+- Benutzerbezogene Wochenplanung
+- Lade-, Erfolgs- und Fehlermeldungen
 
 ### Einkaufsliste
 
-* Automatische Erstellung einer Einkaufsliste aus dem Wochenplan
-* Aktualisierung einer vorhandenen Einkaufsliste anhand des Wochenplans
-* Manuell hinzugefügte Einträge bleiben beim Aktualisieren erhalten
-* Zusammenfassen doppelter Zutaten
-* Zusammenfassen kompatibler Mengenangaben
-* Normalisierung unterstützter Gewichts- und Volumeneinheiten
-* Gruppierung von Zutatenmengen
-* Wöchentliche Navigation der Einkaufsliste
-* Manuelle Einkaufseinträge hinzufügen
-* Einkaufseinträge löschen
-* Statusverwaltung:
-  * Needed
-  * At home
-  * Purchased
-* Speicherung des Einkaufsstatus in PostgreSQL
-* Warnung, wenn der Wochenplan vor der Generierung noch nicht vollständig ausgefüllt ist
-* Benutzerbezogene Einkaufslisten
+- Automatische Erstellung einer Einkaufsliste aus dem Wochenplan
+- Aktualisierung einer vorhandenen Einkaufsliste anhand des Wochenplans
+- Manuell hinzugefügte Einträge bleiben beim Aktualisieren erhalten
+- Zusammenfassen doppelter Zutaten
+- Zusammenfassen kompatibler Mengenangaben
+- Normalisierung unterstützter Gewichts- und Volumeneinheiten
+- Gruppierung von Zutatenmengen
+- Wöchentliche Navigation der Einkaufsliste
+- Manuelle Einkaufseinträge hinzufügen
+- Einkaufseinträge löschen
+- Statusverwaltung:
+  - Needed
+  - At home
+  - Purchased
+- Speicherung des Einkaufsstatus in PostgreSQL
+- Warnung, wenn der Wochenplan vor der Generierung noch nicht vollständig ausgefüllt ist
+- Benutzerbezogene Einkaufslisten
 
 ### Vorratsliste
 
-* Vorratsartikel hinzufügen
-* Vorratsartikel löschen
-* Doppelte Vorratseinträge verhindern
-* Groß-/Kleinschreibung und Leerzeichen bei Duplikaten berücksichtigen
-* Vorratszutaten automatisch aus generierten Einkaufslisten ausschließen
-* Nach dem Entfernen aus der Vorratsliste erscheinen Zutaten wieder in neu generierten Einkaufslisten
-* Benutzerbezogene Vorratsdaten
+- Vorratsartikel hinzufügen
+- Vorratsartikel löschen
+- Doppelte Vorratseinträge verhindern
+- Groß-/Kleinschreibung und Leerzeichen bei Duplikaten berücksichtigen
+- Vorratszutaten automatisch aus generierten Einkaufslisten ausschließen
+- Nach dem Entfernen aus der Vorratsliste erscheinen Zutaten wieder in neu generierten Einkaufslisten
+- Benutzerbezogene Vorratsdaten
 
 ### Benutzeroberfläche
 
-* Responsives Desktop- und Mobil-Layout
-* Responsive Navigation
-* Hamburger-Menü für mobile Geräte
-* Rezept-Dropdown-Menü
-* Wiederverwendbare Statusmeldungen für:
-  * Erfolg
-  * Fehler
-  * Information
-* Lade- und Leerzustände
-* Mehrere auswählbare Farbschemata
-* Lokale Speicherung der Designauswahl
-* DM-Sans-Schriftart
-* Eigene 404-Seite
+- Responsives Desktop- und Mobil-Layout
+- Responsive Navigation
+- Hamburger-Menü für mobile Geräte
+- Rezept-Dropdown-Menü
+- Wiederverwendbare Statusmeldungen für:
+  - Erfolg
+  - Fehler
+  - Information
+- Lade- und Leerzustände
+- Mehrere auswählbare Farbschemata
+- Lokale Speicherung der Designauswahl
+- DM-Sans-Schriftart
+- Eigene 404-Seite
 
 ## Verwendete Technologien
 
 ### Frontend
 
-* React
-* JavaScript
-* Vite
-* React Router
-* React Context API
-* Axios
-* LocalStorage
-* HTML5
-* CSS3
-* Responsives Design
-* DM Sans
+- React
+- JavaScript
+- Vite
+- React Router
+- React Context API
+- Axios
+- LocalStorage
+- HTML5
+- CSS3
+- Responsives Design
+- DM Sans
 
 ### Backend
 
-* Node.js
-* Express.js
-* REST API
-* express-session
-* connect-pg-simple
-* bcrypt
-* multer
-* CORS
-* dotenv
+- Node.js
+- Express.js
+- REST API
+- express-session
+- connect-pg-simple
+- bcrypt
+- multer
+- CORS
+- dotenv
 
 ### Datenbank
 
-* PostgreSQL
-* pg
-* Foreign Keys
-* CHECK Constraints
-* Unique Indexes
-* Benutzerbezogene relationale Daten
-* PostgreSQL Session Storage
+- PostgreSQL
+- pg
+- Foreign Keys
+- CHECK Constraints
+- Unique Indexes
+- Benutzerbezogene relationale Daten
+- PostgreSQL Session Storage
 
 ### Externe Dienste
 
-* TheMealDB – Rezeptdaten
-* Cloudinary – Speicherung und Optimierung hochgeladener Rezeptbilder
+- TheMealDB – Rezeptdaten
+- Cloudinary – Speicherung und Optimierung hochgeladener Rezeptbilder
 
 ### Deployment
 
-* Render – React-Frontend
-* Vercel – Node.js-/Express-Backend
-* Neon – gehostete PostgreSQL-Datenbank
-* Cloudinary – Bildspeicherung
+- Render – React-Frontend
+- Vercel – Node.js-/Express-Backend
+- Neon – gehostete PostgreSQL-Datenbank
+- Cloudinary – Bildspeicherung
 
 ## Datenbankstruktur
 
 Die Anwendung verwendet folgende zentrale Tabellen:
 
-* `users` – registrierte Benutzer
-* `recipes` – gespeicherte API-Rezepte und eigene Familienrezepte
-* `ingredients` – normalisierte Zutaten
-* `recipe_ingredients` – Verknüpfung von Rezepten und Zutaten inklusive Mengenangaben
-* `meal_plan_entries` – geplante Mahlzeiten für Frühstück, Mittagessen und Abendessen
-* `shopping_list_items` – automatisch generierte und manuell hinzugefügte Einkaufseinträge
-* `pantry_staples` – benutzerbezogene Vorratszutaten
-* `user_sessions` – serverseitig gespeicherte Login-Sessions
+- `users` – registrierte Benutzer
+- `recipes` – gespeicherte API-Rezepte und eigene Familienrezepte
+- `ingredients` – normalisierte Zutaten
+- `recipe_ingredients` – Verknüpfung von Rezepten und Zutaten inklusive Mengenangaben
+- `meal_plan_entries` – geplante Mahlzeiten für Frühstück, Mittagessen und Abendessen
+- `shopping_list_items` – automatisch generierte und manuell hinzugefügte Einkaufseinträge
+- `pantry_staples` – benutzerbezogene Vorratszutaten
+- `user_sessions` – serverseitig gespeicherte Login-Sessions
 
 Die Beziehungen zwischen den Anwendungsdaten werden über PostgreSQL Foreign Keys und Constraints verwaltet.
 
@@ -678,24 +678,24 @@ Ziel dieses Projekts war es, eine umfangreichere praktische Full-Stack-Anwendung
 
 Das Projekt demonstriert unter anderem:
 
-* Komponentenbasierte Frontend-Entwicklung mit React
-* React State und Context API
-* Clientseitiges Routing
-* REST-API-Kommunikation
-* Integration einer externen API
-* Benutzer-Authentifizierung
-* Serverseitige Sessions
-* Relationales Datenbankdesign mit PostgreSQL
-* Benutzerbezogene Datenverwaltung
-* CRUD-Operationen
-* Datei-Uploads
-* Cloudbasierte Bildspeicherung
-* Verarbeitung von Kalenderwochen und Datumswerten
-* Datenaggregation
-* Normalisierung von Zutaten und Maßeinheiten
-* Responsives Design
-* Fehler- und Ladezustände
-* Deployment von Frontend und Backend
+- Komponentenbasierte Frontend-Entwicklung mit React
+- React State und Context API
+- Clientseitiges Routing
+- REST-API-Kommunikation
+- Integration einer externen API
+- Benutzer-Authentifizierung
+- Serverseitige Sessions
+- Relationales Datenbankdesign mit PostgreSQL
+- Benutzerbezogene Datenverwaltung
+- CRUD-Operationen
+- Datei-Uploads
+- Cloudbasierte Bildspeicherung
+- Verarbeitung von Kalenderwochen und Datumswerten
+- Datenaggregation
+- Normalisierung von Zutaten und Maßeinheiten
+- Responsives Design
+- Fehler- und Ladezustände
+- Deployment von Frontend und Backend
 
 Ein besonderer Schwerpunkt lag darauf, mehrere Funktionen zu einem zusammenhängenden praktischen Workflow zu verbinden:
 

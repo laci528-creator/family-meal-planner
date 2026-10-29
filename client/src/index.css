@@ -23,9 +23,7 @@ body {
   font-weight: 500;
   background-color: var(--color-background);
   color: var(--color-text);
-
 }
-
 
 .app {
   min-height: 100vh;
@@ -69,7 +67,6 @@ body {
   text-align: center;
   font-weight: 600;
   line-height: 1.4;
-
 }
 
 .status-message.success {
@@ -224,7 +221,7 @@ body {
     gap: 1.4rem;
   }
 
-    .nav-link-a {
+  .nav-link-a {
     margin: 0;
   }
 
@@ -232,7 +229,7 @@ body {
     display: flex;
   }
 
-    .nav-dropdown {
+  .nav-dropdown {
     width: 100%;
     text-align: center;
   }
@@ -257,7 +254,6 @@ body {
     padding: 0.6rem 0;
     text-align: center;
   }
-
 }
 
 /*--- HomePage ---*/
@@ -279,12 +275,12 @@ body {
   text-align: center;
   color: var(--color-on-primary, var(--color-background));
 
-  background:
-    linear-gradient(135deg,
+  background: linear-gradient(
+    135deg,
     var(--color-hero-start, var(--color-text-muted)),
     var(--color-hero-middle, var(--color-primary)),
     var(--color-hero-end, var(--color-primary-hover))
-    );
+  );
   border: 1px solid var(--color-text);
   border-radius: 20px;
   box-shadow: var(--shadow-hero);
@@ -305,14 +301,15 @@ body {
   border: 1px solid var(--color-border);
   border-radius: 10px;
   padding: 15px;
-    background: linear-gradient(
+  background: linear-gradient(
     135deg,
     var(--color-surface) 35%,
     var(--color-border) 100%
   );
 
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .feature-card:hover {
@@ -367,10 +364,8 @@ body {
   object-fit: cover;
 }
 
-
 .recipe-inspiration-text p {
   margin: 1.25rem 0;
-
 }
 
 .recipe-inspiration-text {
@@ -383,7 +378,6 @@ body {
   font-weight: 600;
   color: var(--color-text);
 }
-
 
 @media (max-width: 768px) {
   .recipe-inspiration-card {
@@ -457,18 +451,15 @@ body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-
-
-
 /*--- Buttons --*/
 
 .primary-button {
   width: 180px;
   background: linear-gradient(
-  110deg,
-  var(--color-primary),
-  var(--color-text-muted)
-);
+    110deg,
+    var(--color-primary),
+    var(--color-text-muted)
+  );
   color: var(--color-button-text, var(--color-on-primary, #ffffff));
 
   transition: filter 0.2s ease;
@@ -483,12 +474,11 @@ body {
 }
 
 .primary-button:hover {
-    background: linear-gradient(
+  background: linear-gradient(
     110deg,
     var(--color-text-muted),
     var(--color-primary-hover)
   );
-
 }
 
 .secondary-button {
@@ -601,7 +591,7 @@ body {
 
 .cooking-mode-panel {
   margin: 1rem 0;
-  
+
   padding: 0.75rem;
 
   border: 1px solid var(--color-border);
@@ -707,7 +697,6 @@ body {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 8px;
-
 }
 
 .register-container h2 {
@@ -739,7 +728,6 @@ body {
   }
 }
 
-
 /*---Recipe Page---*/
 
 .recipes-grid {
@@ -756,7 +744,9 @@ body {
 
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .recipe-card:hover {
@@ -829,7 +819,6 @@ body {
   color: white;
 }
 
-
 @media (max-width: 900px) {
   .recipes-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -840,7 +829,6 @@ body {
   .recipes-grid {
     grid-template-columns: 1fr;
   }
-
 }
 
 /*---Save recipe button---*/
@@ -877,7 +865,6 @@ body {
   height: 55px;
   font-size: 1.2rem;
 }
-
 
 /*---Planner-Calendar---*/
 
@@ -1072,7 +1059,6 @@ body {
 
 .recipe-fields .form-label {
   margin-top: 0.9rem;
-  
 }
 
 .family-recipe-form .form-label {
@@ -1080,7 +1066,6 @@ body {
   margin-bottom: 0.35rem;
   font-weight: 600;
 }
-
 
 .family-recipe-form .form-textarea {
   width: 100%;
@@ -1097,7 +1082,6 @@ body {
   resize: vertical;
   margin-bottom: 1rem;
 }
-
 
 .family-recipe-form .form-textarea:focus {
   outline: none;
@@ -1181,11 +1165,9 @@ body {
     align-items: stretch;
     gap: 0.75rem;
   }
-
 }
 
 /* Calendar recipeCards */
-
 
 .planner-recipe-card {
   display: flex;
@@ -1239,7 +1221,6 @@ body {
   margin-bottom: 0;
 }
 
-
 .planner-recipe-info h3 {
   margin: 0 0 0.25rem;
   font-size: 1rem;
@@ -1252,8 +1233,7 @@ body {
 
 .recipe-selector-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit,
-      minmax(230px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 1rem;
   align-items: stretch;
 }
@@ -1424,7 +1404,6 @@ body {
     justify-content: space-between;
   }
 }
-
 
 /*---Formular Global---*/
 

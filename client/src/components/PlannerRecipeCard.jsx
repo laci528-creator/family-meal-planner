@@ -2,7 +2,8 @@ function PlannerRecipeCard({ recipe, onSelect, isSaving }) {
   return (
     <div className="planner-recipe-card">
       {recipe.image ? (
-        <img className="planner-recipe-image"
+        <img
+          className="planner-recipe-image"
           src={recipe.image}
           alt={recipe.title}
         />
@@ -15,11 +16,10 @@ function PlannerRecipeCard({ recipe, onSelect, isSaving }) {
       <div className="planner-recipe-info">
         <h3>{recipe.title}</h3>
 
-        {recipe.category && (
-          <p>{recipe.category}</p>
-        )}
+        {recipe.category && <p>{recipe.category}</p>}
 
-        <button className="primary-button"
+        <button
+          className="primary-button"
           onClick={() => onSelect(recipe)}
           disabled={isSaving}
         >

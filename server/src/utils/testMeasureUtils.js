@@ -6,14 +6,12 @@ import {
   getMeasureType,
 } from "./measureUtils.js";
 
-
 console.log("--- parseAmount ---");
 
-console.log(parseAmount("2"));       // 2
-console.log(parseAmount("1/2"));     // 0.5
-console.log(parseAmount("1 1/2"));   // 1.5
-console.log(parseAmount("2.5"));     // 2.5
-
+console.log(parseAmount("2")); // 2
+console.log(parseAmount("1/2")); // 0.5
+console.log(parseAmount("1 1/2")); // 1.5
+console.log(parseAmount("2.5")); // 2.5
 
 console.log("--- parseMeasure ---");
 
@@ -35,7 +33,6 @@ console.log(parseMeasure("2 cups"));
 console.log(parseMeasure("to taste"));
 // null
 
-
 console.log("--- weight ---");
 
 console.log(convertWeightToGrams("500 g"));
@@ -52,7 +49,6 @@ console.log(convertWeightToGrams("1/2 lb"));
 
 console.log(convertWeightToGrams("2 cups"));
 // null
-
 
 console.log("--- volume ---");
 
@@ -71,7 +67,6 @@ console.log(convertVolumeToMl("3 tbsp"));
 console.log(convertVolumeToMl("2 kg"));
 // null
 
-
 console.log("--- measure type ---");
 
 console.log(getMeasureType("kg"));
@@ -88,4 +83,3 @@ console.log(getMeasureType("tbsp"));
 
 console.log(getMeasureType("clove"));
 // unknown
-

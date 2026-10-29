@@ -5,171 +5,120 @@ import StatusMessage from "../components/StatusMessage";
 import api from "../services/api";
 
 function Pantry() {
+  const [itemSaving, setItemSaving] = useState(false);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState(null);
+  const [pantryList, setPantryList] = useState([]);
+  const [pantryListLoading, setPantryListLoading] = useState(true);
+  const [deletingItemId, setDeletingItemId] = useState(null);
 
-    const [itemSaving, setItemSaving] = useState(false);
-    const [message, setMessage] = useState("");
-    const [error, setError] = useState(null);
-    const [pantryList, setPantryList] = useState([]);
-    const [pantryListLoading, setPantryListLoading] = useState(true);
-    const [deletingItemId, setDeletingItemId] = useState(null);
+  async function fetchPantryList() {
+    setPantryListLoading(true);
+    setError(null);
 
+    try {
+      const response = await api.get("/pantry");
 
-    async function fetchPantryList() {
-
-        setPantryListLoading(true);
-        setError(null);
-
-        try {
-
-            const response = await api.get("/pantry");
-
-            setPantryList(
-                response.data.pantryList
-            );
-
-        } catch (error) {
-            setError(
-                error.response?.data?.message ||
-                "Could not load pantry list."
-            );
-            console.error(
-                "Could not load pantry list:",
-                error
-            );
-        } finally {
-            setPantryListLoading(false);
-        }
+      setPantryList(response.data.pantryList);
+    } catch (error) {
+      setError(error.response?.data?.message || "Could not load pantry list.");
+      console.error("Could not load pantry list:", error);
+    } finally {
+      setPantryListLoading(false);
     }
+  }
 
-    useEffect(() => {
-        fetchPantryList();
-    }, []);
+  useEffect(() => {
+    fetchPantryList();
+  }, []);
 
-    async function handleAddItem({ name }) {
+  async function handleAddItem({ name }) {
+    setItemSaving(true);
+    setError(null);
+    setMessage("");
 
-        setItemSaving(true);
-        setError(null);
-        setMessage("");
+    try {
+      const response = await api.post(`/pantry`, {
+        name,
+      });
 
-        try {
+      await fetchPantryList();
 
-            const response = await api.post(
-                `/pantry`,
-                {
-                    name,
-                }
-            );
+      setMessage(response.data.message);
 
-            await fetchPantryList();
+      return true;
+    } catch (error) {
+      setError(
+        error.response?.data?.message || "Could not save new pantry item.",
+      );
 
-            setMessage(response.data.message);
+      console.error("Could not save new pantry item.", error);
 
-            return true;
-
-        } catch (error) {
-            setError(
-                error.response?.data?.message ||
-                "Could not save new pantry item."
-            );
-
-            console.error(
-                "Could not save new pantry item.",
-                error
-            );
-
-            return false;
-        } finally {
-            setItemSaving(false);
-        }
+      return false;
+    } finally {
+      setItemSaving(false);
     }
+  }
 
+  async function handleDeleteItem(itemId) {
+    setDeletingItemId(itemId);
+    setError(null);
+    setMessage("");
 
-    async function handleDeleteItem(itemId) {
+    try {
+      const response = await api.delete(`/pantry/${itemId}`);
 
-        setDeletingItemId(itemId);
-        setError(null);
-        setMessage("");
+      await fetchPantryList();
 
-        try {
+      setMessage(`${response.data.message} (${response.data.item.name})`);
+    } catch (error) {
+      setError(
+        error.response?.data?.message || "Could not delete pantry item.",
+      );
 
-            const response = await api.delete(
-                `/pantry/${itemId}`,
-            );
-
-            await fetchPantryList();
-
-            setMessage(
-                `${response.data.message} (${response.data.item.name})`
-            );
-
-        } catch (error) {
-            setError(
-                error.response?.data?.message ||
-                "Could not delete pantry item."
-            );
-
-            console.error(
-                "Could not delete pantry item.",
-                error
-            );
-        } finally {
-            setDeletingItemId(null);
-        }
+      console.error("Could not delete pantry item.", error);
+    } finally {
+      setDeletingItemId(null);
     }
+  }
 
-    return (
-        <main className="page-container pantry-page">
-            <h1 className="page-title">My Pantry List</h1>
+  return (
+    <main className="page-container pantry-page">
+      <h1 className="page-title">My Pantry List</h1>
 
+      <StatusMessage type="success">{message}</StatusMessage>
 
-            <StatusMessage type="success">
-                {message}
-            </StatusMessage>
+      <StatusMessage type="error">{error}</StatusMessage>
 
-            <StatusMessage type="error">
-                {error}
-            </StatusMessage>
+      <StatusMessage type="info">
+        {pantryListLoading ? "Loading pantry list..." : null}
+      </StatusMessage>
 
-            <StatusMessage type="info">
-                {pantryListLoading ? "Loading pantry list..." : null}
-            </StatusMessage>
+      <div className="pantry-form-panel">
+        <h3>Add new Pantry item:</h3>
+        <PantryItemForm onAddItem={handleAddItem} isSaving={itemSaving} />
+      </div>
 
-            <div className="pantry-form-panel">
-                <h3>Add new Pantry item:</h3>
-                <PantryItemForm
-                    onAddItem={handleAddItem}
-                    isSaving={itemSaving}
-                />
-            </div>
+      {!pantryListLoading && !error && pantryList.length === 0 && (
+        <StatusMessage type="info">No pantry items in your list.</StatusMessage>
+      )}
 
-            {!pantryListLoading &&
-                !error &&
-                pantryList.length === 0 && (
-                    <StatusMessage type="info">
-                        No pantry items in your list.
-                    </StatusMessage>
-                )}
-
-            {!pantryListLoading &&
-                pantryList.length > 0 && (
-                    <div className="pantry-list"
-                    >
-                        {pantryList.map((item) => {
-                            return (
-                                <PantryItem
-                                    key={item.id}
-                                    item={item}
-                                    onDelete={handleDeleteItem}
-                                    isDeleting={deletingItemId === item.id}
-                                />
-                            )
-                        })
-                        }
-                    </div>
-                )}
-        </main>
-    )
+      {!pantryListLoading && pantryList.length > 0 && (
+        <div className="pantry-list">
+          {pantryList.map((item) => {
+            return (
+              <PantryItem
+                key={item.id}
+                item={item}
+                onDelete={handleDeleteItem}
+                isDeleting={deletingItemId === item.id}
+              />
+            );
+          })}
+        </div>
+      )}
+    </main>
+  );
 }
 
-
-export default Pantry; 
+export default Pantry;

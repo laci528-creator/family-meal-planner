@@ -1,7 +1,6 @@
 import bcrypt from "bcrypt";
 import pool from "../config/db.js";
 
-
 export async function registerUser(req, res) {
   try {
     const { firstName, lastName, email, password } = req.body;
@@ -38,7 +37,7 @@ export async function registerUser(req, res) {
 
     const existingUser = await pool.query(
       "SELECT id FROM users WHERE LOWER(email) = $1",
-      [normalizedEmail]
+      [normalizedEmail],
     );
 
     if (existingUser.rows.length > 0) {
@@ -67,12 +66,7 @@ export async function registerUser(req, res) {
           role,
           created_at
       `,
-      [
-        cleanFirstName,
-        cleanLastName,
-        normalizedEmail,
-        passwordHash,
-      ]
+      [cleanFirstName, cleanLastName, normalizedEmail, passwordHash],
     );
 
     return res.status(201).json({
@@ -90,15 +84,11 @@ export async function registerUser(req, res) {
   }
 }
 
-
 export async function loginUser(req, res) {
   try {
     const { email, password } = req.body;
 
-    if (
-      typeof email !== "string" ||
-      typeof password !== "string"
-    ) {
+    if (typeof email !== "string" || typeof password !== "string") {
       return res.status(400).json({
         error: true,
         message: "Invalid input.",
@@ -127,7 +117,7 @@ export async function loginUser(req, res) {
         FROM users
         WHERE LOWER(email) = $1
       `,
-      [normalizedEmail]
+      [normalizedEmail],
     );
 
     if (result.rows.length === 0) {
@@ -139,10 +129,7 @@ export async function loginUser(req, res) {
 
     const user = result.rows[0];
 
-    const passwordMatches = await bcrypt.compare(
-      password,
-      user.password_hash
-    );
+    const passwordMatches = await bcrypt.compare(password, user.password_hash);
 
     if (!passwordMatches) {
       return res.status(401).json({
@@ -150,8 +137,6 @@ export async function loginUser(req, res) {
         message: "Invalid email or password.",
       });
     }
-
-    
 
     req.session.regenerate((error) => {
       if (error) {

@@ -1,25 +1,22 @@
-
 export function isValidISODate(dateString) {
-    if (!dateString || typeof dateString !== 'string') return false;
-    
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
-        return false;
-    }
+  if (!dateString || typeof dateString !== "string") return false;
 
-    const [year, month, day] = dateString.split('-').map(Number);
-    const date = new Date(year, month - 1, day);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
+    return false;
+  }
 
-    return (
-        date.getFullYear() === year &&
-        date.getMonth() === month - 1 &&
-        date.getDate() === day
-    );
+  const [year, month, day] = dateString.split("-").map(Number);
+  const date = new Date(year, month - 1, day);
+
+  return (
+    date.getFullYear() === year &&
+    date.getMonth() === month - 1 &&
+    date.getDate() === day
+  );
 }
 
 export function getEndDate(startDate) {
-  const [year, month, day] = startDate
-    .split("-")
-    .map(Number);
+  const [year, month, day] = startDate.split("-").map(Number);
 
   const date = new Date(year, month - 1, day);
 

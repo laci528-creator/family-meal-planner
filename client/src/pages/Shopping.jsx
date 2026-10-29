@@ -20,25 +20,21 @@ function Shopping() {
   const [error, setError] = useState(null);
   const [itemStatus, setItemStatus] = useState({});
   const [currentMonday, setCurrentMonday] = useState(() =>
-    getWeekStart(new Date())
+    getWeekStart(new Date()),
   );
 
   const changeWeek = (weeks) => {
-    setCurrentMonday(
-      addWeeks(currentMonday, weeks)
-    );
+    setCurrentMonday(addWeeks(currentMonday, weeks));
   };
 
   async function fetchShoppingList() {
-
     setIngredientsLoading(true);
     setError(null);
     setMessage("");
     setItemStatus({});
 
     try {
-      const startDate =
-        formatDateForApi(currentMonday);
+      const startDate = formatDateForApi(currentMonday);
 
       const response = await api.get("/shopping", {
         params: {
@@ -46,16 +42,10 @@ function Shopping() {
         },
       });
 
-      setShoppingList(
-        response.data.shoppingList
-      );
-
+      setShoppingList(response.data.shoppingList);
     } catch (error) {
       setError("Could not load shopping list.");
-      console.error(
-        "Could not load shopping list:",
-        error
-      );
+      console.error("Could not load shopping list:", error);
     } finally {
       setIngredientsLoading(false);
     }
@@ -85,33 +75,26 @@ function Shopping() {
     return () => clearTimeout(timer);
   }, [error]);
 
-
   async function handleGenerateShoppingList() {
-
     setError(null);
     setMessage("");
 
     try {
-      const startDate =
-        formatDateForApi(currentMonday);
+      const startDate = formatDateForApi(currentMonday);
 
-      const plannerResponse = await api.get(
-        "/planner",
-        {
-          params: {
-            startDate,
-          },
-        }
-      );
+      const plannerResponse = await api.get("/planner", {
+        params: {
+          startDate,
+        },
+      });
 
-      const plannedMeals =
-        plannerResponse.data.weeklyPlannerData.length;
+      const plannedMeals = plannerResponse.data.weeklyPlannerData.length;
 
       const totalSlots = 21;
 
       if (plannedMeals < totalSlots) {
         const confirmed = window.confirm(
-          `Only ${plannedMeals} of ${totalSlots} meal slots are planned. Generate shopping list anyway?`
+          `Only ${plannedMeals} of ${totalSlots} meal slots are planned. Generate shopping list anyway?`,
         );
 
         if (!confirmed) {
@@ -127,99 +110,60 @@ function Shopping() {
 
       await fetchShoppingList();
 
-      setMessage(
-        response.data.message
-      )
-
-
+      setMessage(response.data.message);
     } catch (error) {
       setError("Could not generate shopping list.");
-      console.error(
-        "Could not generate shopping list:",
-        error
-      );
+      console.error("Could not generate shopping list:", error);
     } finally {
       setListGenerate(false);
     }
   }
 
-  async function handleStatusChange(
-    itemIds,
-    itemKey,
-    newStatus,
-    checked
-  ) {
-    const status = checked
-      ? newStatus
-      : "needed";
+  async function handleStatusChange(itemIds, itemKey, newStatus, checked) {
+    const status = checked ? newStatus : "needed";
 
     try {
-      await api.patch(
-        `/shopping/status`,
-        {
-          itemIds,
-          status,
-        }
-      );
+      await api.patch(`/shopping/status`, {
+        itemIds,
+        status,
+      });
 
       setItemStatus((previousStatus) => ({
         ...previousStatus,
         [itemKey]: status,
       }));
-
     } catch (error) {
-      setError(
-        "Could not update shopping item status."
-      );
+      setError("Could not update shopping item status.");
 
-      console.error(
-        "Could not update shopping item status:",
-        error
-      );
+      console.error("Could not update shopping item status:", error);
     }
   }
 
-
   async function deleteItem(itemIds, itemKey) {
-
     setDeletingItemKey(itemKey);
     setError(null);
     setMessage("");
 
     try {
-
-      const response = await api.delete(
-        `/shopping`,
-        {
-          data: {
-            itemIds,
-          },
-        }
-      );
+      const response = await api.delete(`/shopping`, {
+        data: {
+          itemIds,
+        },
+      });
 
       await fetchShoppingList();
 
-      setMessage(
-        `${response.data.message} (${response.data.name})`
-      );
-
+      setMessage(`${response.data.message} (${response.data.name})`);
     } catch (error) {
-      setError(
-        "Could not delete shopping item."
-      );
+      setError("Could not delete shopping item.");
 
-      console.error(
-        "Could not delete shopping item.",
-        error
-      );
+      console.error("Could not delete shopping item.", error);
     } finally {
       setDeletingItemKey(null);
     }
   }
 
-
   async function handleAddItem({ name, measure }) {
-
     const weekStart = formatDateForApi(currentMonday);
 
     setItemSaving(true);
@@ -227,45 +171,31 @@ function Shopping() {
     setMessage("");
 
     try {
-
-      const response = await api.post(
-        `/shopping`, {
+      const response = await api.post(`/shopping`, {
         weekStart,
         name,
-        measure
-      }
-      );
+        measure,
+      });
 
       await fetchShoppingList();
 
       setMessage(response.data.message);
-
     } catch (error) {
-      setError(
-        "Could not save new shopping item."
-      );
+      setError("Could not save new shopping item.");
 
-      console.error(
-        "Could not save new shopping item.",
-        error
-      );
+      console.error("Could not save new shopping item.", error);
     } finally {
       setItemSaving(false);
     }
   }
 
-
   return (
     <main className="page-container shopping-page">
       <h1 className="page-title">Weekly Shopping List</h1>
 
-      <StatusMessage type="success">
-        {message}
-      </StatusMessage>
+      <StatusMessage type="success">{message}</StatusMessage>
 
-      <StatusMessage type="error">
-        {error}
-      </StatusMessage>
+      <StatusMessage type="error">{error}</StatusMessage>
 
       <StatusMessage type="info">
         {ingredientsLoading ? "Loading shopping list..." : null}
@@ -273,16 +203,26 @@ function Shopping() {
 
       <div className="week-navigation">
         <h2 className="week-date">
-          {currentMonday.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })} -
-          {addDays(currentMonday, 6).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })}
+          {currentMonday.toLocaleDateString("en-GB", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}{" "}
+          -
+          {addDays(currentMonday, 6).toLocaleDateString("en-GB", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
         </h2>
         <div className="week-navigation-buttons">
           <button onClick={() => changeWeek(-1)}>&lt; Previous week</button>
-          <button onClick={() => setCurrentMonday(getWeekStart(new Date()))}>Current week</button>
+          <button onClick={() => setCurrentMonday(getWeekStart(new Date()))}>
+            Current week
+          </button>
 
           <button onClick={() => changeWeek(1)}>Next week &gt;</button>
         </div>
-
       </div>
       <div className="shopping-actions-panel">
         <button
@@ -297,95 +237,79 @@ function Shopping() {
               : "Refresh from planner"}
         </button>
 
-        <ShoppingItemForm
-          onAddItem={handleAddItem}
-          isSaving={itemSaving}
-        />
+        <ShoppingItemForm onAddItem={handleAddItem} isSaving={itemSaving} />
       </div>
 
+      {!ingredientsLoading && !error && shoppingList.length === 0 && (
+        <StatusMessage type="info">
+          No shopping items for this week.
+        </StatusMessage>
+      )}
 
-      {!ingredientsLoading &&
-        !error &&
-        shoppingList.length === 0 && (
-          <StatusMessage type="info">
-            No shopping items for this week.
-          </StatusMessage>
-        )}
+      {!ingredientsLoading && !error && shoppingList.length > 0 && (
+        <div className="shopping-list">
+          {shoppingList.map((item) => {
+            const itemKey = item.itemIds.join("-");
 
-      {!ingredientsLoading &&
-        !error &&
-        shoppingList.length > 0 && (
-          <div className="shopping-list">
-            {shoppingList.map((item) => {
-              const itemKey = item.itemIds.join("-");
+            const status = itemStatus[itemKey] ?? item.status ?? "needed";
 
-              const status =
-                itemStatus[itemKey] ??
-                item.status ??
-                "needed";
+            return (
+              <div key={itemKey} className="shopping-item">
+                <div className="shopping-item-main">
+                  <button
+                    className="shopping-delete-button"
+                    aria-label={`Delete ${item.name}`}
+                    type="button"
+                    onClick={() => deleteItem(item.itemIds, itemKey)}
+                    disabled={deletingItemKey === itemKey}
+                  >
+                    {deletingItemKey === itemKey ? "Deleting..." : "X"}
+                  </button>
 
-              return (
-                <div
-                  key={itemKey}
-                  className="shopping-item"
-                >
-                  <div className="shopping-item-main">
-                    <button
-                      className="shopping-delete-button"
-                      aria-label={`Delete ${item.name}`}
-                      type="button"
-                      onClick={() => deleteItem(item.itemIds, itemKey)}
-                      disabled={deletingItemKey === itemKey}
-                    >
-                      {deletingItemKey === itemKey
-                        ? "Deleting..."
-                        : "X"}
-                    </button>
-
-                    <strong>{item.name}</strong>
-                  </div>
-                  <div className="shopping-item-measure">
-                    <p>{item.measure}</p>
-                  </div>
-                  <div className="shopping-item-actions">
-                    <label className="shopping-checkbox">
-                      <input
-                        type="checkbox"
-                        checked={status === "at_home"}
-                        onChange={(e) =>
-                          handleStatusChange(
-                            item.itemIds,
-                            itemKey,
-                            "at_home",
-                            e.target.checked
-                          )
-                        }
-                      />
-                      <span>At home</span>
-                    </label>
-                    <label className="shopping-checkbox">
-                      <input
-                        type="checkbox"
-                        checked={status === "purchased"}
-                        onChange={(e) =>
-                          handleStatusChange(
-                            item.itemIds,
-                            itemKey,
-                            "purchased",
-                            e.target.checked
-                          )
-                        }
-                      />
-                      <span>Purchased</span>
-                    </label>
-                  </div>
+                  <strong>{item.name}</strong>
                 </div>
-              );
-            })}
-          </div>
-        )}
+                <div className="shopping-item-measure">
+                  <p>{item.measure}</p>
+                </div>
+                <div className="shopping-item-actions">
+                  <label className="shopping-checkbox">
+                    <input
+                      type="checkbox"
+                      checked={status === "at_home"}
+                      onChange={(e) =>
+                        handleStatusChange(
+                          item.itemIds,
+                          itemKey,
+                          "at_home",
+                          e.target.checked,
+                        )
+                      }
+                    />
+                    <span>At home</span>
+                  </label>
+                  <label className="shopping-checkbox">
+                    <input
+                      type="checkbox"
+                      checked={status === "purchased"}
+                      onChange={(e) =>
+                        handleStatusChange(
+                          item.itemIds,
+                          itemKey,
+                          "purchased",
+                          e.target.checked,
+                        )
+                      }
+                    />
+                    <span>Purchased</span>
+                  </label>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </main>
   );
 }
 
-export default Shopping; 
+export default Shopping;

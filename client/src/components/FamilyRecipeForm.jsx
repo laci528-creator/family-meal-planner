@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import api from "../services/api";
 import { splitMeasure } from "../utils/measureUtils";
 import StatusMessage from "./StatusMessage";
@@ -8,7 +8,6 @@ function FamilyRecipeForm({
   onSubmit,
   submitText = "Save recipe",
 }) {
-
   const [formData, setFormData] = useState({
     title: initialData?.title || "",
     category: initialData?.category || "",
@@ -19,27 +18,25 @@ function FamilyRecipeForm({
 
   const [imageFile, setImageFile] = useState(null);
 
-const [ingredients, setIngredients] = useState(
-  initialData?.ingredients?.length
-    ? initialData.ingredients.map((ingredient) => {
-        const { amount, unit } =
-          splitMeasure(ingredient.measure);
+  const [ingredients, setIngredients] = useState(
+    initialData?.ingredients?.length
+      ? initialData.ingredients.map((ingredient) => {
+          const { amount, unit } = splitMeasure(ingredient.measure);
 
-        return {
-          ...ingredient,
-          amount,
-          unit,
-        };
-      })
-    : [
-        {
-          name: "",
-          amount: "",
-          unit: "",
-        },
-      ]
-);
-
+          return {
+            ...ingredient,
+            amount,
+            unit,
+          };
+        })
+      : [
+          {
+            name: "",
+            amount: "",
+            unit: "",
+          },
+        ],
+  );
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
@@ -58,11 +55,11 @@ const [ingredients, setIngredients] = useState(
       currentIngredients.map((ingredient, ingredientIndex) =>
         ingredientIndex === index
           ? {
-            ...ingredient,
-            [field]: value,
-          }
-          : ingredient
-      )
+              ...ingredient,
+              [field]: value,
+            }
+          : ingredient,
+      ),
     );
   }
 
@@ -72,15 +69,13 @@ const [ingredients, setIngredients] = useState(
     setError("");
 
     const validIngredients = ingredients.filter(
-      (ingredient) => ingredient.name.trim() !== ""
+      (ingredient) => ingredient.name.trim() !== "",
     );
 
-    const formattedIngredients =
-      validIngredients.map((ingredient) => ({
-        name: ingredient.name.trim(),
-        measure:
-          `${ingredient.amount} ${ingredient.unit}`.trim(),
-      }));
+    const formattedIngredients = validIngredients.map((ingredient) => ({
+      name: ingredient.name.trim(),
+      measure: `${ingredient.amount} ${ingredient.unit}`.trim(),
+    }));
 
     if (validIngredients.length === 0) {
       setError("At least one ingredient is required.");
@@ -99,7 +94,7 @@ const [ingredients, setIngredients] = useState(
 
         const uploadResponse = await api.post(
           "/uploads/recipe-image",
-          uploadData
+          uploadData,
         );
 
         image = uploadResponse.data.image;
@@ -113,15 +108,11 @@ const [ingredients, setIngredients] = useState(
     } catch (error) {
       console.error("Recipe form error:", error);
 
-      setError(
-        error.response?.data?.message ||
-        "Could not save recipe."
-      );
+      setError(error.response?.data?.message || "Could not save recipe.");
     } finally {
       setIsSubmitting(false);
     }
   }
-
 
   function addIngredient() {
     if (ingredients.length >= 20) {
@@ -133,31 +124,27 @@ const [ingredients, setIngredients] = useState(
       {
         name: "",
         amount: "",
-        unit: ""
+        unit: "",
       },
     ]);
   }
 
   function removeIngredient(indexToRemove) {
     setIngredients((currentIngredients) =>
-      currentIngredients.filter((_, index) => index !== indexToRemove)
+      currentIngredients.filter((_, index) => index !== indexToRemove),
     );
-
   }
 
   return (
     <>
-
-      <StatusMessage type="error">
-        {error}
-      </StatusMessage>
-
+      <StatusMessage type="error">{error}</StatusMessage>
 
       <form onSubmit={handleSubmit} className="family-recipe-form">
         <div className="recipe-fields">
-
           <div className="form-group">
-            <label htmlFor="title" className="form-label">Recipe Title:</label>
+            <label htmlFor="title" className="form-label">
+              Recipe Title:
+            </label>
             <input
               className="form-input"
               type="text"
@@ -167,7 +154,9 @@ const [ingredients, setIngredients] = useState(
               onChange={handleChange}
               required
             />
-            <label htmlFor="category" className="form-label">Category:</label>
+            <label htmlFor="category" className="form-label">
+              Category:
+            </label>
             <input
               className="form-input"
               type="text"
@@ -179,7 +168,9 @@ const [ingredients, setIngredients] = useState(
             />
           </div>
           <div className="form-group">
-            <label htmlFor="cuisine" className="form-label">Cuisine:</label>
+            <label htmlFor="cuisine" className="form-label">
+              Cuisine:
+            </label>
             <input
               className="form-input"
               type="text"
@@ -209,7 +200,9 @@ const [ingredients, setIngredients] = useState(
             />
           </div>
           <div className="form-group instructions-field">
-            <label htmlFor="instructions" className="form-label">Instructions:</label>
+            <label htmlFor="instructions" className="form-label">
+              Instructions:
+            </label>
             <textarea
               className="form-textarea"
               id="instructions"
@@ -220,27 +213,19 @@ const [ingredients, setIngredients] = useState(
               required
             />
           </div>
-
         </div>
         <h3>Ingredients</h3>
 
         <div className="ingredients-field-container">
           {ingredients.map((ingredient, index) => (
-            <div
-              className="ingredient-field"
-              key={index}
-            >
+            <div className="ingredient-field" key={index}>
               <input
                 className="form-input"
                 type="text"
                 placeholder="Ingredient"
                 value={ingredient.name}
                 onChange={(event) =>
-                  handleIngredientChange(
-                    index,
-                    "name",
-                    event.target.value
-                  )
+                  handleIngredientChange(index, "name", event.target.value)
                 }
                 required={index === 0}
               />
@@ -250,22 +235,14 @@ const [ingredients, setIngredients] = useState(
                 placeholder="Amount"
                 value={ingredient.amount}
                 onChange={(event) =>
-                  handleIngredientChange(
-                    index,
-                    "amount",
-                    event.target.value
-                  )
+                  handleIngredientChange(index, "amount", event.target.value)
                 }
               />
               <select
                 className="form-input"
                 value={ingredient.unit}
                 onChange={(event) =>
-                  handleIngredientChange(
-                    index,
-                    "unit",
-                    event.target.value
-                  )
+                  handleIngredientChange(index, "unit", event.target.value)
                 }
               >
                 <option value="">No unit</option>
@@ -283,7 +260,6 @@ const [ingredients, setIngredients] = useState(
               </select>
 
               {ingredients.length > 1 && (
-
                 <button
                   type="button"
                   className="ingredient-remove-button"
@@ -304,13 +280,18 @@ const [ingredients, setIngredients] = useState(
               + Add ingredient
             </button>
 
-            <button type="submit" className="primary-button" disabled={isSubmitting}>{isSubmitting ? "Saving..." : submitText}</button>
+            <button
+              type="submit"
+              className="primary-button"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Saving..." : submitText}
+            </button>
           </div>
         </div>
       </form>
     </>
   );
-
 }
 
 export default FamilyRecipeForm;

@@ -11,7 +11,7 @@ router.post(
   requireAuth,
   upload.single("image"),
   handleUploadError,
-  uploadRecipeImage
+  uploadRecipeImage,
 );
 
 export default router;

@@ -11,9 +11,7 @@ function Recipes() {
 
   function handleRecipeDeleted(recipeId) {
     setRecipes((currentRecipes) =>
-      currentRecipes.filter(
-        (recipe) => recipe.id !== recipeId
-      )
+      currentRecipes.filter((recipe) => recipe.id !== recipeId),
     );
 
     setMessage("Recipe deleted successfully.");
@@ -27,7 +25,7 @@ function Recipes() {
     async function fetchRecipes() {
       try {
         setError("");
-        
+
         const response = await api.get("/recipes");
         setRecipes(response.data.recipes);
       } catch (err) {
@@ -45,17 +43,13 @@ function Recipes() {
     <main className="page-container recipes-page">
       <h1 className="page-title">My Recipes</h1>
 
-      <StatusMessage type="success">
-        {message}
-      </StatusMessage>
+      <StatusMessage type="success">{message}</StatusMessage>
 
       <StatusMessage type="info">
         {loading ? "Loading recipes..." : null}
       </StatusMessage>
 
-      <StatusMessage type="error">
-        {error}
-      </StatusMessage>
+      <StatusMessage type="error">{error}</StatusMessage>
 
       {!loading && !error && recipes.length === 0 && (
         <StatusMessage type="info">
@@ -78,4 +72,4 @@ function Recipes() {
   );
 }
 
-export default Recipes; 
+export default Recipes;

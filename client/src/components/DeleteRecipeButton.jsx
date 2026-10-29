@@ -8,7 +8,7 @@ function DeleteRecipeButton({ recipeId, onDeleted }) {
 
   async function handleDelete() {
     const confirmed = window.confirm(
-      "Are you sure you want to delete this recipe?"
+      "Are you sure you want to delete this recipe?",
     );
 
     if (!confirmed) {
@@ -40,9 +40,7 @@ function DeleteRecipeButton({ recipeId, onDeleted }) {
         {isDeleting ? "Deleting..." : "Delete"}
       </button>
 
-      <StatusMessage type="error">
-        {error}
-      </StatusMessage>
+      <StatusMessage type="error">{error}</StatusMessage>
     </div>
   );
 }

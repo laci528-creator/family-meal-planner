@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
-import api from '../services/api';
-import SaveRecipeButton from '../components/SaveRecipeButton';
+import { useState, useEffect } from "react";
+import { useParams, Link, Navigate } from "react-router-dom";
+import api from "../services/api";
+import SaveRecipeButton from "../components/SaveRecipeButton";
 import CookingMode from "../components/CookingMode";
 import StatusMessage from "../components/StatusMessage";
 
@@ -12,7 +12,6 @@ function RecipeDetails({ source = "external" }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
@@ -21,26 +20,18 @@ function RecipeDetails({ source = "external" }) {
         setRecipe(null);
 
         const endpoint =
-          source === "saved"
-            ? `/recipes/saved-recipe/${id}`
-            : `/recipes/${id}`;
+          source === "saved" ? `/recipes/saved-recipe/${id}` : `/recipes/${id}`;
 
         const response = await api.get(endpoint);
 
         setRecipe(response.data.recipe);
-
       } catch (err) {
-        console.error(
-          "Error loading recipe:",
-          err
-        );
+        console.error("Error loading recipe:", err);
 
         if (err.response?.status === 404) {
           setError("Recipe not found.");
         } else {
-          setError(
-            "The recipe could not be loaded."
-          );
+          setError("The recipe could not be loaded.");
         }
       } finally {
         setLoading(false);
@@ -50,24 +41,19 @@ function RecipeDetails({ source = "external" }) {
     fetchRecipe();
   }, [id, source]);
 
-
   if (loading) {
     return (
-    <main className="page-container recipe-details-page">
-      <StatusMessage type="info">
-        Loading recipe...
-      </StatusMessage>
-    </main>
+      <main className="page-container recipe-details-page">
+        <StatusMessage type="info">Loading recipe...</StatusMessage>
+      </main>
     );
   }
 
   if (error) {
     return (
-    <main className="page-container recipe-details-page">
-      <StatusMessage type="error">
-        {error}
-      </StatusMessage>
-    </main>
+      <main className="page-container recipe-details-page">
+        <StatusMessage type="error">{error}</StatusMessage>
+      </main>
     );
   }
 
@@ -77,19 +63,16 @@ function RecipeDetails({ source = "external" }) {
 
   const recipeImage = recipe.image;
 
-
   return (
     <main className="page-container recipe-details-page">
       <div className="recipe-details-card">
-
         <div className="recipe-details-header">
           <img
             className="recipe-details-image"
             src={recipeImage || "/images/recipe-placeholder.jpg"}
             alt={recipeImage ? recipe.title : "No recipe image available"}
             onError={(event) => {
-              event.currentTarget.src =
-                "/images/recipe-placeholder.jpg";
+              event.currentTarget.src = "/images/recipe-placeholder.jpg";
             }}
           />
 
@@ -98,44 +81,37 @@ function RecipeDetails({ source = "external" }) {
 
             <div className="recipe-details-meta">
               <p>
-                <strong>Category:</strong>{" "}
-                {recipe.category}
+                <strong>Category:</strong> {recipe.category}
               </p>
 
               {recipe.cuisine && (
                 <p>
-                  <strong>Cuisine:</strong>{" "}
-                  {recipe.cuisine}
+                  <strong>Cuisine:</strong> {recipe.cuisine}
                 </p>
               )}
             </div>
 
             {source !== "saved" && (
-              <SaveRecipeButton
-                externalId={recipe.externalId}
-              />
+              <SaveRecipeButton externalId={recipe.externalId} />
             )}
 
-            {source === "saved" &&
-              recipe.source === "custom" && (
-                <Link
-                  to={`/recipes/saved/${recipe.id}/edit`}
-                  className="primary-button edit-recipe-button"
-                >
-                  Edit recipe
-                </Link>
-              )}
+            {source === "saved" && recipe.source === "custom" && (
+              <Link
+                to={`/recipes/saved/${recipe.id}/edit`}
+                className="primary-button edit-recipe-button"
+              >
+                Edit recipe
+              </Link>
+            )}
 
-            {source === "saved" &&
-              recipe.source === "api" && (
-                <Link
-                  to={`/recipes/saved/${recipe.id}/edit`}
-                  className="primary-button edit-recipe-button"
-                >
-                  Customize recipe
-                </Link>
-              )}
-
+            {source === "saved" && recipe.source === "api" && (
+              <Link
+                to={`/recipes/saved/${recipe.id}/edit`}
+                className="primary-button edit-recipe-button"
+              >
+                Customize recipe
+              </Link>
+            )}
           </div>
         </div>
 
@@ -145,7 +121,6 @@ function RecipeDetails({ source = "external" }) {
             recipeId={`${source}-${id}`}
             instructions={recipe.instructions}
           />
-
         </section>
 
         {recipe.ingredients?.length > 0 && (
@@ -153,25 +128,18 @@ function RecipeDetails({ source = "external" }) {
             <h2>Ingredients</h2>
 
             <ul className="ingredients-list">
-              {recipe.ingredients.map(
-                (ingredient, index) => (
-                  <li
-                    key={`${ingredient.name}-${index}`}
-                  >
-                    <span>{ingredient.name}</span>
-                    <strong>
-                      {ingredient.measure}
-                    </strong>
-                  </li>
-                )
-              )}
+              {recipe.ingredients.map((ingredient, index) => (
+                <li key={`${ingredient.name}-${index}`}>
+                  <span>{ingredient.name}</span>
+                  <strong>{ingredient.measure}</strong>
+                </li>
+              ))}
             </ul>
           </section>
         )}
-
       </div>
     </main>
   );
 }
 
-export default RecipeDetails; 
+export default RecipeDetails;

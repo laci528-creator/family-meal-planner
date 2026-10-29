@@ -4,45 +4,35 @@ import DeleteRecipeButton from "./DeleteRecipeButton";
 function RecipeCard({ recipe, onDeleted }) {
   return (
     <article className="recipe-card">
-    {recipe.image ? (
-          <img
-            src={recipe.image}
-            alt={recipe.title}
-            className="recipe-card-image"
-          />
-        ) : (
-          <div className="recipe-card-image-placeholder">
-            No image available
-          </div>
-        )}
+      {recipe.image ? (
+        <img
+          src={recipe.image}
+          alt={recipe.title}
+          className="recipe-card-image"
+        />
+      ) : (
+        <div className="recipe-card-image-placeholder">No image available</div>
+      )}
 
       <div className="recipe-card-content">
         <h2>{recipe.title}</h2>
 
         {recipe.category && (
           <p>
-            <strong>Category:</strong>{" "}
-            {recipe.category}
+            <strong>Category:</strong> {recipe.category}
           </p>
         )}
 
         {recipe.cuisine && (
           <p>
-            <strong>Cuisine:</strong>{" "}
-            {recipe.cuisine}
+            <strong>Cuisine:</strong> {recipe.cuisine}
           </p>
         )}
         <div className="recipe-card-actions">
-            <Link
-            to={`/recipes/saved/${recipe.id}`}
-            className="primary-button"
-            >
+          <Link to={`/recipes/saved/${recipe.id}`} className="primary-button">
             View recipe
-            </Link>
-            <DeleteRecipeButton
-                recipeId={recipe.id}
-                onDeleted={onDeleted}
-                />
+          </Link>
+          <DeleteRecipeButton recipeId={recipe.id} onDeleted={onDeleted} />
         </div>
       </div>
     </article>

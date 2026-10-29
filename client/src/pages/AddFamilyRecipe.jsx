@@ -3,8 +3,7 @@ import api from "../services/api";
 import FamilyRecipeForm from "../components/FamilyRecipeForm";
 
 function AddFamilyRecipes() {
-  
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   async function handleSave(recipeData) {
     await api.post("/recipes/custom", recipeData);
@@ -15,11 +14,8 @@ const navigate = useNavigate();
     <main className="page-container family-recipe-page">
       <h1 className="page-title">Save your Family Recipe</h1>
 
-      <FamilyRecipeForm
-        onSubmit={handleSave}
-        submitText="Save recipe"
-      />
+      <FamilyRecipeForm onSubmit={handleSave} submitText="Save recipe" />
     </main>
   );
 }
-export default AddFamilyRecipes; 
+export default AddFamilyRecipes;

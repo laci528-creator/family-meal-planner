@@ -21,7 +21,6 @@ const dayNames = [
 ];
 
 function Planner() {
-
   const [plannerData, setPlannerData] = useState([]);
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -31,18 +30,14 @@ function Planner() {
   const [message, setMessage] = useState("");
   const [recipes, setRecipes] = useState([]);
   const [currentMonday, setCurrentMonday] = useState(() =>
-    getWeekStart(new Date())
+    getWeekStart(new Date()),
   );
 
-
   const changeWeek = (weeks) => {
-
     setMessage("");
     setSelectedSlot(null);
 
-    setCurrentMonday(
-      addWeeks(currentMonday, weeks)
-    );
+    setCurrentMonday(addWeeks(currentMonday, weeks));
   };
 
   const weekDays = getWeekDays(currentMonday);
@@ -65,7 +60,6 @@ function Planner() {
       });
 
       setPlannerData(response.data.weeklyPlannerData);
-
     } catch (error) {
       console.error("Planner loading error:", error);
       setError("Could not load planner data.");
@@ -77,7 +71,6 @@ function Planner() {
   useEffect(() => {
     fetchPlannerData();
   }, [currentMonday]);
-
 
   useEffect(() => {
     async function fetchRecipes() {
@@ -102,9 +95,7 @@ function Planner() {
     const isoDate = formatDateForApi(date);
 
     return plannerData.find(
-      (entry) =>
-        entry.plan_date === isoDate &&
-        entry.meal_type === mealType
+      (entry) => entry.plan_date === isoDate && entry.meal_type === mealType,
     );
   }
 
@@ -121,8 +112,7 @@ function Planner() {
       setMessage("Meal successfully deleted from planner.");
     } catch (err) {
       setError(
-        err.response?.data?.message ||
-        "Could not delete meal from planner."
+        err.response?.data?.message || "Could not delete meal from planner.",
       );
     } finally {
       setIsSaving(false);
@@ -147,8 +137,7 @@ function Planner() {
       setSelectedSlot(null);
     } catch (err) {
       setError(
-        err.response?.data?.message ||
-        "Could not save recipe to planner."
+        err.response?.data?.message || "Could not save recipe to planner.",
       );
     } finally {
       setIsSaving(false);
@@ -157,23 +146,20 @@ function Planner() {
 
   return (
     <main className="page-container planner-calendar">
-
       <h1 className="page-title">
-        {currentMonday.toLocaleDateString('en-GB', { year: 'numeric', month: 'long' })}
+        {currentMonday.toLocaleDateString("en-GB", {
+          year: "numeric",
+          month: "long",
+        })}
       </h1>
 
       <StatusMessage type="info">
         {plannerLoading ? "Loading planner data..." : null}
       </StatusMessage>
 
-      <StatusMessage type="error">
-        {error}
-      </StatusMessage>
+      <StatusMessage type="error">{error}</StatusMessage>
 
-      <StatusMessage type="success">
-        {message}
-      </StatusMessage>
-
+      <StatusMessage type="success">{message}</StatusMessage>
 
       <div className="calendar-header">
         <button onClick={() => changeWeek(-1)}>&lt; Previous week</button>
@@ -187,8 +173,7 @@ function Planner() {
           {weekDays.map((date, index) => {
             const isoDate = formatDateForApi(date);
 
-            const isToday =
-              formatDateForApi(new Date()) === isoDate;
+            const isToday = formatDateForApi(new Date()) === isoDate;
 
             return (
               <div
@@ -196,83 +181,72 @@ function Planner() {
                 className={`day-card ${isToday ? "today" : ""}`}
               >
                 <div className="day-header">
-                  <span className="day-name">
-                    {dayNames[index]}
-                  </span>
+                  <span className="day-name">{dayNames[index]}</span>
 
-                  <span className="day-number">
-                    {date.getDate()}
-                  </span>
+                  <span className="day-number">{date.getDate()}</span>
                 </div>
 
                 <div className="day-content">
-                  {["breakfast", "lunch", "dinner"].map(
-                    (mealType) => {
-                      const plannedMeal = getPlannedMeal(date, mealType);
+                  {["breakfast", "lunch", "dinner"].map((mealType) => {
+                    const plannedMeal = getPlannedMeal(date, mealType);
 
-                      return (
-                        <div
-                          key={mealType}
-                          className="meal-slot"
-                        >
-                          <h4>{mealType}</h4>
-                          {plannedMeal ? (
-                            <>
-                              <p>{plannedMeal.title}</p>
-                              <div className="meal-actions">
-                                <button
-                                  className="delete-meal-button"
-                                  disabled={isSaving}
-                                  onClick={() =>
-                                    deleteMeal(plannedMeal.planner_entry_id)
-                                  }
-                                >
-                                  Delete
-                                </button>
+                    return (
+                      <div key={mealType} className="meal-slot">
+                        <h4>{mealType}</h4>
+                        {plannedMeal ? (
+                          <>
+                            <p>{plannedMeal.title}</p>
+                            <div className="meal-actions">
+                              <button
+                                className="delete-meal-button"
+                                disabled={isSaving}
+                                onClick={() =>
+                                  deleteMeal(plannedMeal.planner_entry_id)
+                                }
+                              >
+                                Delete
+                              </button>
 
-                                <button
-                                  disabled={isSaving}
-                                  onClick={() =>
-                                    setSelectedSlot({
-                                      date: isoDate,
-                                      mealType,
-                                    })
-                                  }
-                                >
-                                  Change
-                                </button>
-                              </div>
-                            </>
-                          ) : (
-                            <>
-                              <p>No meal planned</p>
-                              <div className="meal-actions">
-                                <button
-                                  disabled={isSaving}
-                                  onClick={() =>
-                                    setSelectedSlot({
-                                      date: isoDate,
-                                      mealType,
-                                    })
-                                  }
-                                >
-                                  Add meal
-                                </button>
-                              </div>
-                            </>
-                          )}
-                        </div>
-                      );
-                    }
-                  )}
+                              <button
+                                disabled={isSaving}
+                                onClick={() =>
+                                  setSelectedSlot({
+                                    date: isoDate,
+                                    mealType,
+                                  })
+                                }
+                              >
+                                Change
+                              </button>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <p>No meal planned</p>
+                            <div className="meal-actions">
+                              <button
+                                disabled={isSaving}
+                                onClick={() =>
+                                  setSelectedSlot({
+                                    date: isoDate,
+                                    mealType,
+                                  })
+                                }
+                              >
+                                Add meal
+                              </button>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             );
           })}
         </div>
       )}
-
-
 
       {selectedSlot && (
         <div className="recipe-selector-header">
@@ -293,9 +267,7 @@ function Planner() {
           </button>
 
           {recipesLoading ? (
-            <StatusMessage type="info">
-              Loading saved recipes...
-            </StatusMessage>
+            <StatusMessage type="info">Loading saved recipes...</StatusMessage>
           ) : recipes.length === 0 ? (
             <StatusMessage type="info">
               No saved recipes available.
@@ -318,4 +290,4 @@ function Planner() {
   );
 }
 
-export default Planner; 
+export default Planner;
