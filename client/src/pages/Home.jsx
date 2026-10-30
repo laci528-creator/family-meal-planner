@@ -32,53 +32,84 @@ function Home() {
           <h1 className="home-title">Plan meals. Shop smarter.</h1>
 
           <p className="home-description">
-            Discover recipes, save family favourites, plan your week and create
-            your shopping list automatically.
+            Choose your recipes, plan your meals for the week and automatically create
+            your shopping list.
           </p>
         </div>
 
-        <div className="home-features">
-          <article className="feature-card">
-            <h2>Discover Recipes</h2>
-            <p>Find new recipes and save your favourites.</p>
-            <div className="button-container">
-              <Link to="/discover" className="primary-button">
-                Discover recipes
-              </Link>
-            </div>
-          </article>
+<div className="home-features">
+  <article className="feature-card">
+    <span className="feature-step">Step 1</span>
 
-          <article className="feature-card">
-            <h2>Family Recipes</h2>
-            <p>Keep your own and traditional family recipes in one place.</p>
-            <div className="button-container">
-              <Link to="/recipes/family/new" className="primary-button">
-                {" "}
-                Add family recipe{" "}
-              </Link>
-            </div>
-          </article>
+    <h2>Choose your recipes</h2>
 
-          <article className="feature-card">
-            <h2>Weekly Planner</h2>
-            <p>Plan your meals for the upcoming week.</p>
-            <div className="button-container">
-              <Link to="/planner" className="primary-button">
-                Plan your week
-              </Link>
-            </div>
-          </article>
+    <p>
+      Discover new recipes or add your own family recipes and save them to your
+      personal collection.
+    </p>
 
-          <article className="feature-card">
-            <h2>Shopping List</h2>
-            <p>Create a shopping list automatically from your meal plan.</p>
-            <div className="button-container">
-              <Link to="/shopping" className="primary-button">
-                View shopping list
-              </Link>
-            </div>
-          </article>
-        </div>
+    <div className="button-container feature-buttons">
+      <Link to="/discover" className="primary-button">
+        Discover recipes
+      </Link>
+
+      <Link to="/recipes/family/new" className="secondary-button">
+        Add family recipe
+      </Link>
+    </div>
+  </article>
+
+  <article className="feature-card">
+    <span className="feature-step">Step 2</span>
+
+    <h2>Plan your week</h2>
+
+    <p>
+      Choose saved recipes for breakfast, lunch and dinner and create your
+      weekly meal plan.
+    </p>
+
+    <div className="button-container">
+      <Link to="/planner" className="primary-button">
+        Plan your week
+      </Link>
+    </div>
+  </article>
+
+  <article className="feature-card">
+    <span className="feature-step">Step 3</span>
+
+    <h2>Generate your shopping list</h2>
+
+    <p>
+      Automatically create a shopping list from all the meals you planned for
+      the selected week.
+    </p>
+
+    <div className="button-container">
+      <Link to="/shopping" className="primary-button">
+        View shopping list
+      </Link>
+    </div>
+  </article>
+
+  <article className="feature-card">
+    <span className="feature-step">Step 4</span>
+
+    <h2>Check your pantry</h2>
+
+    <p>
+      Add ingredients you already have at home so they are excluded from your
+      generated shopping list.
+    </p>
+
+    <div className="button-container">
+      <Link to="/pantry" className="primary-button">
+        Manage pantry
+      </Link>
+    </div>
+  </article>
+</div>
 
         <section className="recipe-inspiration">
           <StatusMessage type="info">

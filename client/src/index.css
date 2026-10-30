@@ -286,6 +286,32 @@ body {
   box-shadow: var(--shadow-hero);
 }
 
+.feature-step {
+  display: inline-block;
+  align-self: flex-start;
+
+  margin-bottom: 0.75rem;
+  padding: 0.3rem 0.65rem;
+
+  border: 1px solid var(--color-primary);
+  border-radius: 999px;
+
+  color: var(--color-primary);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.button-container {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+}
+
+.feature-buttons {
+  gap: 0.5rem;
+}
+
 .home-features {
   width: 100%;
   max-width: 1200px;
