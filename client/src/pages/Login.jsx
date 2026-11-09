@@ -17,6 +17,12 @@ function Login() {
 
   const successMessage = location.state?.message || "";
 
+  function handleDemoLogin() {
+  setEmail("demo@familymealplanner.app");
+  setPassword("Demo1234!");
+  setError(null);
+}
+
   const handleSubmit = async (e) => {
     e.preventDefault(); // page refresh not allowed
     setError(null);
@@ -94,6 +100,18 @@ function Login() {
             disabled={isSubmitting}
           >
             {isSubmitting ? "Logging in..." : "Login"}
+          </button>
+          <p className="demo-login-text">
+            Want to explore the app without registering?
+          </p>
+
+          <button
+            type="button"
+            className="secondary-button"
+            onClick={handleDemoLogin}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Logging in..." : "Try demo account"}
           </button>
         </form>
       </div>
