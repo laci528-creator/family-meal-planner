@@ -1,11 +1,23 @@
 # Family Meal Planner
 
-> 🚧 This project is currently under active development.
+> ✅ Core features are complete and the application is available as a live demo.
 
 A full-stack meal planning application built with React, Node.js, Express and PostgreSQL.
 
 **Live Demo:**  
 https://family-meal-planner-evy5.onrender.com
+
+## Screenshots
+
+![Home](screenshots/Home.jpg)
+
+![My Recipes](screenshots/My_recipes.jpg)
+
+![Planner](screenshots/Planner.jpg)
+
+![Shopping List](screenshots/Shopping_List.jpg)
+
+![Cooking Mode](screenshots/Recipe_details.jpg)
 
 This README is available in English and German.
 
